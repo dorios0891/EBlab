@@ -1,0 +1,11 @@
+{
+  "appId": "co.ebime.vascular",
+  "appName": "EBIME",
+  "webDir": "www",
+  "server": {
+    "androidScheme": "https"
+  },
+  "android": {
+    "backgroundColor": "#ffffff"
+  }
+}
