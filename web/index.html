@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#24459a">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="EBIME">
+<title>EBIME · Plataforma Clínica de Acceso Vascular</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+
+:root{
+  --royal:#24459a; --teal:#16a3c4; --magenta:#902d8e; --green:#54b24c; --amber:#f19f2c; --white:#ffffff;
+  /* tinta y superficies claras */
+  --bg:#ffffff; --bg-2:#f4f7fc; --surface:#ffffff; --surface-2:#f7f9fe;
+  --line:#e3e9f4; --line-soft:#edf1f8;
+  --txt:#152040; --txt-dim:#536084; --txt-faint:#8a97b5;
+  /* tintas legibles sobre blanco */
+  --royal-ink:#24459a; --teal-ink:#0c7c98; --magenta-ink:#8a2b88; --green-ink:#2f7d28; --amber-ink:#b9740b; --danger:#e2445f; --danger-ink:#c52d44;
+  --shadow:0 1px 2px rgba(21,32,64,.05),0 10px 30px -20px rgba(21,32,64,.25);
+  --r:16px; --r-sm:10px;
+  --mono:"IBM Plex Mono",ui-monospace,monospace; --disp:"Space Grotesk",system-ui,sans-serif; --body:"Inter",system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:radial-gradient(1100px 560px at 85% -10%, rgba(22,163,196,.06), transparent 60%),radial-gradient(900px 500px at -10% 5%, rgba(144,45,142,.05), transparent 55%),var(--bg);color:var(--txt);font-family:var(--body);line-height:1.55;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--teal);outline-offset:2px;border-radius:4px}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+.spectrum{height:4px;width:100%;background:linear-gradient(90deg,var(--royal) 0 20%,var(--teal) 20% 40%,var(--magenta) 40% 60%,var(--green) 60% 80%,var(--amber) 80% 100%)}
+header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.86);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;gap:28px;height:66px}
+.brand{display:flex;align-items:center;gap:12px;font-family:var(--disp);font-weight:700;letter-spacing:.3px;font-size:20px;color:var(--royal-ink)}
+.brand .mark{width:34px;height:34px;flex:none}
+.brand small{display:block;font-family:var(--body);font-weight:500;font-size:10.5px;letter-spacing:2px;color:var(--txt-faint);text-transform:uppercase;margin-top:-2px}
+.nav-links{display:flex;gap:4px;margin-left:auto;flex-wrap:wrap}
+.nav-links button{font-family:var(--body);font-size:13.5px;font-weight:500;color:var(--txt-dim);background:none;border:0;padding:9px 14px;border-radius:999px;cursor:pointer;transition:.18s}
+.nav-links button:hover{color:var(--txt);background:var(--bg-2)}
+.nav-links button.active{color:var(--royal-ink);background:var(--bg-2);box-shadow:inset 0 0 0 1px var(--line)}
+.menu-btn{display:none;margin-left:auto;background:var(--bg-2);border:1px solid var(--line);color:var(--txt);width:40px;height:40px;border-radius:10px;cursor:pointer}
+.view{display:none;padding:54px 0 90px;animation:fade .35s ease}
+.view.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:3px;text-transform:uppercase;color:var(--txt-faint);display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.eyebrow::before{content:"";width:26px;height:2px;background:var(--accent,var(--teal))}
+h1.title{font-family:var(--disp);font-weight:700;font-size:clamp(30px,5vw,52px);line-height:1.05;letter-spacing:-.5px}
+h2.sec{font-family:var(--disp);font-weight:700;font-size:clamp(24px,3.4vw,34px);letter-spacing:-.4px;margin-bottom:8px}
+.lead{color:var(--txt-dim);font-size:16.5px;max-width:62ch;margin-top:16px}
+.hero{max-width:760px}
+.hero-stats{display:flex;gap:30px;margin-top:34px;flex-wrap:wrap}
+.hero-stats b{font-family:var(--mono);font-size:30px;font-weight:600;display:block;line-height:1}
+.hero-stats span{font-size:12.5px;color:var(--txt-faint);letter-spacing:.4px}
+.mods{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:48px}
+.mod{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:26px 24px;cursor:pointer;transition:.22s;overflow:hidden;box-shadow:var(--shadow)}
+.mod:hover{transform:translateY(-4px);border-color:var(--c);box-shadow:0 12px 30px -16px var(--c)}
+.mod::before{content:"";position:absolute;inset:0 auto 0 0;width:4px;background:var(--c)}
+.mod .ico{width:46px;height:46px;border-radius:12px;display:grid;place-items:center;background:color-mix(in srgb,var(--c) 14%,#fff);margin-bottom:18px}
+.mod h3{font-family:var(--disp);font-weight:600;font-size:19px;margin-bottom:6px}
+.mod p{font-size:13.5px;color:var(--txt-dim);line-height:1.5}
+.mod .tags{margin-top:16px;display:flex;flex-wrap:wrap;gap:6px}
+.tag{font-family:var(--mono);font-size:10.5px;letter-spacing:.5px;color:var(--txt-dim);border:1px solid var(--line);padding:3px 8px;border-radius:6px}
+.subtabs{display:flex;gap:0;flex-wrap:wrap;margin:30px 0 34px;border-bottom:1px solid var(--line)}
+.subtabs button{font-family:var(--body);font-weight:600;font-size:14px;color:var(--txt-dim);background:none;border:0;border-bottom:2px solid transparent;padding:11px 4px;margin-right:20px;cursor:pointer;transition:.18s}
+.subtabs button:hover{color:var(--txt)}
+.subtabs button.active{color:var(--txt);border-color:var(--accent)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:22px;align-items:start}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:24px;box-shadow:var(--shadow)}
+.card h4{font-family:var(--disp);font-weight:600;font-size:17px;margin-bottom:4px}
+.card .hint{font-size:12.5px;color:var(--txt-faint);margin-bottom:18px}
+.grphead{font-family:var(--mono);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);margin:22px 0 4px;font-weight:600}
+.grphead:first-child{margin-top:0}
+.crit{display:flex;gap:14px;align-items:flex-start;padding:11px 0;border-bottom:1px solid var(--line-soft);cursor:pointer}
+.crit:last-child{border-bottom:0}
+.crit input{display:none}
+.crit .box{flex:none;width:22px;height:22px;border-radius:6px;border:1.5px solid var(--line);display:grid;place-items:center;transition:.15s;margin-top:1px}
+.crit input:checked + .box{background:var(--accent);border-color:var(--accent)}
+.crit input:checked + .box svg{opacity:1}
+.crit .box svg{opacity:0;transition:.15s}
+.crit .pts{font-family:var(--mono);font-size:13px;font-weight:600;color:var(--accent);min-width:30px}
+.crit .lbl b{font-size:14px;font-weight:600;display:block}
+.crit .lbl span{font-size:12.5px;color:var(--txt-dim)}
+.crit:hover .box{border-color:var(--accent)}
+.readout{background:var(--surface-2);border:1px solid var(--line);border-radius:var(--r);padding:24px;position:sticky;top:84px;box-shadow:var(--shadow)}
+.score-big{font-family:var(--mono);font-weight:600;font-size:64px;line-height:1;letter-spacing:-2px;color:var(--txt)}
+.score-big small{font-size:22px;color:var(--txt-faint)}
+.gauge{height:10px;border-radius:99px;background:var(--line-soft);overflow:hidden;margin:18px 0}
+.gauge i{display:block;height:100%;border-radius:99px;transition:width .4s ease,background .3s}
+.verdict{border-radius:var(--r-sm);padding:14px 16px;font-size:14px;margin-top:8px;border:1px solid var(--line);color:var(--txt)}
+.verdict b{display:block;font-size:15px;margin-bottom:3px}
+.field{margin-bottom:18px}
+.field label{display:block;font-size:12.5px;color:var(--txt-dim);margin-bottom:7px;font-weight:500}
+input[type=range]{width:100%;accent-color:var(--accent);height:4px}
+select,input[type=number],input[type=text]{width:100%;background:var(--bg);border:1px solid var(--line);color:var(--txt);border-radius:var(--r-sm);padding:11px 13px;font-family:var(--body);font-size:14px}
+select:focus,input:focus{outline:none;border-color:var(--accent)}
+.rangeval{font-family:var(--mono);font-size:13px;color:var(--accent);float:right}
+.seg{display:flex;gap:6px;flex-wrap:wrap}
+.seg button{flex:1;min-width:fit-content;background:var(--bg);border:1px solid var(--line);color:var(--txt-dim);padding:9px 12px;border-radius:var(--r-sm);font-family:var(--body);font-size:13px;font-weight:500;cursor:pointer;transition:.15s}
+.seg button.on{background:var(--accent);border-color:var(--accent);color:#fff}
+.metrics{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:16px 0}
+.metric{background:var(--bg-2);border:1px solid var(--line-soft);border-radius:var(--r-sm);padding:13px}
+.metric span{font-size:11px;color:var(--txt-faint);display:block}
+.metric b{font-family:var(--mono);font-size:21px;font-weight:600}
+table{width:100%;border-collapse:collapse;font-size:13px;margin-top:8px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line-soft)}
+th{font-family:var(--mono);font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--txt-faint);font-weight:500}
+td b{color:var(--txt)}
+.pill{display:inline-block;font-family:var(--mono);font-size:11px;padding:2px 8px;border-radius:6px;font-weight:600}
+.pill.g{background:#e7f4e6;color:var(--green-ink)}
+.pill.a{background:#fdf0db;color:var(--amber-ink)}
+.pill.r{background:#fbe3e7;color:var(--danger-ink)}
+.pill.b{background:#e0f3f8;color:var(--teal-ink)}
+.pill.m{background:#f3e3f2;color:var(--magenta-ink)}
+.note{font-size:12px;color:var(--txt-faint);margin-top:16px;line-height:1.6}
+.ref{font-family:var(--mono);font-size:11.5px;color:var(--txt-faint);margin-top:18px;padding-top:14px;border-top:1px solid var(--line-soft)}
+.disclaim{background:#fdf6ea;border:1px solid #f5e0bd;border-radius:var(--r-sm);padding:14px 16px;font-size:13px;color:var(--txt-dim);margin-bottom:24px;display:flex;gap:12px}
+.disclaim svg{flex:none;color:var(--amber-ink)}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px}
+.toolbar input,.toolbar select{width:auto;flex:1;min-width:160px}
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow)}
+.tablewrap table{margin:0}
+.tablewrap th{background:var(--bg-2);position:sticky;top:0}
+.empty{text-align:center;padding:40px;color:var(--txt-faint)}
+.catfilter{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:26px}
+.catfilter button{background:var(--surface);border:1px solid var(--line);color:var(--txt-dim);padding:8px 15px;border-radius:999px;font-size:13px;font-weight:500;cursor:pointer;transition:.15s}
+.catfilter button.on{background:var(--accent);border-color:var(--accent);color:#fff}
+.devgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.dev{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:22px;display:flex;flex-direction:column;transition:.2s;box-shadow:var(--shadow)}
+.dev:hover{border-color:var(--c);transform:translateY(-3px)}
+.dev .line{font-family:var(--mono);font-size:11px;letter-spacing:1px;color:var(--c);text-transform:uppercase;margin-bottom:10px}
+.dev h4{font-family:var(--disp);font-size:20px;font-weight:600;margin-bottom:3px}
+.dev .sub{font-size:12.5px;color:var(--txt-faint);margin-bottom:14px}
+.dev p{font-size:13px;color:var(--txt-dim);line-height:1.55;flex:1}
+.dev dl{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;margin-top:14px;font-size:12px}
+.dev dt{color:var(--txt-faint)}
+.dev dd{color:var(--txt);text-align:right;font-weight:500}
+.dev .uses{margin-top:14px;display:flex;flex-wrap:wrap;gap:6px}
+.dev .badge{font-size:10.5px;background:var(--bg-2);border:1px solid var(--line-soft);color:var(--txt-dim);padding:3px 8px;border-radius:6px}
+footer{border-top:1px solid var(--line);padding:40px 0 60px;color:var(--txt-faint);font-size:12.5px;line-height:1.7}
+footer .ft-top{display:flex;justify-content:space-between;gap:30px;flex-wrap:wrap;margin-bottom:24px}
+footer b{color:var(--txt-dim)}
+@media(max-width:920px){.mods,.devgrid{grid-template-columns:1fr 1fr}.grid2{grid-template-columns:1fr}.readout{position:static}}
+@media(max-width:680px){.nav-links{display:none;position:absolute;top:66px;left:0;right:0;flex-direction:column;background:var(--surface);border-bottom:1px solid var(--line);padding:10px}.nav-links.open{display:flex}.menu-btn{display:grid;place-items:center}.mods,.devgrid{grid-template-columns:1fr}.metrics{grid-template-columns:1fr 1fr}}
+
+/* ============ Android / Material 3 shell ============ */
+body{background:#e7ebf3;font-family:"Roboto","Inter",system-ui,sans-serif}
+.app{max-width:480px;margin:0 auto;min-height:100vh;background:#fff;position:relative;box-shadow:0 0 50px rgba(20,33,63,.10);overflow-x:hidden}
+.spectrum{position:fixed;top:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;z-index:60}
+.appbar{position:fixed;top:4px;left:50%;transform:translateX(-50%);width:100%;max-width:480px;height:56px;display:flex;align-items:center;gap:2px;padding:0 6px;background:rgba(255,255,255,.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);z-index:55}
+.appbar .iconbtn{width:44px;height:44px;border:0;background:none;border-radius:50%;display:grid;place-items:center;color:var(--txt);cursor:pointer}
+.appbar .iconbtn svg{width:24px;height:24px}
+.appbar-title{font-size:20px;font-weight:600;letter-spacing:.1px;flex:1;padding-left:8px;color:var(--royal-ink);font-family:"Roboto","Space Grotesk",sans-serif}
+.appbar .iconbtn[hidden]{display:none}
+.content{padding:60px 0 86px}
+.screen{display:none;padding:16px 16px 8px;animation:mfade .28s ease}
+.screen.active{display:block}
+@keyframes mfade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.screen .eyebrow{margin-bottom:8px}.screen h2.sec{font-size:22px;margin-bottom:2px}.screen .lead{font-size:14.5px;margin-top:8px}
+.grid2{display:flex;flex-direction:column;gap:14px}
+.readout{order:-1;position:sticky;top:60px;z-index:5}
+.card,.readout,.dev,.tablewrap{border-radius:18px}
+.devgrid{grid-template-columns:1fr}
+/* segmented buttons (tonal selection) */
+.seg button{background:#fff}
+.seg button.on{background:#dde6fb;color:var(--royal-ink);border-color:#bcd0f5}
+/* bottom navigation */
+.bottomnav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;height:74px;display:flex;background:rgba(255,255,255,.98);backdrop-filter:blur(12px);border-top:1px solid var(--line);z-index:55;padding:8px 6px 10px}
+.navitem{flex:1;border:0;background:none;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;color:var(--txt-faint);font-family:inherit;font-size:11.5px;font-weight:500;padding:0}
+.navitem .pill{width:62px;height:32px;border-radius:16px;display:grid;place-items:center;transition:background .18s}
+.navitem.active .pill{background:#dde6fb}
+.navitem.active{color:var(--royal-ink)}
+.navitem svg{width:24px;height:24px;stroke:currentColor;fill:none}
+/* home */
+.logobanner{background:#fff;border:1px solid var(--line);border-radius:18px;padding:16px;display:flex;justify-content:center;box-shadow:var(--shadow);margin-bottom:12px}
+.logobanner img{width:100%;max-width:240px;height:auto;display:block}
+.barlogo{height:26px;width:auto;display:block}
+.greet{background:linear-gradient(135deg,#24459a,#16a3c4);color:#fff;border-radius:22px;padding:22px 20px}
+.greet h1{font-size:22px;font-weight:700;line-height:1.22;font-family:"Roboto","Space Grotesk",sans-serif}
+.greet p{font-size:13.5px;opacity:.92;margin-top:8px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+.chip{background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.3);color:#fff;border-radius:999px;padding:5px 12px;font-size:12px;font-weight:500;font-family:var(--mono)}
+.install{display:none;align-items:center;gap:6px;background:#fff;color:var(--royal-ink);border:0;border-radius:999px;padding:9px 16px;font-weight:600;font-size:13px;margin-top:16px;cursor:pointer;font-family:inherit}
+.sectlabel{font-family:var(--mono);font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--txt-faint);margin:22px 4px 12px;font-weight:600}
+.qgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.qcard{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:16px;cursor:pointer;box-shadow:var(--shadow);transition:transform .12s}
+.qcard:active{transform:scale(.97)}
+.qcard .qi{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;margin-bottom:12px}
+.qcard .qi svg{width:22px;height:22px}
+.qcard h3{font-size:14.5px;font-weight:600;margin-bottom:3px}
+.qcard p{font-size:11.5px;color:var(--txt-dim);line-height:1.4}
+.widecard{display:flex;align-items:center;gap:14px;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:16px;cursor:pointer;box-shadow:var(--shadow);margin-top:12px;transition:transform .12s}
+.widecard:active{transform:scale(.99)}
+.widecard .qi{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;flex:none}
+.widecard .qi svg{width:24px;height:24px}
+.widecard h3{font-size:15.5px;font-weight:600}
+.widecard p{font-size:12.5px;color:var(--txt-dim)}
+.widecard .chev{margin-left:auto;color:var(--txt-faint)}
+.widecard .chev svg{width:22px;height:22px}
+/* calc list */
+.listrow{display:flex;align-items:center;gap:14px;padding:13px 8px;cursor:pointer;transition:background .12s;border-radius:14px}
+.listrow:active{background:var(--bg-2)}
+.listrow + .listrow{border-top:1px solid var(--line-soft)}
+.listrow .li{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;flex:none}
+.listrow .li svg{width:22px;height:22px}
+.listrow .lt b{font-size:15px;font-weight:600;display:block}
+.listrow .lt span{font-size:12.5px;color:var(--txt-dim)}
+.listrow .chev{margin-left:auto;color:var(--txt-faint)}
+.listrow .chev svg{width:20px;height:20px}
+.ctab{padding-top:2px}
+.appfoot{padding:22px 8px 4px;color:var(--txt-faint);font-size:11px;line-height:1.65;text-align:center}
+/* ripple */
+.ripple{position:relative;overflow:hidden}
+.rip{position:absolute;border-radius:50%;background:currentColor;opacity:.15;transform:scale(0);animation:rip .5s ease-out;pointer-events:none}
+@keyframes rip{to{transform:scale(2.4);opacity:0}}
+
+.sheet-scrim{position:fixed;inset:0;background:rgba(10,16,36,.4);opacity:0;visibility:hidden;transition:.2s;z-index:70}
+.sheet-scrim.on{opacity:1;visibility:visible}
+.sheet{position:fixed;left:50%;transform:translateX(-50%) translateY(100%);bottom:0;width:100%;max-width:480px;background:#fff;border-radius:22px 22px 0 0;z-index:71;padding:8px 8px 26px;transition:transform .25s ease;box-shadow:0 -10px 40px rgba(20,33,63,.2)}
+.sheet.on{transform:translateX(-50%) translateY(0)}
+.sheet-h{font-family:var(--mono);font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--txt-faint);padding:12px;font-weight:600}
+.langrow{display:flex;align-items:center;gap:12px;padding:14px;border-radius:14px;cursor:pointer;position:relative;overflow:hidden}
+.langrow:active{background:var(--bg-2)}
+.langrow .nm{font-size:15px;font-weight:500}
+.langrow .ck{margin-left:auto;color:var(--royal-ink);opacity:0;display:flex}
+.langrow.on .ck{opacity:1}
+.langrow.on{background:#f0f4fb}
+.langrow .ck svg{width:20px;height:20px}
+</style>
+</head>
+<body>
+<div class="app">
+<div class="spectrum"></div>
+<header class="appbar">
+  <button class="iconbtn ripple" id="backBtn" hidden onclick="history.back()" aria-label="Atrás"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button>
+  <div class="appbar-title" id="appTitle"><img class="barlogo" src="ebime-logo.png" alt="EBIME"></div>
+  <button class="iconbtn ripple" id="langBtn" aria-label="Idioma" onclick="openLang()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.5 2.5 4 5.7 4 9s-1.5 6.5-4 9c-2.5-2.5-4-5.7-4-9s1.5-6.5 4-9z"/></svg></button>
+</header>
+<div class="content">
+
+<!-- HOME -->
+<div class="screen active" id="s-home">
+  <div class="logobanner"><img src="ebime-logo.png" alt="EBIME"></div>
+  <div class="greet">
+    <h1 data-i18n="home_h1">Plataforma clínica de acceso vascular</h1>
+    <p data-i18n="home_tagline">Valoración, decisión farmacológica y dispositivos EBIME en un solo lugar.</p>
+    <div class="chips"><span class="chip" data-i18n="chip1">7 calculadoras</span><span class="chip" data-i18n="chip2">20+ fármacos</span><span class="chip" data-i18n="chip3">11 dispositivos</span></div>
+    <button class="install ripple" id="installBtn">&#10515;&nbsp;<span data-i18n="install">Instalar app</span></button>
+  </div>
+  <div class="sectlabel" data-i18n="sec_calc">Calculadoras clínicas</div>
+  <div class="qgrid" id="homeCalcs"></div>
+  <div class="sectlabel" data-i18n="sec_more">Más herramientas</div>
+  <div class="widecard ripple" onclick="showScreen('pharma')">
+    <div class="qi" style="background:color-mix(in srgb,var(--green) 14%,#fff)"><svg viewBox="0 0 24 24" fill="none" stroke="#54b24c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2v7.5L4.5 18a3 3 0 0 0 2.6 4.5h9.8A3 3 0 0 0 19.5 18L14 9.5V2M8 2h8M7 14h10"/></svg></div>
+    <div><h3 data-i18n="pharma_t">Motor farmacológico</h3><p data-i18n="pharma_p">pH · osmolaridad · vía recomendada</p></div>
+    <div class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></div>
+  </div>
+  <div class="widecard ripple" onclick="showScreen('catalog')">
+    <div class="qi" style="background:color-mix(in srgb,var(--magenta) 14%,#fff)"><svg viewBox="0 0 24 24" fill="none" stroke="#902d8e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>
+    <div><h3 data-i18n="catalog_t">Catálogo EBIME</h3><p data-i18n="catalog_p">11 dispositivos por familia clínica</p></div>
+    <div class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></div>
+  </div>
+  <div class="appfoot" data-i18n="home_foot">© 2026 Diego Orlando Ríos Guarín · Uso educativo y clínico-operativo.</div>
+</div>
+
+<!-- CALC -->
+<div class="screen" id="s-calc">
+  <div id="calcList">
+    <div class="sectlabel" data-i18n="calc_list_label">7 herramientas de valoración</div>
+    <div id="calcListBody"></div>
+  </div>
+  <div id="calcDetail" style="display:none">
+<div class="ctab" id="t-diva" style="--accent:var(--magenta)">
+      <div class="grid2">
+        <div class="card"><h4 data-i18n="diva_title">DIVA — pediátrica (Yen 2008)</h4><p class="hint" data-i18n="diva_hint">Escala de 4 variables ponderadas para predecir fallo de canalización periférica en niños. Corte ≥ 4.</p>
+          <div class="field"><label data-i18n="diva_age">Edad del paciente</label><div class="seg" id="dvAge"><button data-v="3" data-i18n="age_lt1">&lt; 1 año</button><button data-v="1" data-i18n="age_12">1–2 años</button><button data-v="0" class="on" data-i18n="age_gt2">&gt; 2 años</button></div></div>
+          <div id="divaList"></div>
+        </div>
+        <div class="readout">
+          <div class="eyebrow" style="--accent:var(--magenta);margin-bottom:10px"><span data-i18n="result">Resultado</span> DIVA</div>
+          <div class="score-big"><span id="dvScore">0</span><small> / 10</small></div>
+          <div class="gauge"><i id="dvGauge" style="width:0%;background:var(--green)"></i></div>
+          <div class="verdict" id="dvVerdict"></div>
+          <div class="ref" data-i18n="diva_ref">Corte ≥ 4 → > 50% de fallo en el primer intento. Yen K et al. Pediatr Emerg Care. 2008;24(3):143–147.</div>
+        </div>
+      </div>
+    </div><div class="ctab" id="t-adiva" style="--accent:var(--magenta);display:none">
+      <div class="grid2">
+        <div class="card"><h4 data-i18n="adiva_title">A-DIVA modificada (van Loon 2019)</h4><p class="hint" data-i18n="adiva_hint">Escala aditiva de 5 variables binarias (1 punto c/u) para riesgo de acceso venoso difícil en adultos.</p>
+          <div id="adivaList"></div>
+        </div>
+        <div class="readout">
+          <div class="eyebrow" style="--accent:var(--magenta);margin-bottom:10px"><span data-i18n="result">Resultado</span> A-DIVA</div>
+          <div class="score-big"><span id="adScore">0</span><small> / 5</small></div>
+          <div class="gauge"><i id="adGauge" style="width:0%;background:var(--green)"></i></div>
+          <div class="verdict" id="adVerdict"></div>
+          <table style="margin-top:16px"><tr><td><span class="pill g">0–1</span></td><td data-i18n="adiva_t_low">Bajo · ~5% fallo</td></tr><tr><td><span class="pill a">2–3</span></td><td data-i18n="adiva_t_mod">Moderado · ~37% fallo</td></tr><tr><td><span class="pill r">4–5</span></td><td data-i18n="adiva_t_high">Alto · ~93% fallo</td></tr></table>
+          <div class="ref" data-i18n="adiva_ref">van Loon FHJ et al. J Clin Med. 2019;8(2):144 (escala A-DIVA modificada).</div>
+        </div>
+      </div>
+    </div><div class="ctab" id="t-eadiva" style="--accent:var(--magenta);display:none">
+      <div class="grid2">
+        <div class="card"><h4 data-i18n="eadiva_title">EA-DIVA (Civetta 2019)</h4><p class="hint" data-i18n="eadiva_hint">Escala de 8 ítems ponderados para riesgo de acceso venoso periférico difícil en adultos. Corte > 8.</p><div id="eadivaList"></div></div>
+        <div class="readout">
+          <div class="eyebrow" style="--accent:var(--magenta);margin-bottom:10px"><span data-i18n="result">Resultado</span> EA-DIVA</div>
+          <div class="score-big"><span id="eaScore">0</span><small> / 12</small></div>
+          <div class="gauge"><i id="eaGauge" style="width:0%;background:var(--green)"></i></div>
+          <div class="verdict" id="eaVerdict"></div>
+          <div class="ref" data-i18n="eadiva_ref">Corte > 8 → ultrasonido inmediato. Civetta G et al. J Vasc Access. 2019;20(3):281–289.</div>
+        </div>
+      </div>
+    </div><div class="ctab" id="t-cvr" style="--accent:var(--teal);display:none">
+      <div class="grid2">
+        <div class="card"><h4 data-i18n="cvr_title">Ratio catéter/vena (por diámetro)</h4><p class="hint" data-i18n="cvr_hint">CVR = diámetro externo del catéter ÷ diámetro de la vena × 100. Mide la vena con ultrasonido sin torniquete. OD del catéter = French ÷ 3 mm.</p>
+          <div class="field"><label><span data-i18n="cvr_vein">Diámetro interno de la vena</span> <span class="rangeval" id="veinVal">4.0 mm</span></label><input type="range" id="veinD" min="1.5" max="12" step="0.1" value="4"></div>
+          <div class="field"><label data-i18n="cvr_cath">Tamaño del catéter</label><select id="frSel"></select></div>
+          <div class="metrics"><div class="metric"><span data-i18n="cvr_m_od">OD catéter</span><b id="odVal">–</b></div><div class="metric"><span data-i18n="cvr_m_d">Diámetro vena</span><b id="dVal">–</b></div><div class="metric"><span data-i18n="cvr_m_cvr">CVR · ocupación</span><b id="cvrVal">–</b></div></div>
+          <div class="note" data-i18n="cvr_note">El CVR se calcula por diámetro (OD ÷ vena). Los cortes 33% y 45% son por diámetro, no por área (45% diámetro ≈ 20% área); no mezclar escalas.</div>
+        </div>
+        <div class="readout">
+          <div class="eyebrow" style="--accent:var(--teal);margin-bottom:10px" data-i18n="cvr_zone">Zona de riesgo</div>
+          <div class="score-big" id="cvrBig" style="font-size:48px">–</div>
+          <div class="gauge"><i id="cvrGauge" style="width:0%"></i></div>
+          <div class="verdict" id="cvrVerdict"></div>
+          <table style="margin-top:18px"><tr><td><span class="pill g" data-i18n="cvr_z_opt">Óptima</span></td><td data-i18n="cvr_z_opt_d">CVR ≤ 33% — ideal</td></tr><tr><td><span class="pill a" data-i18n="cvr_z_acc">Aceptable</span></td><td data-i18n="cvr_z_acc_d">34–45% — límite recomendado</td></tr><tr><td><span class="pill r" data-i18n="cvr_z_no">No recomendada</span></td><td data-i18n="cvr_z_no_d">&gt; 45% — &gt; 2× riesgo de trombosis</td></tr></table>
+          <div class="ref" data-i18n="cvr_ref">Cortes por diámetro. Spencer &amp; Mahoney 2017 · Sharp R et al. 2021.</div>
+        </div>
+      </div>
+    </div><div class="ctab" id="t-magic" style="--accent:var(--royal);display:none">
+      <div class="grid2">
+        <div class="card"><h4>Selección de dispositivo</h4><p class="hint">Michigan Appropriateness Guide for Intravenous Catheters. Responde según el escenario clínico.</p>
+          <div class="field"><label>Duración prevista de la terapia</label><div class="seg" id="mgDur"><button data-v="0" class="on">≤5 días</button><button data-v="1">6–14 d</button><button data-v="2">15–30 d</button><button data-v="3">≥31 d</button></div></div>
+          <div class="field"><label>Tipo de infusado</label><div class="seg" id="mgInf"><button data-v="periph" class="on">Periféricamente compatible</button><button data-v="central">Irritante / vesicante</button></div></div>
+          <div class="field"><label>Acceso venoso difícil (DIVA/A-DIVA alto)</label><div class="seg" id="mgDiff"><button data-v="no" class="on">No</button><button data-v="si">Sí</button></div></div>
+          <div class="field"><label>Paciente crítico hemodinámicamente inestable</label><div class="seg" id="mgCrit"><button data-v="no" class="on">No</button><button data-v="si">Sí</button></div></div>
+          <div class="field"><label>ERC avanzada (≥3b) — preservar capital venoso</label><div class="seg" id="mgCkd"><button data-v="no" class="on">No</button><button data-v="si">Sí</button></div></div>
+          <div class="field" style="margin-bottom:0"><label>Necesidad de múltiples lúmenes</label><div class="seg" id="mgLum"><button data-v="no" class="on">Un lumen basta</button><button data-v="si">Varios lúmenes</button></div></div>
+        </div>
+        <div class="readout">
+          <div class="eyebrow" style="--accent:var(--royal);margin-bottom:10px">Recomendación</div>
+          <div class="score-big" id="mgDevice" style="font-size:30px;font-family:var(--disp);letter-spacing:-.5px">Catéter periférico</div>
+          <div class="verdict" id="mgRationale" style="margin-top:16px"></div>
+          <div class="ref">Reevaluar la indicación a diario; retirar el dispositivo cuando ya no sea necesario. Chopra V et al. (MAGIC), Ann Intern Med. 2015.</div>
+        </div>
+      </div>
+    </div><div class="ctab" id="t-maddox" style="--accent:var(--amber);display:none">
+      <div class="grid2">
+        <div class="card"><h4 data-i18n="maddox_title">Grado observado</h4><p class="hint" data-i18n="maddox_hint">Selecciona el grado de flebitis en el sitio de inserción del catéter periférico.</p>
+          <div class="field" style="margin-bottom:0"><label data-i18n="maddox_label">Grado de Maddox</label><select id="mxSel">
+            <option value="0" data-i18n="mx_o0">0 — Sin signos de flebitis</option><option value="1" data-i18n="mx_o1">1 — Flebitis leve</option><option value="2" data-i18n="mx_o2">2 — Flebitis temprana establecida</option><option value="3" data-i18n="mx_o3">3 — Flebitis moderada</option><option value="4" data-i18n="mx_o4">4 — Flebitis avanzada / tromboflebitis</option><option value="5" data-i18n="mx_o5">5 — Complicación severa</option></select></div>
+          <table style="margin-top:22px"><thead><tr><th data-i18n="mx_th_g">Grado</th><th data-i18n="mx_th_r">Lectura</th><th data-i18n="mx_th_c">Conducta</th></tr></thead><tbody>
+            <tr><td><b>0</b></td><td data-i18n="mx_b0_r">Sitio normal</td><td data-i18n="mx_b0_c">Vigilancia rutinaria</td></tr><tr><td><b>1</b></td><td data-i18n="mx_b1_r">Irritación inicial</td><td data-i18n="mx_b1_c">Revalorar fijación</td></tr><tr><td><b>2</b></td><td data-i18n="mx_b2_r">Flebitis temprana</td><td data-i18n="mx_b2_c">Considerar retiro</td></tr><tr><td><b>3</b></td><td data-i18n="mx_b3_r">Flebitis moderada</td><td data-i18n="mx_b3_c">Retirar y documentar</td></tr><tr><td><b>4–5</b></td><td data-i18n="mx_b4_r">Complicación</td><td data-i18n="mx_b4_c">Retirar y escalar</td></tr></tbody></table>
+        </div>
+        <div class="readout">
+          <div class="eyebrow" style="--accent:var(--amber);margin-bottom:10px" data-i18n="maddox_score">Puntaje actual</div>
+          <div class="score-big" id="mxScore">0</div>
+          <div class="gauge"><i id="mxGauge" style="width:0%;background:var(--green)"></i></div>
+          <div class="verdict" id="mxVerdict"></div>
+          <div class="ref" data-i18n="maddox_ref">Maddox RR et al. — escala observacional de flebitis IV.</div>
+        </div>
+      </div>
+    </div><div class="ctab" id="t-caprini" style="--accent:var(--green);display:none">
+      <div class="grid2">
+        <div class="card"><h4>Caprini adaptado a acceso vascular</h4><p class="hint">Puntaje Caprini 2005 (validado) + capa de interpretación para selección de dispositivo y riesgo de trombosis asociada a catéter. La edad es excluyente.</p>
+          <div class="field"><label>Edad</label><div class="seg" id="cpAge"><button data-v="0" class="on">&lt; 41</button><button data-v="1">41–60</button><button data-v="2">61–74</button><button data-v="3">≥ 75</button></div></div>
+          <div id="capriniList"></div>
+          <div class="grphead" style="--accent:var(--danger)">Modificadores de acceso vascular (no puntúan)</div>
+          <div id="cpMods" style="--accent:var(--danger)"></div>
+        </div>
+        <div class="readout">
+          <div class="eyebrow" style="--accent:var(--green);margin-bottom:10px">Resultado Caprini</div>
+          <div class="score-big" id="cpScore">0</div>
+          <div class="gauge"><i id="cpGauge" style="width:0%;background:var(--green)"></i></div>
+          <div class="verdict" id="cpVerdict"></div>
+          <div class="verdict" id="cpVascular"></div>
+          <div id="cpModAlert"></div>
+          <table style="margin-top:16px"><tr><td><span class="pill g">0</span></td><td>Muy bajo · ~0.5%</td></tr><tr><td><span class="pill g">1–2</span></td><td>Bajo · ~1.5%</td></tr><tr><td><span class="pill a">3–4</span></td><td>Moderado · ~3%</td></tr><tr><td><span class="pill r">≥5</span></td><td>Alto · ~6%</td></tr></table>
+          <div class="ref">Puntaje Caprini validado (2005); la interpretación para acceso vascular es una adaptación operativa basada en factores de trombosis asociada a catéter (CRT). Valorar siempre el riesgo hemorrágico antes de la tromboprofilaxis. Caprini JA. Dis Mon. 2005;51(2-3):70–78.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PHARMA -->
+<div class="screen" id="s-pharma">
+
+    <div class="eyebrow" style="--accent:var(--green)">Motor farmacológico</div>
+    <h2 class="sec">pH · Osmolaridad · Compatibilidad IV</h2>
+    <p class="lead" style="margin-bottom:26px">Referencia de pH, osmolaridad, potencial vesicante/irritante y vía recomendada. Solo uso educativo.</p>
+    <div class="disclaim"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg><span>Referencia informativa basada en literatura farmacéutica. Los valores de pH y osmolaridad varían según marca y concentración. Consulta siempre la ficha técnica, al farmacéutico clínico y los protocolos institucionales. <b>No sustituye el juicio clínico.</b></span></div>
+    <div class="grid2" style="margin-bottom:30px">
+      <div class="card"><h4>Calculadora de riesgo periférico</h4><p class="hint">Límites ERPIUP 2021 / INS 2024: pH 5–9 y osmolaridad &lt; 600 mOsm/L para vía periférica.</p>
+        <div class="field"><label>pH del infusado <span class="rangeval" id="phVal">7.0</span></label><input type="range" id="phR" min="1" max="13" step="0.1" value="7"></div>
+        <div class="field" style="margin-bottom:0"><label>Osmolaridad estimada <span class="rangeval" id="osVal">300 mOsm/L</span></label><input type="range" id="osR" min="200" max="1500" step="10" value="300"></div>
+      </div>
+      <div class="readout" style="position:static">
+        <div class="eyebrow" style="--accent:var(--green);margin-bottom:10px">Compatibilidad de vía</div>
+        <div class="verdict" id="phVerdict" style="margin-top:0"></div><div class="verdict" id="osVerdict"></div><div class="verdict" id="routeVerdict" style="font-weight:600"></div>
+      </div>
+    </div>
+    <div class="toolbar">
+      <input type="text" id="drugSearch" placeholder="Buscar fármaco…" oninput="renderDrugs()">
+      <select id="fType" onchange="renderDrugs()"><option value="">Todos los tipos</option><option value="Vesicante">Vesicante</option><option value="Irritante">Irritante</option><option value="No vesicante">No vesicante</option></select>
+      <select id="fRoute" onchange="renderDrugs()"><option value="">Toda vía</option><option value="Central">Central preferida</option><option value="Periférica">Periférica aceptable</option></select>
+    </div>
+    <div class="tablewrap"><table><thead><tr><th>Medicamento</th><th>Tipo</th><th>pH</th><th>Osmolaridad</th><th>Vía</th><th>Cuidado clave</th></tr></thead><tbody id="drugBody"></tbody></table></div>
+    <div class="ref">Fuentes: Trissel's Handbook on Injectable Drugs · Gahart's IV Medications · Micromedex · ERPIUP 2021 · INS Standards 2024. Conjunto representativo con fines docentes.</div>
+  
+</div>
+
+<!-- CATALOG -->
+<div class="screen" id="s-catalog">
+
+    <div class="eyebrow" style="--accent:var(--magenta)">Catálogo de dispositivos</div>
+    <h2 class="sec">EBIME® — Equipos de Biomedicina de México</h2>
+    <p class="lead" style="margin-bottom:26px">Empresa 100% mexicana con más de 30 años de innovación en catéteres y accesos vasculares. Líneas por familia clínica.</p>
+    <div class="catfilter" id="catFilter"></div>
+    <div class="devgrid" id="devGrid"></div>
+    <div class="ref">Información educativa y de referencia. Para claves de catálogo, especificaciones completas y disponibilidad: ep.andina@ebime.co · (+57) 316 615 5248 · ebime.com.mx</div>
+  
+</div>
+
+</div><!-- /content -->
+
+<nav class="bottomnav">
+  <button class="navitem active ripple" data-s="home" onclick="showScreen('home')"><span class="pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8M5 10v10h14V10"/></svg></span><span data-i18n="nav_home">Inicio</span></button>
+  <button class="navitem ripple" data-s="calc" onclick="showScreen('calc')"><span class="pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 7h8M8 11h.01M12 11h.01M16 11h.01M8 15h.01M12 15h.01M16 15h.01"/></svg></span><span data-i18n="nav_calc">Cálculos</span></button>
+  <button class="navitem ripple" data-s="pharma" onclick="showScreen('pharma')"><span class="pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2v7.5L4.5 18a3 3 0 0 0 2.6 4.5h9.8A3 3 0 0 0 19.5 18L14 9.5V2M8 2h8M7 14h10"/></svg></span><span data-i18n="nav_pharma">Fármacos</span></button>
+  <button class="navitem ripple" data-s="catalog" onclick="showScreen('catalog')"><span class="pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></span><span data-i18n="nav_catalog">Catálogo</span></button>
+</nav>
+<div class="sheet-scrim" id="langScrim" onclick="closeLang()"></div>
+<div class="sheet" id="langSheet"><div class="sheet-h" data-i18n="lang_label">Idioma</div><div id="langList"></div></div>
+</div><!-- /app -->
+
+<script>
+const I18N={"es":{"nav_home":"Inicio","nav_calc":"Cálculos","nav_pharma":"Fármacos","nav_catalog":"Catálogo","t_calc":"Calculadoras","t_pharma":"Motor farmacológico","t_catalog":"Catálogo EBIME","lang_label":"Idioma","install":"Instalar app","calc_list_label":"7 herramientas de valoración","home_tagline":"Valoración, decisión farmacológica y dispositivos EBIME en un solo lugar.","chip1":"7 calculadoras","chip2":"20+ fármacos","chip3":"11 dispositivos","sec_calc":"Calculadoras clínicas","sec_more":"Más herramientas","pharma_t":"Motor farmacológico","pharma_p":"pH · osmolaridad · vía recomendada","catalog_t":"Catálogo EBIME","catalog_p":"11 dispositivos por familia clínica","home_foot":"© 2026 Diego Orlando Ríos Guarín · Uso educativo y clínico-operativo. Escalas reconocidas a sus autores: Yen, van Loon, Civetta, Spencer & Mahoney, Chopra, Maddox y Caprini.","diva_n":"DIVA pediátrica","diva_s":"Acceso difícil en niños","adiva_n":"A-DIVA","adiva_s":"Acceso difícil en adultos","eadiva_n":"EA-DIVA","eadiva_s":"Acceso difícil · 8 ítems","cvr_n":"Ratio catéter/vena","cvr_s":"Riesgo de trombosis (CVR)","magic_n":"MAGIC","magic_s":"Selección de dispositivo","maddox_n":"Escala de Maddox","maddox_s":"Flebitis periférica 0–5","caprini_n":"Caprini · Acceso vascular","caprini_s":"Riesgo de TEV / trombosis CRT","risk_low":"Riesgo bajo","risk_mid":"Riesgo intermedio","risk_mod":"Riesgo moderado","risk_high":"Riesgo alto","result":"Resultado","yes":"Sí","no":"No","diva_title":"DIVA — pediátrica (Yen 2008)","diva_hint":"Escala de 4 variables para predecir fallo de canalización periférica en niños. Corte ≥ 4.","diva_age":"Edad del paciente","age_lt1":"< 1 año","age_12":"1–2 años","age_gt2":"> 2 años","diva_ref":"Corte ≥ 4 → > 50% de fallo en el primer intento. Yen K et al. Pediatr Emerg Care. 2008;24(3):143–147.","diva_v_low":"Puntaje < 4: canalización convencional con buena probabilidad de éxito al primer intento.","diva_v_high":"Puntaje ≥ 4: > 50% de fallo en el primer intento. Usar ecoguía, transiluminador u operador experto desde el inicio.","adiva_title":"A-DIVA modificada (van Loon 2019)","adiva_hint":"5 variables binarias (1 punto c/u) para riesgo de acceso venoso difícil en adultos.","adiva_t_low":"Bajo · ~5% fallo","adiva_t_mod":"Moderado · ~37% fallo","adiva_t_high":"Alto · ~93% fallo","adiva_ref":"van Loon FHJ et al. J Clin Med. 2019;8(2):144 (A-DIVA modificada).","adiva_v_low":"Puntaje 0–1: ~5% de fallo. Canalización convencional aceptable.","adiva_v_mod":"Puntaje 2–3: ~37% de fallo. Considerar operador experto y/o ultrasonido desde el inicio.","adiva_v_high":"Puntaje 4–5: ~93% de fallo. Acceso guiado por ultrasonido o técnica avanzada como primera elección.","eadiva_title":"EA-DIVA (Civetta 2019)","eadiva_hint":"8 ítems ponderados para riesgo de acceso venoso periférico difícil en adultos. Corte > 8.","eadiva_ref":"Corte > 8 → ultrasonido inmediato. Civetta G et al. J Vasc Access. 2019;20(3):281–289.","eadiva_v_low":"Punción convencional aceptable. VPN 97.5% — es poco probable que el paciente presente DIVA.","eadiva_v_mid":"Considerar operador experto y/o ultrasonido desde el inicio.","eadiva_v_high":"Ultrasonido de inmediato. Si no hay venas superficiales: mini-midline, midline o vena profunda guiada.","cvr_title":"Ratio catéter/vena (por diámetro)","cvr_hint":"CVR = OD del catéter ÷ diámetro de la vena × 100. Mide la vena con ultrasonido sin torniquete. OD = French ÷ 3 mm.","cvr_vein":"Diámetro interno de la vena","cvr_cath":"Tamaño del catéter","cvr_m_od":"OD catéter","cvr_m_d":"Diámetro vena","cvr_m_cvr":"CVR · ocupación","cvr_note":"El CVR se calcula por diámetro (OD ÷ vena). Los cortes 33% y 45% son por diámetro, no por área (45% diámetro ≈ 20% área); no mezclar escalas.","cvr_zone":"Zona de riesgo","cvr_z_opt":"Óptima","cvr_z_acc":"Aceptable","cvr_z_no":"No recomendada","cvr_z_opt_d":"CVR ≤ 33% — ideal","cvr_z_acc_d":"34–45% — límite recomendado","cvr_z_no_d":"> 45% — > 2× riesgo de trombosis","cvr_ref":"Cortes por diámetro. Spencer & Mahoney 2017 · Sharp R et al. 2021.","cvr_v_opt_t":"Óptima · ocupación ≤ 33%","cvr_v_opt_b":"Relación ideal: amplio flujo alrededor del catéter. Primera opción (regla práctica: igual Fr que mm de vena ≈ 33%).","cvr_v_acc_t":"Aceptable · 34–45%","cvr_v_acc_b":"Dentro del límite recomendado (Spencer & Mahoney / INS). Valorar comorbilidades y alternativas de menor calibre.","cvr_v_no_t":"No recomendada · > 45%","cvr_v_no_b":"Supera el límite seguro: más del doble de riesgo de trombosis. Elegir vena mayor o catéter de menor calibre.","maddox_title":"Grado observado","maddox_hint":"Selecciona el grado de flebitis en el sitio de inserción del catéter periférico.","maddox_label":"Grado de Maddox","maddox_score":"Puntaje actual","maddox_ref":"Maddox RR et al. — escala observacional de flebitis IV.","mx_th_g":"Grado","mx_th_r":"Lectura","mx_th_c":"Conducta","home_h1":"Plataforma clínica de acceso vascular","diva_c1_t":"Antecedente de prematuridad","diva_c1_d":"Historia de nacimiento prematuro.","diva_c2_t":"Vena no palpable","diva_c2_d":"Imposibilidad de palpar una vena en la extremidad.","diva_c3_t":"Vena no visible","diva_c3_d":"Imposibilidad de visualizar una vena en la extremidad.","adiva_c1_t":"Antecedente de acceso IV difícil","adiva_c1_d":"Historia de canalización periférica difícil.","adiva_c2_t":"Acceso difícil esperado por el operador","adiva_c2_d":"El profesional anticipa dificultad antes de puncionar.","adiva_c3_t":"Imposibilidad de palpar una vena dilatada","adiva_c3_d":"No se palpa vena dilatada en la extremidad.","adiva_c4_t":"Imposibilidad de visualizar una vena dilatada","adiva_c4_d":"No se visualiza vena dilatada en la extremidad.","adiva_c5_t":"Diámetro de la vena diana < 3 mm","adiva_c5_d":"Vena objetivo menor a 3 mm (medición con US).","eadiva_c1_t":"Antecedente de acceso venoso periférico difícil","eadiva_c1_d":"Dificultad previa documentada para canalizar un catéter periférico.","eadiva_c2_t":"Depleción vascular","eadiva_c2_d":"Quimioterapia previa, drogas IV o múltiples venopunciones que deterioraron el capital venoso.","eadiva_c3_t":"Evaluación de venas comprometida","eadiva_c3_d":"Venas no visibles, no palpables, rodantes o tortuosas en la exploración actual.","eadiva_c4_t":"Trastorno coagulativo / anticoagulantes","eadiva_c4_d":"Coagulopatías o ingesta de anticoagulantes o antiagregantes.","eadiva_c5_t":"Enfermedad neurovascular","eadiva_c5_d":"Neuropatía y/o vasculopatía periférica (paresia, flebitis, linfedema, TVP).","eadiva_c6_t":"Examen clínico de piel alterado","eadiva_c6_d":"Piel oscura, gruesa o frágil; cicatrices, quemaduras, psoriasis, keloides.","eadiva_c7_t":"Sobrepeso (IMC > 25)","eadiva_c7_d":"Índice de masa corporal mayor a 25 kg/m².","eadiva_c8_t":"Disponibilidad de un solo lado corporal","eadiva_c8_d":"Fístula AV, flebitis, necesidad quirúrgica o amputación que limita el acceso.","mx_o0":"0 — Sin signos de flebitis","mx_o1":"1 — Flebitis leve","mx_o2":"2 — Flebitis temprana establecida","mx_o3":"3 — Flebitis moderada","mx_o4":"4 — Flebitis avanzada / tromboflebitis","mx_o5":"5 — Complicación severa","mx_b0_r":"Sitio normal","mx_b0_c":"Vigilancia rutinaria","mx_b1_r":"Irritación inicial","mx_b1_c":"Revalorar fijación","mx_b2_r":"Flebitis temprana","mx_b2_c":"Considerar retiro","mx_b3_r":"Flebitis moderada","mx_b3_c":"Retirar y documentar","mx_b4_r":"Complicación","mx_b4_c":"Retirar y escalar","mx_v0_t":"Sin flebitis","mx_v0_b":"Continuar vigilancia rutinaria del sitio, verificar permeabilidad y mantener monitorización.","mx_v1_t":"Flebitis leve","mx_v1_b":"Revalorar fijación, permeabilidad, infusado y síntomas locales.","mx_v2_t":"Flebitis temprana","mx_v2_b":"Considerar retiro y rotación del sitio según evolución.","mx_v3_t":"Flebitis moderada","mx_v3_b":"Retirar el catéter y documentar los hallazgos.","mx_v4_t":"Flebitis avanzada / tromboflebitis","mx_v4_b":"Retirar, valorar tromboflebitis/infección y escalar manejo.","mx_v5_t":"Complicación severa","mx_v5_b":"Retirar de inmediato, valorar infección local/sistémica y escalar."},"en":{"nav_home":"Home","nav_calc":"Tools","nav_pharma":"Drugs","nav_catalog":"Catalog","t_calc":"Calculators","t_pharma":"Drug engine","t_catalog":"EBIME Catalog","lang_label":"Language","install":"Install app","calc_list_label":"7 assessment tools","home_tagline":"Assessment, drug decisions and EBIME devices in one place.","chip1":"7 calculators","chip2":"20+ drugs","chip3":"11 devices","sec_calc":"Clinical calculators","sec_more":"More tools","pharma_t":"Drug engine","pharma_p":"pH · osmolarity · recommended route","catalog_t":"EBIME Catalog","catalog_p":"11 devices by clinical family","home_foot":"© 2026 Diego Orlando Ríos Guarín · Educational and clinical-operational use. Scales credited to their authors: Yen, van Loon, Civetta, Spencer & Mahoney, Chopra, Maddox and Caprini.","diva_n":"Pediatric DIVA","diva_s":"Difficult access in children","adiva_n":"A-DIVA","adiva_s":"Difficult access in adults","eadiva_n":"EA-DIVA","eadiva_s":"Difficult access · 8 items","cvr_n":"Catheter-to-vein ratio","cvr_s":"Thrombosis risk (CVR)","magic_n":"MAGIC","magic_s":"Device selection","maddox_n":"Maddox scale","maddox_s":"Peripheral phlebitis 0–5","caprini_n":"Caprini · Vascular access","caprini_s":"VTE / CRT thrombosis risk","risk_low":"Low risk","risk_mid":"Intermediate risk","risk_mod":"Moderate risk","risk_high":"High risk","result":"Result","yes":"Yes","no":"No","diva_title":"DIVA — pediatric (Yen 2008)","diva_hint":"4-variable scale predicting peripheral cannulation failure in children. Cut-off ≥ 4.","diva_age":"Patient age","age_lt1":"< 1 yr","age_12":"1–2 yrs","age_gt2":"> 2 yrs","diva_ref":"Cut-off ≥ 4 → > 50% first-attempt failure. Yen K et al. Pediatr Emerg Care. 2008;24(3):143–147.","diva_v_low":"Score < 4: conventional cannulation with good first-attempt success.","diva_v_high":"Score ≥ 4: > 50% first-attempt failure. Use ultrasound, transilluminator or expert operator from the start.","adiva_title":"Modified A-DIVA (van Loon 2019)","adiva_hint":"5 binary variables (1 point each) for difficult venous access risk in adults.","adiva_t_low":"Low · ~5% failure","adiva_t_mod":"Moderate · ~37% failure","adiva_t_high":"High · ~93% failure","adiva_ref":"van Loon FHJ et al. J Clin Med. 2019;8(2):144 (modified A-DIVA).","adiva_v_low":"Score 0–1: ~5% failure. Conventional cannulation acceptable.","adiva_v_mod":"Score 2–3: ~37% failure. Consider expert operator and/or ultrasound from the start.","adiva_v_high":"Score 4–5: ~93% failure. Ultrasound-guided access or advanced technique as first choice.","eadiva_title":"EA-DIVA (Civetta 2019)","eadiva_hint":"8 weighted items for difficult peripheral venous access risk in adults. Cut-off > 8.","eadiva_ref":"Cut-off > 8 → immediate ultrasound. Civetta G et al. J Vasc Access. 2019;20(3):281–289.","eadiva_v_low":"Conventional puncture acceptable. NPV 97.5% — DIVA is unlikely.","eadiva_v_mid":"Consider expert operator and/or ultrasound from the start.","eadiva_v_high":"Immediate ultrasound. If no superficial veins: mini-midline, midline or guided deep vein.","cvr_title":"Catheter-to-vein ratio (by diameter)","cvr_hint":"CVR = catheter OD ÷ vein diameter × 100. Measure the vein with ultrasound without tourniquet. OD = French ÷ 3 mm.","cvr_vein":"Vein internal diameter","cvr_cath":"Catheter size","cvr_m_od":"Catheter OD","cvr_m_d":"Vein diameter","cvr_m_cvr":"CVR · occupancy","cvr_note":"CVR is by diameter (OD ÷ vein). The 33% and 45% cut-offs are diameter ratios, not area (45% diameter ≈ 20% area); don’t mix scales.","cvr_zone":"Risk zone","cvr_z_opt":"Optimal","cvr_z_acc":"Acceptable","cvr_z_no":"Not recommended","cvr_z_opt_d":"CVR ≤ 33% — ideal","cvr_z_acc_d":"34–45% — recommended limit","cvr_z_no_d":"> 45% — > 2× thrombosis risk","cvr_ref":"Diameter-based cut-offs. Spencer & Mahoney 2017 · Sharp R et al. 2021.","cvr_v_opt_t":"Optimal · occupancy ≤ 33%","cvr_v_opt_b":"Ideal ratio: ample flow around the catheter. First choice (rule of thumb: same Fr as mm of vein ≈ 33%).","cvr_v_acc_t":"Acceptable · 34–45%","cvr_v_acc_b":"Within the recommended limit (Spencer & Mahoney / INS). Weigh comorbidities and smaller-bore alternatives.","cvr_v_no_t":"Not recommended · > 45%","cvr_v_no_b":"Exceeds the safe limit: more than double the thrombosis risk. Choose a larger vein or smaller catheter.","maddox_title":"Observed grade","maddox_hint":"Select the phlebitis grade at the peripheral catheter insertion site.","maddox_label":"Maddox grade","maddox_score":"Current score","maddox_ref":"Maddox RR et al. — observational IV phlebitis scale.","mx_th_g":"Grade","mx_th_r":"Reading","mx_th_c":"Action","home_h1":"Clinical vascular access platform","diva_c1_t":"History of prematurity","diva_c1_d":"History of premature birth.","diva_c2_t":"Non-palpable vein","diva_c2_d":"Unable to palpate a vein in the limb.","diva_c3_t":"Non-visible vein","diva_c3_d":"Unable to visualize a vein in the limb.","adiva_c1_t":"History of difficult IV access","adiva_c1_d":"Prior difficult peripheral cannulation.","adiva_c2_t":"Difficulty expected by the operator","adiva_c2_d":"Clinician anticipates difficulty before puncturing.","adiva_c3_t":"Unable to palpate a dilated vein","adiva_c3_d":"No dilated vein palpable in the limb.","adiva_c4_t":"Unable to visualize a dilated vein","adiva_c4_d":"No dilated vein visible in the limb.","adiva_c5_t":"Target vein diameter < 3 mm","adiva_c5_d":"Target vein smaller than 3 mm (ultrasound measured).","eadiva_c1_t":"History of difficult peripheral access","eadiva_c1_d":"Documented prior difficulty cannulating a peripheral catheter.","eadiva_c2_t":"Vascular depletion","eadiva_c2_d":"Prior chemotherapy, IV drugs or repeated venipunctures depleting venous capital.","eadiva_c3_t":"Compromised vein assessment","eadiva_c3_d":"Veins non-visible, non-palpable, rolling or tortuous on current exam.","eadiva_c4_t":"Coagulation disorder / anticoagulants","eadiva_c4_d":"Coagulopathy or use of anticoagulants/antiplatelets.","eadiva_c5_t":"Neurovascular disease","eadiva_c5_d":"Peripheral neuropathy and/or vasculopathy (paresis, phlebitis, lymphedema, DVT).","eadiva_c6_t":"Altered skin exam","eadiva_c6_d":"Dark, thick or fragile skin; scars, burns, psoriasis, keloids.","eadiva_c7_t":"Overweight (BMI > 25)","eadiva_c7_d":"Body mass index above 25 kg/m².","eadiva_c8_t":"Only one body side available","eadiva_c8_d":"AV fistula, phlebitis, surgical need or amputation limiting access.","mx_o0":"0 — No signs of phlebitis","mx_o1":"1 — Mild phlebitis","mx_o2":"2 — Early established phlebitis","mx_o3":"3 — Moderate phlebitis","mx_o4":"4 — Advanced phlebitis / thrombophlebitis","mx_o5":"5 — Severe complication","mx_b0_r":"Normal site","mx_b0_c":"Routine monitoring","mx_b1_r":"Initial irritation","mx_b1_c":"Reassess securement","mx_b2_r":"Early phlebitis","mx_b2_c":"Consider removal","mx_b3_r":"Moderate phlebitis","mx_b3_c":"Remove and document","mx_b4_r":"Complication","mx_b4_c":"Remove and escalate","mx_v0_t":"No phlebitis","mx_v0_b":"Continue routine site monitoring, check patency and keep monitoring.","mx_v1_t":"Mild phlebitis","mx_v1_b":"Reassess securement, patency, infusate and local symptoms.","mx_v2_t":"Early phlebitis","mx_v2_b":"Consider removal and site rotation depending on course.","mx_v3_t":"Moderate phlebitis","mx_v3_b":"Remove the catheter and document findings.","mx_v4_t":"Advanced phlebitis / thrombophlebitis","mx_v4_b":"Remove, assess thrombophlebitis/infection and escalate care.","mx_v5_t":"Severe complication","mx_v5_b":"Remove immediately, assess local/systemic infection and escalate."},"pt":{"nav_home":"Início","nav_calc":"Cálculos","nav_pharma":"Fármacos","nav_catalog":"Catálogo","t_calc":"Calculadoras","t_pharma":"Motor farmacológico","t_catalog":"Catálogo EBIME","lang_label":"Idioma","install":"Instalar app","calc_list_label":"7 ferramentas de avaliação","home_tagline":"Avaliação, decisão farmacológica e dispositivos EBIME num só lugar.","chip1":"7 calculadoras","chip2":"20+ fármacos","chip3":"11 dispositivos","sec_calc":"Calculadoras clínicas","sec_more":"Mais ferramentas","pharma_t":"Motor farmacológico","pharma_p":"pH · osmolaridade · via recomendada","catalog_t":"Catálogo EBIME","catalog_p":"11 dispositivos por família clínica","home_foot":"© 2026 Diego Orlando Ríos Guarín · Uso educativo e clínico-operacional. Escalas creditadas aos seus autores: Yen, van Loon, Civetta, Spencer & Mahoney, Chopra, Maddox e Caprini.","diva_n":"DIVA pediátrica","diva_s":"Acesso difícil em crianças","adiva_n":"A-DIVA","adiva_s":"Acesso difícil em adultos","eadiva_n":"EA-DIVA","eadiva_s":"Acesso difícil · 8 itens","cvr_n":"Razão cateter/veia","cvr_s":"Risco de trombose (CVR)","magic_n":"MAGIC","magic_s":"Seleção de dispositivo","maddox_n":"Escala de Maddox","maddox_s":"Flebite periférica 0–5","caprini_n":"Caprini · Acesso vascular","caprini_s":"Risco de TEV / trombose CRT","risk_low":"Risco baixo","risk_mid":"Risco intermédio","risk_mod":"Risco moderado","risk_high":"Risco alto","result":"Resultado","yes":"Sim","no":"Não","diva_title":"DIVA — pediátrica (Yen 2008)","diva_hint":"Escala de 4 variáveis para prever falha de canalização periférica em crianças. Corte ≥ 4.","diva_age":"Idade do paciente","age_lt1":"< 1 ano","age_12":"1–2 anos","age_gt2":"> 2 anos","diva_ref":"Corte ≥ 4 → > 50% de falha na 1ª tentativa. Yen K et al. Pediatr Emerg Care. 2008;24(3):143–147.","diva_v_low":"Pontuação < 4: canalização convencional com boa probabilidade de sucesso na 1ª tentativa.","diva_v_high":"Pontuação ≥ 4: > 50% de falha na 1ª tentativa. Use ecoguia, transiluminador ou operador experiente desde o início.","adiva_title":"A-DIVA modificada (van Loon 2019)","adiva_hint":"5 variáveis binárias (1 ponto cada) para risco de acesso venoso difícil em adultos.","adiva_t_low":"Baixo · ~5% falha","adiva_t_mod":"Moderado · ~37% falha","adiva_t_high":"Alto · ~93% falha","adiva_ref":"van Loon FHJ et al. J Clin Med. 2019;8(2):144 (A-DIVA modificada).","adiva_v_low":"Pontuação 0–1: ~5% de falha. Canalização convencional aceitável.","adiva_v_mod":"Pontuação 2–3: ~37% de falha. Considerar operador experiente e/ou ultrassom desde o início.","adiva_v_high":"Pontuação 4–5: ~93% de falha. Acesso guiado por ultrassom ou técnica avançada como primeira escolha.","eadiva_title":"EA-DIVA (Civetta 2019)","eadiva_hint":"8 itens ponderados para risco de acesso venoso periférico difícil em adultos. Corte > 8.","eadiva_ref":"Corte > 8 → ultrassom imediato. Civetta G et al. J Vasc Access. 2019;20(3):281–289.","eadiva_v_low":"Punção convencional aceitável. VPN 97,5% — DIVA pouco provável.","eadiva_v_mid":"Considerar operador experiente e/ou ultrassom desde o início.","eadiva_v_high":"Ultrassom imediato. Sem veias superficiais: mini-midline, midline ou veia profunda guiada.","cvr_title":"Razão cateter/veia (por diâmetro)","cvr_hint":"RCV = DE do cateter ÷ diâmetro da veia × 100. Meça a veia com ultrassom sem torniquete. DE = French ÷ 3 mm.","cvr_vein":"Diâmetro interno da veia","cvr_cath":"Tamanho do cateter","cvr_m_od":"DE cateter","cvr_m_d":"Diâmetro veia","cvr_m_cvr":"RCV · ocupação","cvr_note":"A RCV é por diâmetro (DE ÷ veia). Os cortes 33% e 45% são por diâmetro, não por área (45% diâmetro ≈ 20% área); não misturar escalas.","cvr_zone":"Zona de risco","cvr_z_opt":"Ótima","cvr_z_acc":"Aceitável","cvr_z_no":"Não recomendada","cvr_z_opt_d":"RCV ≤ 33% — ideal","cvr_z_acc_d":"34–45% — limite recomendado","cvr_z_no_d":"> 45% — > 2× risco de trombose","cvr_ref":"Cortes por diâmetro. Spencer & Mahoney 2017 · Sharp R et al. 2021.","cvr_v_opt_t":"Ótima · ocupação ≤ 33%","cvr_v_opt_b":"Relação ideal: amplo fluxo ao redor do cateter. Primeira opção (regra prática: Fr igual aos mm da veia ≈ 33%).","cvr_v_acc_t":"Aceitável · 34–45%","cvr_v_acc_b":"Dentro do limite recomendado (Spencer & Mahoney / INS). Avaliar comorbidades e alternativas de menor calibre.","cvr_v_no_t":"Não recomendada · > 45%","cvr_v_no_b":"Excede o limite seguro: mais que o dobro do risco de trombose. Escolher veia maior ou cateter menor.","maddox_title":"Grau observado","maddox_hint":"Selecione o grau de flebite no sítio de inserção do cateter periférico.","maddox_label":"Grau de Maddox","maddox_score":"Pontuação atual","maddox_ref":"Maddox RR et al. — escala observacional de flebite IV.","mx_th_g":"Grau","mx_th_r":"Leitura","mx_th_c":"Conduta","home_h1":"Plataforma clínica de acesso vascular","diva_c1_t":"Antecedente de prematuridade","diva_c1_d":"História de nascimento prematuro.","diva_c2_t":"Veia não palpável","diva_c2_d":"Impossibilidade de palpar uma veia no membro.","diva_c3_t":"Veia não visível","diva_c3_d":"Impossibilidade de visualizar uma veia no membro.","adiva_c1_t":"Antecedente de acesso IV difícil","adiva_c1_d":"História de canalização periférica difícil.","adiva_c2_t":"Acesso difícil esperado pelo operador","adiva_c2_d":"O profissional antecipa dificuldade antes de puncionar.","adiva_c3_t":"Impossibilidade de palpar veia dilatada","adiva_c3_d":"Sem veia dilatada palpável no membro.","adiva_c4_t":"Impossibilidade de visualizar veia dilatada","adiva_c4_d":"Sem veia dilatada visível no membro.","adiva_c5_t":"Diâmetro da veia-alvo < 3 mm","adiva_c5_d":"Veia-alvo menor que 3 mm (medida por US).","eadiva_c1_t":"Antecedente de acesso venoso periférico difícil","eadiva_c1_d":"Dificuldade prévia documentada para canalizar cateter periférico.","eadiva_c2_t":"Depleção vascular","eadiva_c2_d":"Quimioterapia prévia, drogas IV ou múltiplas punções que deterioraram o capital venoso.","eadiva_c3_t":"Avaliação de veias comprometida","eadiva_c3_d":"Veias não visíveis, não palpáveis, rolantes ou tortuosas no exame atual.","eadiva_c4_t":"Distúrbio de coagulação / anticoagulantes","eadiva_c4_d":"Coagulopatias ou uso de anticoagulantes/antiagregantes.","eadiva_c5_t":"Doença neurovascular","eadiva_c5_d":"Neuropatia e/ou vasculopatia periférica (paresia, flebite, linfedema, TVP).","eadiva_c6_t":"Exame de pele alterado","eadiva_c6_d":"Pele escura, grossa ou frágil; cicatrizes, queimaduras, psoríase, queloides.","eadiva_c7_t":"Sobrepeso (IMC > 25)","eadiva_c7_d":"Índice de massa corporal acima de 25 kg/m².","eadiva_c8_t":"Disponibilidade de um só lado do corpo","eadiva_c8_d":"Fístula AV, flebite, necessidade cirúrgica ou amputação que limita o acesso.","mx_o0":"0 — Sem sinais de flebite","mx_o1":"1 — Flebite leve","mx_o2":"2 — Flebite inicial estabelecida","mx_o3":"3 — Flebite moderada","mx_o4":"4 — Flebite avançada / tromboflebite","mx_o5":"5 — Complicação grave","mx_b0_r":"Sítio normal","mx_b0_c":"Vigilância de rotina","mx_b1_r":"Irritação inicial","mx_b1_c":"Reavaliar fixação","mx_b2_r":"Flebite inicial","mx_b2_c":"Considerar retirada","mx_b3_r":"Flebite moderada","mx_b3_c":"Retirar e documentar","mx_b4_r":"Complicação","mx_b4_c":"Retirar e escalar","mx_v0_t":"Sem flebite","mx_v0_b":"Manter vigilância de rotina do sítio, verificar permeabilidade e seguir monitorando.","mx_v1_t":"Flebite leve","mx_v1_b":"Reavaliar fixação, permeabilidade, infusato e sintomas locais.","mx_v2_t":"Flebite inicial","mx_v2_b":"Considerar retirada e rotação do sítio conforme evolução.","mx_v3_t":"Flebite moderada","mx_v3_b":"Retirar o cateter e documentar os achados.","mx_v4_t":"Flebite avançada / tromboflebite","mx_v4_b":"Retirar, avaliar tromboflebite/infecção e escalar manejo.","mx_v5_t":"Complicação grave","mx_v5_b":"Retirar imediatamente, avaliar infecção local/sistêmica e escalar."},"fr":{"nav_home":"Accueil","nav_calc":"Outils","nav_pharma":"Médic.","nav_catalog":"Catalogue","t_calc":"Calculateurs","t_pharma":"Moteur pharmaco.","t_catalog":"Catalogue EBIME","lang_label":"Langue","install":"Installer","calc_list_label":"7 outils d’évaluation","home_tagline":"Évaluation, décision pharmacologique et dispositifs EBIME au même endroit.","chip1":"7 calculateurs","chip2":"20+ médicaments","chip3":"11 dispositifs","sec_calc":"Calculateurs cliniques","sec_more":"Plus d’outils","pharma_t":"Moteur pharmacologique","pharma_p":"pH · osmolarité · voie recommandée","catalog_t":"Catalogue EBIME","catalog_p":"11 dispositifs par famille clinique","home_foot":"© 2026 Diego Orlando Ríos Guarín · Usage éducatif et clinico-opérationnel. Échelles créditées à leurs auteurs : Yen, van Loon, Civetta, Spencer & Mahoney, Chopra, Maddox et Caprini.","diva_n":"DIVA pédiatrique","diva_s":"Accès difficile chez l’enfant","adiva_n":"A-DIVA","adiva_s":"Accès difficile chez l’adulte","eadiva_n":"EA-DIVA","eadiva_s":"Accès difficile · 8 items","cvr_n":"Ratio cathéter/veine","cvr_s":"Risque de thrombose (CVR)","magic_n":"MAGIC","magic_s":"Choix du dispositif","maddox_n":"Échelle de Maddox","maddox_s":"Phlébite périphérique 0–5","caprini_n":"Caprini · Accès vasculaire","caprini_s":"Risque de TEV / thrombose CRT","risk_low":"Risque faible","risk_mid":"Risque intermédiaire","risk_mod":"Risque modéré","risk_high":"Risque élevé","result":"Résultat","yes":"Oui","no":"Non","diva_title":"DIVA — pédiatrique (Yen 2008)","diva_hint":"Échelle à 4 variables prédisant l’échec de pose périphérique chez l’enfant. Seuil ≥ 4.","diva_age":"Âge du patient","age_lt1":"< 1 an","age_12":"1–2 ans","age_gt2":"> 2 ans","diva_ref":"Seuil ≥ 4 → > 50% d’échec au 1er essai. Yen K et al. Pediatr Emerg Care. 2008;24(3):143–147.","diva_v_low":"Score < 4 : pose conventionnelle avec bonne réussite au 1er essai.","diva_v_high":"Score ≥ 4 : > 50% d’échec au 1er essai. Échographie, transilluminateur ou opérateur expert d’emblée.","adiva_title":"A-DIVA modifiée (van Loon 2019)","adiva_hint":"5 variables binaires (1 point chacune) pour le risque d’accès veineux difficile chez l’adulte.","adiva_t_low":"Faible · ~5% échec","adiva_t_mod":"Modéré · ~37% échec","adiva_t_high":"Élevé · ~93% échec","adiva_ref":"van Loon FHJ et al. J Clin Med. 2019;8(2):144 (A-DIVA modifiée).","adiva_v_low":"Score 0–1 : ~5% d’échec. Pose conventionnelle acceptable.","adiva_v_mod":"Score 2–3 : ~37% d’échec. Envisager opérateur expert et/ou échographie d’emblée.","adiva_v_high":"Score 4–5 : ~93% d’échec. Accès écho-guidé ou technique avancée en première intention.","eadiva_title":"EA-DIVA (Civetta 2019)","eadiva_hint":"8 items pondérés pour le risque d’accès veineux périphérique difficile chez l’adulte. Seuil > 8.","eadiva_ref":"Seuil > 8 → échographie immédiate. Civetta G et al. J Vasc Access. 2019;20(3):281–289.","eadiva_v_low":"Ponction conventionnelle acceptable. VPN 97,5% — DIVA peu probable.","eadiva_v_mid":"Envisager opérateur expert et/ou échographie d’emblée.","eadiva_v_high":"Échographie immédiate. Sans veine superficielle : mini-midline, midline ou veine profonde guidée.","cvr_title":"Ratio cathéter/veine (par diamètre)","cvr_hint":"RCV = DE du cathéter ÷ diamètre de la veine × 100. Mesurer la veine en échographie sans garrot. DE = French ÷ 3 mm.","cvr_vein":"Diamètre interne de la veine","cvr_cath":"Taille du cathéter","cvr_m_od":"DE cathéter","cvr_m_d":"Diamètre veine","cvr_m_cvr":"RCV · occupation","cvr_note":"La RCV est par diamètre (DE ÷ veine). Les seuils 33% et 45% sont par diamètre, pas par surface (45% diamètre ≈ 20% surface) ; ne pas mélanger.","cvr_zone":"Zone de risque","cvr_z_opt":"Optimale","cvr_z_acc":"Acceptable","cvr_z_no":"Non recommandée","cvr_z_opt_d":"RCV ≤ 33% — idéal","cvr_z_acc_d":"34–45% — limite recommandée","cvr_z_no_d":"> 45% — > 2× risque de thrombose","cvr_ref":"Seuils par diamètre. Spencer & Mahoney 2017 · Sharp R et al. 2021.","cvr_v_opt_t":"Optimale · occupation ≤ 33%","cvr_v_opt_b":"Ratio idéal : flux ample autour du cathéter. Premier choix (règle : Fr = mm de veine ≈ 33%).","cvr_v_acc_t":"Acceptable · 34–45%","cvr_v_acc_b":"Dans la limite recommandée (Spencer & Mahoney / INS). Évaluer comorbidités et alternatives de plus petit calibre.","cvr_v_no_t":"Non recommandée · > 45%","cvr_v_no_b":"Dépasse la limite sûre : plus du double du risque de thrombose. Choisir une veine plus large ou un cathéter plus fin.","maddox_title":"Grade observé","maddox_hint":"Sélectionnez le grade de phlébite au site d’insertion du cathéter périphérique.","maddox_label":"Grade de Maddox","maddox_score":"Score actuel","maddox_ref":"Maddox RR et al. — échelle observationnelle de phlébite IV.","mx_th_g":"Grade","mx_th_r":"Lecture","mx_th_c":"Conduite","home_h1":"Plateforme clinique d’accès vasculaire","diva_c1_t":"Antécédent de prématurité","diva_c1_d":"Antécédent de naissance prématurée.","diva_c2_t":"Veine non palpable","diva_c2_d":"Impossibilité de palper une veine sur le membre.","diva_c3_t":"Veine non visible","diva_c3_d":"Impossibilité de visualiser une veine sur le membre.","adiva_c1_t":"Antécédent d’accès IV difficile","adiva_c1_d":"Antécédent de pose périphérique difficile.","adiva_c2_t":"Difficulté attendue par l’opérateur","adiva_c2_d":"Le clinicien anticipe une difficulté avant la ponction.","adiva_c3_t":"Impossibilité de palper une veine dilatée","adiva_c3_d":"Aucune veine dilatée palpable sur le membre.","adiva_c4_t":"Impossibilité de visualiser une veine dilatée","adiva_c4_d":"Aucune veine dilatée visible sur le membre.","adiva_c5_t":"Diamètre de la veine cible < 3 mm","adiva_c5_d":"Veine cible inférieure à 3 mm (mesure échographique).","eadiva_c1_t":"Antécédent d’accès veineux périphérique difficile","eadiva_c1_d":"Difficulté antérieure documentée à canuler un cathéter périphérique.","eadiva_c2_t":"Déplétion vasculaire","eadiva_c2_d":"Chimiothérapie, drogues IV ou multiples ponctions ayant altéré le capital veineux.","eadiva_c3_t":"Évaluation des veines compromise","eadiva_c3_d":"Veines non visibles, non palpables, roulantes ou tortueuses à l’examen.","eadiva_c4_t":"Trouble de la coagulation / anticoagulants","eadiva_c4_d":"Coagulopathie ou prise d’anticoagulants/antiagrégants.","eadiva_c5_t":"Maladie neurovasculaire","eadiva_c5_d":"Neuropathie et/ou vasculopathie périphérique (parésie, phlébite, lymphœdème, TVP).","eadiva_c6_t":"Examen cutané altéré","eadiva_c6_d":"Peau sombre, épaisse ou fragile ; cicatrices, brûlures, psoriasis, chéloïdes.","eadiva_c7_t":"Surpoids (IMC > 25)","eadiva_c7_d":"Indice de masse corporelle supérieur à 25 kg/m².","eadiva_c8_t":"Un seul côté du corps disponible","eadiva_c8_d":"Fistule AV, phlébite, besoin chirurgical ou amputation limitant l’accès.","mx_o0":"0 — Aucun signe de phlébite","mx_o1":"1 — Phlébite légère","mx_o2":"2 — Phlébite précoce établie","mx_o3":"3 — Phlébite modérée","mx_o4":"4 — Phlébite avancée / thrombophlébite","mx_o5":"5 — Complication sévère","mx_b0_r":"Site normal","mx_b0_c":"Surveillance de routine","mx_b1_r":"Irritation initiale","mx_b1_c":"Réévaluer la fixation","mx_b2_r":"Phlébite précoce","mx_b2_c":"Envisager le retrait","mx_b3_r":"Phlébite modérée","mx_b3_c":"Retirer et documenter","mx_b4_r":"Complication","mx_b4_c":"Retirer et escalader","mx_v0_t":"Pas de phlébite","mx_v0_b":"Poursuivre la surveillance de routine, vérifier la perméabilité et maintenir le suivi.","mx_v1_t":"Phlébite légère","mx_v1_b":"Réévaluer fixation, perméabilité, perfusat et symptômes locaux.","mx_v2_t":"Phlébite précoce","mx_v2_b":"Envisager le retrait et la rotation du site selon l’évolution.","mx_v3_t":"Phlébite modérée","mx_v3_b":"Retirer le cathéter et documenter les constatations.","mx_v4_t":"Phlébite avancée / thrombophlébite","mx_v4_b":"Retirer, évaluer thrombophlébite/infection et escalader la prise en charge.","mx_v5_t":"Complication sévère","mx_v5_b":"Retirer immédiatement, évaluer l’infection locale/systémique et escalader."},"it":{"nav_home":"Home","nav_calc":"Strumenti","nav_pharma":"Farmaci","nav_catalog":"Catalogo","t_calc":"Calcolatori","t_pharma":"Motore farmaci","t_catalog":"Catalogo EBIME","lang_label":"Lingua","install":"Installa app","calc_list_label":"7 strumenti di valutazione","home_tagline":"Valutazione, decisione farmacologica e dispositivi EBIME in un solo posto.","chip1":"7 calcolatori","chip2":"20+ farmaci","chip3":"11 dispositivi","sec_calc":"Calcolatori clinici","sec_more":"Altri strumenti","pharma_t":"Motore farmacologico","pharma_p":"pH · osmolarità · via consigliata","catalog_t":"Catalogo EBIME","catalog_p":"11 dispositivi per famiglia clinica","home_foot":"© 2026 Diego Orlando Ríos Guarín · Uso educativo e clinico-operativo. Scale attribuite ai loro autori: Yen, van Loon, Civetta, Spencer & Mahoney, Chopra, Maddox e Caprini.","diva_n":"DIVA pediatrica","diva_s":"Accesso difficile nei bambini","adiva_n":"A-DIVA","adiva_s":"Accesso difficile negli adulti","eadiva_n":"EA-DIVA","eadiva_s":"Accesso difficile · 8 voci","cvr_n":"Rapporto catetere/vena","cvr_s":"Rischio di trombosi (CVR)","magic_n":"MAGIC","magic_s":"Scelta del dispositivo","maddox_n":"Scala di Maddox","maddox_s":"Flebite periferica 0–5","caprini_n":"Caprini · Accesso vascolare","caprini_s":"Rischio TEV / trombosi CRT","risk_low":"Rischio basso","risk_mid":"Rischio intermedio","risk_mod":"Rischio moderato","risk_high":"Rischio alto","result":"Risultato","yes":"Sì","no":"No","diva_title":"DIVA — pediatrica (Yen 2008)","diva_hint":"Scala a 4 variabili per prevedere il fallimento dell’incannulamento periferico nei bambini. Soglia ≥ 4.","diva_age":"Età del paziente","age_lt1":"< 1 anno","age_12":"1–2 anni","age_gt2":"> 2 anni","diva_ref":"Soglia ≥ 4 → > 50% di fallimento al 1° tentativo. Yen K et al. Pediatr Emerg Care. 2008;24(3):143–147.","diva_v_low":"Punteggio < 4: incannulamento convenzionale con buona riuscita al 1° tentativo.","diva_v_high":"Punteggio ≥ 4: > 50% di fallimento al 1° tentativo. Usare eco-guida, transilluminatore o operatore esperto fin dall’inizio.","adiva_title":"A-DIVA modificata (van Loon 2019)","adiva_hint":"5 variabili binarie (1 punto ciascuna) per il rischio di accesso venoso difficile negli adulti.","adiva_t_low":"Basso · ~5% fallimento","adiva_t_mod":"Moderato · ~37% fallimento","adiva_t_high":"Alto · ~93% fallimento","adiva_ref":"van Loon FHJ et al. J Clin Med. 2019;8(2):144 (A-DIVA modificata).","adiva_v_low":"Punteggio 0–1: ~5% di fallimento. Incannulamento convenzionale accettabile.","adiva_v_mod":"Punteggio 2–3: ~37% di fallimento. Valutare operatore esperto e/o ecografia fin dall’inizio.","adiva_v_high":"Punteggio 4–5: ~93% di fallimento. Accesso eco-guidato o tecnica avanzata come prima scelta.","eadiva_title":"EA-DIVA (Civetta 2019)","eadiva_hint":"8 voci ponderate per il rischio di accesso venoso periferico difficile negli adulti. Soglia > 8.","eadiva_ref":"Soglia > 8 → ecografia immediata. Civetta G et al. J Vasc Access. 2019;20(3):281–289.","eadiva_v_low":"Puntura convenzionale accettabile. VPN 97,5% — DIVA improbabile.","eadiva_v_mid":"Valutare operatore esperto e/o ecografia fin dall’inizio.","eadiva_v_high":"Ecografia immediata. Senza vene superficiali: mini-midline, midline o vena profonda eco-guidata.","cvr_title":"Rapporto catetere/vena (per diametro)","cvr_hint":"RCV = DE del catetere ÷ diametro della vena × 100. Misura la vena con ecografia senza laccio. DE = French ÷ 3 mm.","cvr_vein":"Diametro interno della vena","cvr_cath":"Calibro del catetere","cvr_m_od":"DE catetere","cvr_m_d":"Diametro vena","cvr_m_cvr":"RCV · occupazione","cvr_note":"La RCV è per diametro (DE ÷ vena). Le soglie 33% e 45% sono per diametro, non per area (45% diametro ≈ 20% area); non mescolare le scale.","cvr_zone":"Zona di rischio","cvr_z_opt":"Ottimale","cvr_z_acc":"Accettabile","cvr_z_no":"Non raccomandata","cvr_z_opt_d":"RCV ≤ 33% — ideale","cvr_z_acc_d":"34–45% — limite raccomandato","cvr_z_no_d":"> 45% — > 2× rischio di trombosi","cvr_ref":"Soglie per diametro. Spencer & Mahoney 2017 · Sharp R et al. 2021.","cvr_v_opt_t":"Ottimale · occupazione ≤ 33%","cvr_v_opt_b":"Rapporto ideale: ampio flusso attorno al catetere. Prima scelta (regola: Fr pari ai mm della vena ≈ 33%).","cvr_v_acc_t":"Accettabile · 34–45%","cvr_v_acc_b":"Entro il limite raccomandato (Spencer & Mahoney / INS). Valutare comorbilità e alternative di calibro minore.","cvr_v_no_t":"Non raccomandata · > 45%","cvr_v_no_b":"Supera il limite sicuro: oltre il doppio del rischio di trombosi. Scegliere vena più grande o catetere più piccolo.","maddox_title":"Grado osservato","maddox_hint":"Seleziona il grado di flebite nel sito di inserzione del catetere periferico.","maddox_label":"Grado di Maddox","maddox_score":"Punteggio attuale","maddox_ref":"Maddox RR et al. — scala osservazionale di flebite EV.","mx_th_g":"Grado","mx_th_r":"Lettura","mx_th_c":"Condotta","home_h1":"Piattaforma clinica di accesso vascolare","diva_c1_t":"Anamnesi di prematurità","diva_c1_d":"Storia di nascita prematura.","diva_c2_t":"Vena non palpabile","diva_c2_d":"Impossibilità di palpare una vena nell’arto.","diva_c3_t":"Vena non visibile","diva_c3_d":"Impossibilità di visualizzare una vena nell’arto.","adiva_c1_t":"Anamnesi di accesso IV difficile","adiva_c1_d":"Storia di incannulamento periferico difficile.","adiva_c2_t":"Difficoltà attesa dall’operatore","adiva_c2_d":"Il clinico prevede difficoltà prima della puntura.","adiva_c3_t":"Impossibilità di palpare una vena dilatata","adiva_c3_d":"Nessuna vena dilatata palpabile nell’arto.","adiva_c4_t":"Impossibilità di visualizzare una vena dilatata","adiva_c4_d":"Nessuna vena dilatata visibile nell’arto.","adiva_c5_t":"Diametro della vena bersaglio < 3 mm","adiva_c5_d":"Vena bersaglio inferiore a 3 mm (misura ecografica).","eadiva_c1_t":"Anamnesi di accesso venoso periferico difficile","eadiva_c1_d":"Difficoltà precedente documentata nell’incannulare un catetere periferico.","eadiva_c2_t":"Deplezione vascolare","eadiva_c2_d":"Chemioterapia, droghe EV o ripetute venipunture che hanno depauperato il patrimonio venoso.","eadiva_c3_t":"Valutazione delle vene compromessa","eadiva_c3_d":"Vene non visibili, non palpabili, rotolanti o tortuose all’esame attuale.","eadiva_c4_t":"Disturbo coagulativo / anticoagulanti","eadiva_c4_d":"Coagulopatie o assunzione di anticoagulanti/antiaggreganti.","eadiva_c5_t":"Malattia neurovascolare","eadiva_c5_d":"Neuropatia e/o vasculopatia periferica (paresi, flebite, linfedema, TVP).","eadiva_c6_t":"Esame cutaneo alterato","eadiva_c6_d":"Pelle scura, spessa o fragile; cicatrici, ustioni, psoriasi, cheloidi.","eadiva_c7_t":"Sovrappeso (IMC > 25)","eadiva_c7_d":"Indice di massa corporea superiore a 25 kg/m².","eadiva_c8_t":"Disponibilità di un solo lato del corpo","eadiva_c8_d":"Fistola AV, flebite, necessità chirurgica o amputazione che limita l’accesso.","mx_o0":"0 — Nessun segno di flebite","mx_o1":"1 — Flebite lieve","mx_o2":"2 — Flebite precoce stabilita","mx_o3":"3 — Flebite moderata","mx_o4":"4 — Flebite avanzata / tromboflebite","mx_o5":"5 — Complicanza grave","mx_b0_r":"Sito normale","mx_b0_c":"Sorveglianza di routine","mx_b1_r":"Irritazione iniziale","mx_b1_c":"Rivalutare il fissaggio","mx_b2_r":"Flebite precoce","mx_b2_c":"Valutare la rimozione","mx_b3_r":"Flebite moderata","mx_b3_c":"Rimuovere e documentare","mx_b4_r":"Complicanza","mx_b4_c":"Rimuovere ed escalare","mx_v0_t":"Nessuna flebite","mx_v0_b":"Continuare la sorveglianza di routine del sito, verificare la pervietà e mantenere il monitoraggio.","mx_v1_t":"Flebite lieve","mx_v1_b":"Rivalutare fissaggio, pervietà, infuso e sintomi locali.","mx_v2_t":"Flebite precoce","mx_v2_b":"Valutare rimozione e rotazione del sito secondo l’evoluzione.","mx_v3_t":"Flebite moderata","mx_v3_b":"Rimuovere il catetere e documentare i reperti.","mx_v4_t":"Flebite avanzata / tromboflebite","mx_v4_b":"Rimuovere, valutare tromboflebite/infezione ed escalare la gestione.","mx_v5_t":"Complicanza grave","mx_v5_b":"Rimuovere subito, valutare infezione locale/sistemica ed escalare."},"ru":{"nav_home":"Главная","nav_calc":"Шкалы","nav_pharma":"Препараты","nav_catalog":"Каталог","t_calc":"Шкалы","t_pharma":"Фарм. модуль","t_catalog":"Каталог EBIME","lang_label":"Язык","install":"Установить","calc_list_label":"7 инструментов оценки","home_tagline":"Оценка, выбор препаратов и устройства EBIME в одном месте.","chip1":"7 шкал","chip2":"20+ препаратов","chip3":"11 устройств","sec_calc":"Клинические шкалы","sec_more":"Ещё инструменты","pharma_t":"Фармакологический модуль","pharma_p":"pH · осмолярность · путь введения","catalog_t":"Каталог EBIME","catalog_p":"11 устройств по клиническим группам","home_foot":"© 2026 Diego Orlando Ríos Guarín · Образовательное и клинико-практическое использование. Шкалы принадлежат авторам: Yen, van Loon, Civetta, Spencer & Mahoney, Chopra, Maddox и Caprini.","diva_n":"DIVA (дети)","diva_s":"Трудный доступ у детей","adiva_n":"A-DIVA","adiva_s":"Трудный доступ у взрослых","eadiva_n":"EA-DIVA","eadiva_s":"Трудный доступ · 8 пунктов","cvr_n":"Катетер/вена","cvr_s":"Риск тромбоза (CVR)","magic_n":"MAGIC","magic_s":"Выбор устройства","maddox_n":"Шкала Maddox","maddox_s":"Флебит 0–5","caprini_n":"Caprini · Сосуд. доступ","caprini_s":"Риск ВТЭ / КАТ-тромбоза","risk_low":"Низкий риск","risk_mid":"Средний риск","risk_mod":"Умеренный риск","risk_high":"Высокий риск","result":"Результат","yes":"Да","no":"Нет","diva_title":"DIVA — педиатрическая (Yen 2008)","diva_hint":"Шкала из 4 переменных, прогнозирующая неудачу периферической катетеризации у детей. Порог ≥ 4.","diva_age":"Возраст пациента","age_lt1":"< 1 года","age_12":"1–2 года","age_gt2":"> 2 лет","diva_ref":"Порог ≥ 4 → > 50% неудач с первой попытки. Yen K et al. Pediatr Emerg Care. 2008;24(3):143–147.","diva_v_low":"Балл < 4: обычная катетеризация с высокой вероятностью успеха с первой попытки.","diva_v_high":"Балл ≥ 4: > 50% неудач с первой попытки. Сразу применять УЗ-навигацию, трансиллюминатор или опытного оператора.","adiva_title":"A-DIVA модифицир. (van Loon 2019)","adiva_hint":"5 бинарных переменных (по 1 баллу) для риска трудного венозного доступа у взрослых.","adiva_t_low":"Низкий · ~5% неудач","adiva_t_mod":"Умеренный · ~37% неудач","adiva_t_high":"Высокий · ~93% неудач","adiva_ref":"van Loon FHJ et al. J Clin Med. 2019;8(2):144 (модиф. A-DIVA).","adiva_v_low":"Балл 0–1: ~5% неудач. Обычная катетеризация приемлема.","adiva_v_mod":"Балл 2–3: ~37% неудач. Рассмотреть опытного оператора и/или УЗИ с самого начала.","adiva_v_high":"Балл 4–5: ~93% неудач. УЗ-навигация или продвинутая методика как первый выбор.","eadiva_title":"EA-DIVA (Civetta 2019)","eadiva_hint":"8 взвешенных пунктов для риска трудного периферического доступа у взрослых. Порог > 8.","eadiva_ref":"Порог > 8 → немедленное УЗИ. Civetta G et al. J Vasc Access. 2019;20(3):281–289.","eadiva_v_low":"Обычная пункция приемлема. ОПЦ 97,5% — DIVA маловероятен.","eadiva_v_mid":"Рассмотреть опытного оператора и/или УЗИ с самого начала.","eadiva_v_high":"Немедленное УЗИ. При отсутствии поверхностных вен: мини-мидлайн, мидлайн или глубокая вена под контролем.","cvr_title":"Соотношение катетер/вена (по диаметру)","cvr_hint":"CVR = НД катетера ÷ диаметр вены × 100. Измеряйте вену УЗИ без жгута. НД = French ÷ 3 мм.","cvr_vein":"Внутренний диаметр вены","cvr_cath":"Размер катетера","cvr_m_od":"НД катетера","cvr_m_d":"Диаметр вены","cvr_m_cvr":"CVR · заполнение","cvr_note":"CVR — по диаметру (НД ÷ вена). Пороги 33% и 45% — по диаметру, не по площади (45% диаметра ≈ 20% площади); не смешивать.","cvr_zone":"Зона риска","cvr_z_opt":"Оптимально","cvr_z_acc":"Допустимо","cvr_z_no":"Не рекомендуется","cvr_z_opt_d":"CVR ≤ 33% — идеально","cvr_z_acc_d":"34–45% — рекомендуемый предел","cvr_z_no_d":"> 45% — > 2× риск тромбоза","cvr_ref":"Пороги по диаметру. Spencer & Mahoney 2017 · Sharp R et al. 2021.","cvr_v_opt_t":"Оптимально · заполнение ≤ 33%","cvr_v_opt_b":"Идеальное соотношение: достаточный кровоток вокруг катетера. Первый выбор (правило: Fr = мм вены ≈ 33%).","cvr_v_acc_t":"Допустимо · 34–45%","cvr_v_acc_b":"В пределах рекомендуемого (Spencer & Mahoney / INS). Учесть сопутствующие болезни и катетеры меньшего калибра.","cvr_v_no_t":"Не рекомендуется · > 45%","cvr_v_no_b":"Превышает безопасный предел: риск тромбоза более чем вдвое. Выбрать вену крупнее или катетер тоньше.","maddox_title":"Наблюдаемая степень","maddox_hint":"Выберите степень флебита в месте установки периферического катетера.","maddox_label":"Степень Maddox","maddox_score":"Текущий балл","maddox_ref":"Maddox RR et al. — наблюдательная шкала флебита.","mx_th_g":"Степень","mx_th_r":"Трактовка","mx_th_c":"Действие","home_h1":"Клиническая платформа сосудистого доступа","diva_c1_t":"Недоношенность в анамнезе","diva_c1_d":"Преждевременные роды в анамнезе.","diva_c2_t":"Вена не пальпируется","diva_c2_d":"Невозможно пропальпировать вену на конечности.","diva_c3_t":"Вена не видна","diva_c3_d":"Невозможно визуализировать вену на конечности.","adiva_c1_t":"Трудный венозный доступ в анамнезе","adiva_c1_d":"Ранее трудная периферическая катетеризация.","adiva_c2_t":"Оператор ожидает трудности","adiva_c2_d":"Врач предвидит трудность до пункции.","adiva_c3_t":"Расширенная вена не пальпируется","adiva_c3_d":"Расширенная вена на конечности не пальпируется.","adiva_c4_t":"Расширенная вена не визуализируется","adiva_c4_d":"Расширенная вена на конечности не видна.","adiva_c5_t":"Диаметр целевой вены < 3 мм","adiva_c5_d":"Целевая вена менее 3 мм (по УЗИ).","eadiva_c1_t":"Трудный периферический доступ в анамнезе","eadiva_c1_d":"Документированная прежняя трудность катетеризации периферической вены.","eadiva_c2_t":"Истощение венозного русла","eadiva_c2_d":"Химиотерапия, в/в препараты или множественные пункции, истощившие венозный ресурс.","eadiva_c3_t":"Затруднённая оценка вен","eadiva_c3_d":"Вены не видны, не пальпируются, перекатываются или извиты при осмотре.","eadiva_c4_t":"Нарушение свёртывания / антикоагулянты","eadiva_c4_d":"Коагулопатии или приём антикоагулянтов/антиагрегантов.","eadiva_c5_t":"Нейроваскулярное заболевание","eadiva_c5_d":"Периферическая нейропатия и/или васкулопатия (парез, флебит, лимфедема, ТГВ).","eadiva_c6_t":"Изменения кожи при осмотре","eadiva_c6_d":"Тёмная, толстая или хрупкая кожа; рубцы, ожоги, псориаз, келоиды.","eadiva_c7_t":"Избыточный вес (ИМТ > 25)","eadiva_c7_d":"Индекс массы тела выше 25 кг/м².","eadiva_c8_t":"Доступна только одна сторона тела","eadiva_c8_d":"АВ-фистула, флебит, хирургическая необходимость или ампутация, ограничивающие доступ.","mx_o0":"0 — Нет признаков флебита","mx_o1":"1 — Лёгкий флебит","mx_o2":"2 — Ранний установившийся флебит","mx_o3":"3 — Умеренный флебит","mx_o4":"4 — Выраженный флебит / тромбофлебит","mx_o5":"5 — Тяжёлое осложнение","mx_b0_r":"Норма","mx_b0_c":"Рутинный контроль","mx_b1_r":"Начальное раздражение","mx_b1_c":"Проверить фиксацию","mx_b2_r":"Ранний флебит","mx_b2_c":"Рассмотреть удаление","mx_b3_r":"Умеренный флебит","mx_b3_c":"Удалить и задокументировать","mx_b4_r":"Осложнение","mx_b4_c":"Удалить и эскалировать","mx_v0_t":"Флебита нет","mx_v0_b":"Продолжать рутинный контроль места, проверять проходимость и наблюдение.","mx_v1_t":"Лёгкий флебит","mx_v1_b":"Переоценить фиксацию, проходимость, инфузат и местные симптомы.","mx_v2_t":"Ранний флебит","mx_v2_b":"Рассмотреть удаление и смену места в зависимости от динамики.","mx_v3_t":"Умеренный флебит","mx_v3_b":"Удалить катетер и задокументировать находки.","mx_v4_t":"Выраженный флебит / тромбофлебит","mx_v4_b":"Удалить, оценить тромбофлебит/инфекцию и эскалировать лечение.","mx_v5_t":"Тяжёлое осложнение","mx_v5_b":"Немедленно удалить, оценить местную/системную инфекцию и эскалировать."},"zh":{"nav_home":"首页","nav_calc":"计算","nav_pharma":"药物","nav_catalog":"目录","t_calc":"计算器","t_pharma":"药理引擎","t_catalog":"EBIME 目录","lang_label":"语言","install":"安装应用","calc_list_label":"7 项评估工具","home_tagline":"评估、药物决策与 EBIME 器械，集于一处。","chip1":"7 个计算器","chip2":"20+ 种药物","chip3":"11 种器械","sec_calc":"临床计算器","sec_more":"更多工具","pharma_t":"药理引擎","pharma_p":"pH · 渗透压 · 推荐途径","catalog_t":"EBIME 目录","catalog_p":"11 种器械（按临床类别）","home_foot":"© 2026 Diego Orlando Ríos Guarín · 用于教育与临床实践。量表归属其作者：Yen、van Loon、Civetta、Spencer & Mahoney、Chopra、Maddox 与 Caprini。","diva_n":"DIVA（儿科）","diva_s":"儿童困难静脉通路","adiva_n":"A-DIVA","adiva_s":"成人困难静脉通路","eadiva_n":"EA-DIVA","eadiva_s":"困难通路 · 8 项","cvr_n":"导管/静脉比","cvr_s":"血栓风险 (CVR)","magic_n":"MAGIC","magic_s":"器械选择","maddox_n":"Maddox 量表","maddox_s":"外周静脉炎 0–5","caprini_n":"Caprini · 血管通路","caprini_s":"VTE / 导管血栓风险","risk_low":"低风险","risk_mid":"中等风险","risk_mod":"中度风险","risk_high":"高风险","result":"结果","yes":"是","no":"否","diva_title":"DIVA — 儿科 (Yen 2008)","diva_hint":"4 项变量预测儿童外周置管失败的量表。临界值 ≥ 4。","diva_age":"患者年龄","age_lt1":"< 1 岁","age_12":"1–2 岁","age_gt2":"> 2 岁","diva_ref":"临界值 ≥ 4 → 首次穿刺失败 > 50%。Yen K 等. Pediatr Emerg Care. 2008;24(3):143–147.","diva_v_low":"评分 < 4：常规置管，首次成功率高。","diva_v_high":"评分 ≥ 4：首次失败 > 50%。一开始即使用超声引导、透照仪或资深操作者。","adiva_title":"改良 A-DIVA (van Loon 2019)","adiva_hint":"5 项二元变量（各 1 分），评估成人困难静脉通路风险。","adiva_t_low":"低 · ~5% 失败","adiva_t_mod":"中度 · ~37% 失败","adiva_t_high":"高 · ~93% 失败","adiva_ref":"van Loon FHJ 等. J Clin Med. 2019;8(2):144（改良 A-DIVA）。","adiva_v_low":"评分 0–1：~5% 失败。常规置管可行。","adiva_v_mod":"评分 2–3：~37% 失败。建议一开始即由资深操作者和/或超声引导。","adiva_v_high":"评分 4–5：~93% 失败。首选超声引导或高级技术。","eadiva_title":"EA-DIVA (Civetta 2019)","eadiva_hint":"8 项加权指标，评估成人困难外周静脉通路风险。临界值 > 8。","eadiva_ref":"临界值 > 8 → 立即超声。Civetta G 等. J Vasc Access. 2019;20(3):281–289.","eadiva_v_low":"常规穿刺可行。阴性预测值 97.5% — 不太可能为困难通路。","eadiva_v_mid":"建议一开始即由资深操作者和/或超声引导。","eadiva_v_high":"立即超声。无浅静脉时：mini-midline、midline 或引导下深静脉。","cvr_title":"导管/静脉比（按直径）","cvr_hint":"CVR = 导管外径 ÷ 静脉直径 × 100。无止血带下超声测量静脉。外径 = French ÷ 3 mm。","cvr_vein":"静脉内径","cvr_cath":"导管尺寸","cvr_m_od":"导管外径","cvr_m_d":"静脉直径","cvr_m_cvr":"CVR · 占据率","cvr_note":"CVR 按直径计算（外径 ÷ 静脉）。33% 与 45% 阈值为直径比，非面积（45% 直径 ≈ 20% 面积）；勿混用。","cvr_zone":"风险区","cvr_z_opt":"最佳","cvr_z_acc":"可接受","cvr_z_no":"不推荐","cvr_z_opt_d":"CVR ≤ 33% — 理想","cvr_z_acc_d":"34–45% — 推荐上限","cvr_z_no_d":"> 45% — 血栓风险 > 2 倍","cvr_ref":"直径阈值。Spencer & Mahoney 2017 · Sharp R 等 2021。","cvr_v_opt_t":"最佳 · 占据 ≤ 33%","cvr_v_opt_b":"理想比值：导管周围血流充分。首选（经验法则：Fr 数 = 静脉 mm 数 ≈ 33%）。","cvr_v_acc_t":"可接受 · 34–45%","cvr_v_acc_b":"在推荐上限内（Spencer & Mahoney / INS）。评估合并症并考虑更小口径替代。","cvr_v_no_t":"不推荐 · > 45%","cvr_v_no_b":"超过安全上限：血栓风险 > 2 倍。选用更粗静脉或更细导管。","maddox_title":"观察分级","maddox_hint":"选择外周导管穿刺部位的静脉炎分级。","maddox_label":"Maddox 分级","maddox_score":"当前评分","maddox_ref":"Maddox RR 等 — 静脉炎观察量表。","mx_th_g":"分级","mx_th_r":"解读","mx_th_c":"处置","home_h1":"临床血管通路平台","diva_c1_t":"早产史","diva_c1_d":"既往早产史。","diva_c2_t":"静脉不可触及","diva_c2_d":"肢体上无法触及静脉。","diva_c3_t":"静脉不可见","diva_c3_d":"肢体上无法看到静脉。","adiva_c1_t":"既往静脉通路困难","adiva_c1_d":"既往外周置管困难史。","adiva_c2_t":"操作者预期困难","adiva_c2_d":"穿刺前临床医生即预计困难。","adiva_c3_t":"无法触及扩张静脉","adiva_c3_d":"肢体上无可触及的扩张静脉。","adiva_c4_t":"无法看到扩张静脉","adiva_c4_d":"肢体上无可见的扩张静脉。","adiva_c5_t":"目标静脉直径 < 3 mm","adiva_c5_d":"目标静脉小于 3 mm（超声测量）。","eadiva_c1_t":"既往外周静脉通路困难","eadiva_c1_d":"既往外周导管置管困难有记录。","eadiva_c2_t":"静脉资源耗竭","eadiva_c2_d":"既往化疗、静脉用药或多次穿刺导致静脉资源耗竭。","eadiva_c3_t":"静脉评估受限","eadiva_c3_d":"本次检查静脉不可见、不可触及、滚动或迂曲。","eadiva_c4_t":"凝血障碍 / 抗凝药","eadiva_c4_d":"凝血病或使用抗凝/抗血小板药物。","eadiva_c5_t":"神经血管疾病","eadiva_c5_d":"外周神经病和/或血管病（轻瘫、静脉炎、淋巴水肿、深静脉血栓）。","eadiva_c6_t":"皮肤检查异常","eadiva_c6_d":"皮肤深色、增厚或脆弱；瘢痕、烧伤、银屑病、瘢痕疙瘩。","eadiva_c7_t":"超重（BMI > 25）","eadiva_c7_d":"体质指数高于 25 kg/m²。","eadiva_c8_t":"仅一侧肢体可用","eadiva_c8_d":"动静脉瘘、静脉炎、手术需要或截肢限制通路。","mx_o0":"0 — 无静脉炎征象","mx_o1":"1 — 轻度静脉炎","mx_o2":"2 — 早期确立的静脉炎","mx_o3":"3 — 中度静脉炎","mx_o4":"4 — 重度静脉炎 / 血栓性静脉炎","mx_o5":"5 — 严重并发症","mx_b0_r":"部位正常","mx_b0_c":"常规监测","mx_b1_r":"初期刺激","mx_b1_c":"重新评估固定","mx_b2_r":"早期静脉炎","mx_b2_c":"考虑拔除","mx_b3_r":"中度静脉炎","mx_b3_c":"拔除并记录","mx_b4_r":"并发症","mx_b4_c":"拔除并升级处理","mx_v0_t":"无静脉炎","mx_v0_b":"继续常规监测穿刺部位，确认通畅并保持监测。","mx_v1_t":"轻度静脉炎","mx_v1_b":"重新评估固定、通畅性、输注液与局部症状。","mx_v2_t":"早期静脉炎","mx_v2_b":"根据进展考虑拔除并更换部位。","mx_v3_t":"中度静脉炎","mx_v3_b":"拔除导管并记录所见。","mx_v4_t":"重度静脉炎 / 血栓性静脉炎","mx_v4_b":"拔除，评估血栓性静脉炎/感染并升级处理。","mx_v5_t":"严重并发症","mx_v5_b":"立即拔除，评估局部/全身感染并升级处理。"}};
+let LANG=(function(){try{var s=localStorage.getItem("ebime_lang");if(s&&I18N[s])return s;}catch(e){}var n=(navigator.language||"es").slice(0,2).toLowerCase();return I18N[n]?n:"es";})();
+function t(k){return (I18N[LANG]&&I18N[LANG][k])||I18N.es[k]||k;}
+const LANG_NAMES={es:"Español",en:"English",pt:"Português",fr:"Français",it:"Italiano",ru:"Русский",zh:"中文"};
+
+const INK={green:'#2f7d28',amber:'#b9740b',danger:'#c52d44',teal:'#0c7c98',royal:'#24459a',magenta:'#8a2b88'};
+const FILL={green:'var(--green)',amber:'var(--amber)',danger:'var(--danger)',teal:'var(--teal)',royal:'var(--royal)',magenta:'var(--magenta)'};
+function paint(el,key,title,body){el.style.borderColor=FILL[key];el.style.background='color-mix(in srgb,'+FILL[key]+' 12%,#fff)';el.innerHTML='<b style="color:'+INK[key]+'">'+title+'</b>'+body;}
+const check='<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg>';
+function go(v,sub){
+  document.querySelectorAll('.view').forEach(e=>e.classList.remove('active'));
+  document.getElementById(v).classList.add('active');
+  document.querySelectorAll('.nav-links button').forEach(b=>b.classList.toggle('active',b.dataset.v===v));
+  document.querySelector('.nav-links').classList.remove('open');
+  window.scrollTo({top:0,behavior:'smooth'});
+  if(v==='calc'&&sub)calcTab(sub);
+}
+function calcTab(t){
+  document.querySelectorAll('#calcTabs button').forEach(b=>b.classList.toggle('active',b.dataset.t===t));
+  document.querySelectorAll('.ctab').forEach(e=>e.style.display='none');
+  document.getElementById('t-'+t).style.display='block';
+}
+let CRIT={};
+function buildCrit(id,items,cb){
+  CRIT[id]={items,cb};
+  const c=document.getElementById(id);c.innerHTML='';
+  items.forEach(it=>{const w=document.createElement('label');w.className='crit';
+    w.innerHTML='<input type="checkbox" data-p="'+it.p+'"><span class="box">'+check+'</span><span class="pts">+'+it.p+'</span><span class="lbl"><b>'+t(it.k+'_t')+'</b><span>'+t(it.k+'_d')+'</span></span>';
+    w.querySelector('input').addEventListener('change',cb);c.appendChild(w);});
+}
+function rebuildCrit(id){const r=CRIT[id];if(!r)return;const st=[...document.querySelectorAll('#'+id+' input')].map(i=>i.checked);buildCrit(id,r.items,r.cb);const ins=document.querySelectorAll('#'+id+' input');st.forEach((v,i)=>{if(ins[i])ins[i].checked=v;});}
+function sumChecked(id){let s=0;document.querySelectorAll('#'+id+' input:checked').forEach(i=>s+=+i.dataset.p);return s;}
+
+/* ---- DIVA pediátrica ---- */
+let dvAgeVal=0;
+buildCrit('divaList',[{p:3,k:'diva_c1'},{p:2,k:'diva_c2'},{p:2,k:'diva_c3'}],dvCalc);
+document.querySelectorAll('#dvAge button').forEach(b=>b.onclick=()=>{document.querySelectorAll('#dvAge button').forEach(x=>x.classList.remove('on'));b.classList.add('on');dvAgeVal=+b.dataset.v;dvCalc();});
+function dvCalc(){
+  const s=dvAgeVal+sumChecked('divaList');
+  document.getElementById('dvScore').textContent=s;
+  const key=s>=4?'danger':'green';
+  document.getElementById('dvScore').style.color=INK[key];
+  const g=document.getElementById('dvGauge');g.style.width=(s/10*100)+'%';g.style.background=FILL[key];
+  if(s>=4)paint(document.getElementById('dvVerdict'),'danger',t('risk_high'),t('diva_v_high'));
+  else paint(document.getElementById('dvVerdict'),'green',t('risk_low'),t('diva_v_low'));
+}
+dvCalc();
+
+/* ---- A-DIVA modificada ---- */
+buildCrit('adivaList',[{p:1,k:'adiva_c1'},{p:1,k:'adiva_c2'},{p:1,k:'adiva_c3'},{p:1,k:'adiva_c4'},{p:1,k:'adiva_c5'}],adCalc);
+function adCalc(){
+  const s=sumChecked('adivaList');document.getElementById('adScore').textContent=s;
+  const key=s<=1?'green':s<=3?'amber':'danger';
+  document.getElementById('adScore').style.color=INK[key];
+  const g=document.getElementById('adGauge');g.style.width=(s/5*100)+'%';g.style.background=FILL[key];
+  const map={green:[t('risk_low'),t('adiva_v_low')],amber:[t('risk_mod'),t('adiva_v_mod')],danger:[t('risk_high'),t('adiva_v_high')]};
+  paint(document.getElementById('adVerdict'),key,map[key][0],map[key][1]);
+}
+adCalc();
+
+/* ---- EA-DIVA ---- */
+buildCrit('eadivaList',[{p:3,k:'eadiva_c1'},{p:2,k:'eadiva_c2'},{p:2,k:'eadiva_c3'},{p:1,k:'eadiva_c4'},{p:1,k:'eadiva_c5'},{p:1,k:'eadiva_c6'},{p:1,k:'eadiva_c7'},{p:1,k:'eadiva_c8'}],eaCalc);
+function eaCalc(){
+  const s=sumChecked('eadivaList');document.getElementById('eaScore').textContent=s;
+  const key=s<=4?'green':s<=8?'amber':'danger';
+  document.getElementById('eaScore').style.color=INK[key];
+  const g=document.getElementById('eaGauge');g.style.width=(s/12*100)+'%';g.style.background=FILL[key];
+  const map={green:[t('risk_low'),t('eadiva_v_low')],amber:[t('risk_mid'),t('eadiva_v_mid')],danger:[t('risk_high'),t('eadiva_v_high')]};
+  paint(document.getElementById('eaVerdict'),key,map[key][0],map[key][1]);
+}
+eaCalc();
+
+/* ---- CVR ---- */
+const frData=[1,2,3,4,4.5,5,5.5,6,7,8,9,10];
+const frSel=document.getElementById('frSel');
+frData.forEach(f=>{const o=document.createElement('option');o.value=f;o.textContent=f+' Fr ('+(f/3).toFixed(2)+' mm OD)';if(f===4)o.selected=true;frSel.appendChild(o);});
+function cvrCalc(){
+  const d=+document.getElementById('veinD').value;const fr=+frSel.value;const od=fr/3;
+  document.getElementById('veinVal').textContent=d.toFixed(1)+' mm';
+  const cvr=od/d*100;const r=Math.round(cvr);
+  document.getElementById('odVal').textContent=od.toFixed(2)+' mm';
+  document.getElementById('dVal').textContent=d.toFixed(1)+' mm';
+  document.getElementById('cvrVal').textContent=r+'%';
+  document.getElementById('cvrBig').textContent=r+'%';
+  const g=document.getElementById('cvrGauge');g.style.width=Math.min(cvr,100)+'%';
+  const key=r<=33?'green':r<=45?'amber':'danger';g.style.background=FILL[key];
+  document.getElementById('cvrBig').style.color=INK[key];
+  const map={green:[t('cvr_v_opt_t'),t('cvr_v_opt_b')],amber:[t('cvr_v_acc_t'),t('cvr_v_acc_b')],danger:[t('cvr_v_no_t'),t('cvr_v_no_b')]};
+  paint(document.getElementById('cvrVerdict'),key,map[key][0],map[key][1]);
+}
+document.getElementById('veinD').addEventListener('input',cvrCalc);frSel.addEventListener('change',cvrCalc);cvrCalc();
+
+/* ---- MAGIC ---- */
+const mg={dur:0,inf:'periph',diff:'no',crit:'no',ckd:'no',lum:'no'};
+function segWire(id,key){document.querySelectorAll('#'+id+' button').forEach(b=>b.onclick=()=>{document.querySelectorAll('#'+id+' button').forEach(x=>x.classList.remove('on'));b.classList.add('on');mg[key]=b.dataset.v;magicCalc();});}
+segWire('mgDur','dur');segWire('mgInf','inf');segWire('mgDiff','diff');segWire('mgCrit','crit');segWire('mgCkd','ckd');segWire('mgLum','lum');
+function magicCalc(){
+  let dev,why,key='royal';const dur=+mg.dur;
+  if(mg.inf==='central'){
+    if(mg.crit==='si'){dev='CVC no tunelizado';why='Infusado irritante/vesicante en paciente crítico inestable: acceso central de inserción rápida para corta estancia.';}
+    else if(dur>=3){dev=mg.lum==='si'?'Port o CVC tunelizado':'Port implantable';why='Terapia central prolongada (≥31 días): dispositivo de larga permanencia tunelizado o totalmente implantable.';}
+    else{dev=mg.lum==='si'?'PICC multilumen':'PICC';why='El infusado irritante/vesicante exige acceso central; el PICC es razonable según duración y número de lúmenes.';}
+  } else {
+    if(mg.ckd==='si'){dev='Evitar venas del brazo — valorar con nefrología';why='ERC avanzada: preservar capital venoso del brazo. Evitar PICC/midline; coordinar estrategia de acceso con nefrología.';key='amber';}
+    else if(dur===0){dev=mg.diff==='si'?'Periférico guiado por US':'Catéter periférico';why='Terapia corta (≤5 días) y periféricamente compatible: dispositivo periférico. Con acceso difícil, guía por ultrasonido.';key='green';}
+    else if(dur===1){dev='Midline o periférico guiado por US';why='6–14 días, infusado compatible: preferir midline o periférico guiado por US; el PICC no es primera opción.';key='teal';}
+    else if(dur===2){dev=mg.lum==='si'?'PICC multilumen':'PICC';why='15–30 días: el PICC empieza a ser razonable según el contexto clínico.';}
+    else{dev=mg.lum==='si'?'PICC multilumen':'PICC';why='≥31 días: PICC apropiado; valorar tunelizado/port si la permanencia es muy prolongada.';}
+  }
+  document.getElementById('mgDevice').textContent=dev;document.getElementById('mgDevice').style.color=INK[key];
+  paint(document.getElementById('mgRationale'),key,'Fundamento',why);
+}
+magicCalc();
+
+/* ---- MADDOX ---- */
+const mxData=[['green','mx_v0'],['green','mx_v1'],['amber','mx_v2'],['amber','mx_v3'],['danger','mx_v4'],['danger','mx_v5']];
+function mxCalc(){
+  const g=+document.getElementById('mxSel').value;document.getElementById('mxScore').textContent=g;
+  const key=mxData[g][0];document.getElementById('mxScore').style.color=INK[key];
+  const gg=document.getElementById('mxGauge');gg.style.width=(g/5*100)+'%';gg.style.background=FILL[key];
+  paint(document.getElementById('mxVerdict'),key,t(mxData[g][1]+'_t'),t(mxData[g][1]+'_b'));
+}
+document.getElementById('mxSel').addEventListener('change',mxCalc);mxCalc();
+
+/* ---- CAPRINI ---- */
+let cpAgeVal=0;
+const capriniGroups=[
+  ['+1 punto',[
+    "Cirugía menor programada","Cirugía mayor previa (< 1 mes)","Venas varicosas","Enfermedad inflamatoria intestinal",
+    "Edema actual de miembros inferiores","Obesidad (IMC > 25)","Infarto agudo de miocardio","Insuficiencia cardiaca congestiva (< 1 mes)",
+    "Sepsis (< 1 mes)","Enfermedad pulmonar grave / neumonía (< 1 mes)","Función pulmonar anormal / EPOC","Reposo en cama (paciente médico)",
+    "Anticonceptivos orales o terapia hormonal","Embarazo o posparto (< 1 mes)","Aborto recurrente / muerte fetal / parto prematuro con toxemia"],1],
+  ['+2 puntos',[
+    "Cirugía artroscópica","Cirugía abierta mayor (> 45 min)","Cirugía laparoscópica (> 45 min)","Neoplasia maligna (actual o previa)",
+    "Confinado a cama (> 72 h)","Yeso inmovilizador (< 1 mes)","Acceso venoso central"],2],
+  ['+3 puntos',[
+    "Antecedente de TVP / TEP","Historia familiar de TVP / TEP","Factor V Leiden","Protrombina 20210A","Anticoagulante lúpico",
+    "Anticuerpos anticardiolipina","Homocisteína sérica elevada","Trombocitopenia inducida por heparina (TIH)","Otra trombofilia congénita / adquirida"],3],
+  ['+5 puntos',[
+    "Artroplastia mayor electiva de MI","Fractura de cadera, pelvis o pierna (< 1 mes)","ACV (< 1 mes)","Politraumatismo (< 1 mes)","Lesión medular aguda / parálisis (< 1 mes)"],5]
+];
+(function(){const c=document.getElementById('capriniList');
+  capriniGroups.forEach(grp=>{const h=document.createElement('div');h.className='grphead';h.textContent=grp[0];c.appendChild(h);
+    grp[1].forEach(t=>{const w=document.createElement('label');w.className='crit';
+      w.innerHTML='<input type="checkbox" data-p="'+grp[2]+'"><span class="box">'+check+'</span><span class="pts">+'+grp[2]+'</span><span class="lbl"><b>'+t+'</b></span>';
+      w.querySelector('input').addEventListener('change',cpCalc);c.appendChild(w);});});
+})();
+document.querySelectorAll('#cpAge button').forEach(b=>b.onclick=()=>{document.querySelectorAll('#cpAge button').forEach(x=>x.classList.remove('on'));b.classList.add('on');cpAgeVal=+b.dataset.v;cpCalc();});
+// Modificadores propios del acceso vascular (factores de trombosis asociada a catéter, no suman al Caprini)
+const cpModsData=[
+  ["Antecedente de trombosis asociada a catéter","Elegir vena distinta y de mayor calibre; CVR lo más bajo posible; valorar tromboprofilaxis con el equipo."],
+  ["Múltiples CVAD previos / capital venoso comprometido","Mapear venas con ecografía; preferir el menor calibre y lumen único; preservar venas para futuros accesos."],
+  ["Catéter de gran calibre previsto (CVR > 45%)","Reducir French o elegir una vena mayor hasta CVR < 33%; recalcular en la pestaña Ratio catéter/vena."],
+  ["Múltiples lúmenes previstos","Usar el menor número de lúmenes necesario; cada lumen adicional incrementa el riesgo trombótico."],
+  ["Inserción prevista en lado izquierdo","Trayecto más largo y angulado; preferir el lado derecho cuando sea posible."],
+  ["Acceso femoral / miembro inferior","Mayor riesgo de TVP e infección; preferir miembro superior o yugular salvo contraindicación."],
+  ["Punta no confirmada en unión cavoatrial","Confirmar punta en CAJ / VCS distal (ECG intracavitario o imagen); las puntas altas elevan el riesgo trombótico."]
+];
+(function(){const c=document.getElementById('cpMods');
+  cpModsData.forEach((m,i)=>{const w=document.createElement('label');w.className='crit';
+    w.innerHTML='<input type="checkbox" data-mod="'+i+'"><span class="box">'+check+'</span><span class="pts"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="'+INK.danger+'" stroke-width="2"><path d="M4 22V4M4 4h13l-2 4 2 4H4"/></svg></span><span class="lbl"><b>'+m[0]+'</b></span>';
+    w.querySelector('input').addEventListener('change',cpCalc);c.appendChild(w);});
+})();
+function cpCalc(){
+  const s=cpAgeVal+sumChecked('capriniList');document.getElementById('cpScore').textContent=s;
+  let key,title,body;
+  if(s===0){key='green';title='Riesgo muy bajo (~0.5%)';body='Deambulación temprana y frecuente. Profilaxis farmacológica habitualmente no requerida.';}
+  else if(s<=2){key='green';title='Riesgo bajo (~1.5%)';body='Profilaxis mecánica (compresión neumática intermitente) durante la hospitalización.';}
+  else if(s<=4){key='amber';title='Riesgo moderado (~3%)';body='Profilaxis farmacológica o mecánica según contexto clínico y riesgo hemorrágico.';}
+  else{key='danger';title='Riesgo alto (~6%)';body='Profilaxis farmacológica (HBPM/HNF) + medidas mecánicas. Valorar profilaxis extendida en cirugía oncológica.';}
+  document.getElementById('cpScore').style.color=INK[key];
+  const g=document.getElementById('cpGauge');g.style.width=Math.min(s/8*100,100)+'%';g.style.background=FILL[key];
+  paint(document.getElementById('cpVerdict'),key,title,body);
+  // Implicación para acceso vascular según el nivel de riesgo
+  let vkey,vbody;
+  if(s<=2){vkey='green';vbody='Selección estándar por MAGIC/CVR. Elegir el menor calibre que cumpla la terapia, CVR ≤ 33% y un solo lumen si es suficiente.';}
+  else if(s<=4){vkey='amber';vbody='Minimizar trombogenicidad: menor French posible, CVR < 33%, lumen único y punta en unión cavoatrial; evitar inserción izquierda y antebrazo. Reevaluar PICC frente a midline si la terapia lo permite.';}
+  else{vkey='danger';vbody='Alto riesgo de trombosis asociada a catéter: el PICC eleva el riesgo de TVP de miembro superior. Valorar alternativas (CICC de menor calibre, port en terapia intermitente prolongada), CVR muy por debajo del 45%, evitar multilumen innecesario, confirmar punta en CAJ y discutir tromboprofilaxis según riesgo hemorrágico. Vigilar signos de TVP.';}
+  paint(document.getElementById('cpVascular'),vkey,'Implicación para acceso vascular',vbody);
+  // Alerta de modificadores presentes
+  const mods=[...document.querySelectorAll('#cpMods input:checked')].map(i=>+i.dataset.mod);
+  const al=document.getElementById('cpModAlert');
+  if(mods.length){
+    let html='<div class="verdict" style="border-color:var(--danger);background:color-mix(in srgb,var(--danger) 10%,#fff);margin-top:8px"><b style="color:'+INK.danger+'">⚑ Modificadores de trombosis presentes ('+mods.length+')</b><ul style="margin:6px 0 0 16px;padding:0;font-size:13px">';
+    mods.forEach(i=>html+='<li style="margin-bottom:6px"><b style="color:var(--txt)">'+cpModsData[i][0]+':</b> '+cpModsData[i][1]+'</li>');
+    html+='</ul></div>';al.innerHTML=html;
+  } else al.innerHTML='';
+}
+cpCalc();
+
+/* ---- pH / Osmolaridad ---- */
+function phCalc(){
+  const ph=+document.getElementById('phR').value;const os=+document.getElementById('osR').value;
+  document.getElementById('phVal').textContent=ph.toFixed(1);document.getElementById('osVal').textContent=os+' mOsm/L';
+  const okph=(ph>=5&&ph<=9);
+  paint(document.getElementById('phVerdict'),okph?'green':'danger','pH',okph?'pH compatible periférico (5–9).':'pH extremo — riesgo de daño endotelial. Valorar vía central o dilución/velocidad lenta.');
+  const okos=(os<600);
+  paint(document.getElementById('osVerdict'),okos?'green':'danger','Osmolaridad',okos?'Osmolaridad compatible periférica (< 600 mOsm/L).':'Hiperosmolar (≥ 600 mOsm/L) — acceso central recomendado. NPT ≥ 850 requiere central.');
+  const ok=okph&&okos;
+  paint(document.getElementById('routeVerdict'),ok?'green':'danger','Vía sugerida',ok?'Apta para vía periférica corta.':'Preferir acceso central o técnica de minimización.');
+}
+document.getElementById('phR').addEventListener('input',phCalc);document.getElementById('osR').addEventListener('input',phCalc);phCalc();
+
+/* ---- Base de fármacos ---- */
+const drugs=[
+  ["Norepinefrina","Vesicante","3.0–4.5","~280","Central","Extravasación → necrosis; antídoto fentolamina. Vía central de elección."],
+  ["Dopamina","Vesicante","2.5–4.5","~280","Central","Vesicante; monitor de extravasación. Central preferida en infusión prolongada."],
+  ["Amiodarona","Vesicante","~4.0","~280","Central","Irrita endotelio; filtro 0.22µm; central si > 1 h o concentración alta."],
+  ["Cloruro de calcio","Vesicante","5.5–7.5","~2050","Central","Hiperosmolar y vesicante; preferir central. Gluconato menos irritante en periférica."],
+  ["Fenitoína","Vesicante","10–12","~520","Central","pH muy alcalino; riesgo de síndrome del guante púrpura; filtro en línea."],
+  ["Dextrosa 50%","Vesicante","3.5–6.5",">2500","Central","Muy hiperosmolar; solo central o diluir para periférica."],
+  ["Vancomicina","Irritante","2.5–4.5","~300","Periférica","Síndrome del hombre rojo: infundir ≥ 60 min. Concentración ≤ 5 mg/mL periférica."],
+  ["Potasio (KCl)","Irritante","4.0–8.0","variable","Periférica","Diluir; nunca en bolo. Concentrado (>40 mEq/L) por vía central."],
+  ["Aciclovir","Irritante","10.5–11.6","~300","Periférica","pH alcalino; hidratar; infundir ≥ 1 h para evitar cristaluria/flebitis."],
+  ["Ciprofloxacino","Irritante","3.3–4.6","~300","Periférica","Ácido; rotar sitio; infundir 60 min para reducir flebitis."],
+  ["Furosemida","Irritante","8.0–9.3","~290","Periférica","Alcalino; no mezclar con soluciones ácidas (precipita)."],
+  ["Fenobarbital","Irritante","9.2–10.5","variable","Periférica","Alcalino; extravasación irritante; infusión lenta."],
+  ["Midazolam","Irritante","3.0","~290","Periférica","Ácido; vigilar sedación y depresión respiratoria."],
+  ["Metronidazol","No vesicante","4.5–7.0","~310","Periférica","Compatible periférico; infusión estándar."],
+  ["Cefepime","No vesicante","4.0–6.0","~300","Periférica","Compatible periférico; reconstituir según ficha técnica."],
+  ["Ceftriaxona","No vesicante","6.0–8.0","~300","Periférica","No mezclar con soluciones con calcio (precipitado)."],
+  ["Heparina","No vesicante","5.0–7.5","~300","Periférica","Compatible; monitor de TTPa según protocolo."],
+  ["Propofol","Irritante","7.0–8.5","~290","Periférica","Emulsión lipídica; dolor a la inyección; técnica aséptica estricta."],
+  ["Bicarbonato de sodio","Irritante","7.0–8.5","~1000–2000","Central","Hiperosmolar; vesicante en extravasación; preferir central concentrado."],
+  ["Nutrición parenteral total","Vesicante","5.0–6.0","≥850","Central","Osmolaridad ≥ 850 mOsm/L exige acceso central (punta en VCS)."]
+];
+function pillType(t){return t==='Vesicante'?'<span class="pill r">Vesicante</span>':t==='Irritante'?'<span class="pill a">Irritante</span>':'<span class="pill g">No vesicante</span>';}
+function pillRoute(r){return r==='Central'?'<span class="pill m">Central</span>':'<span class="pill b">Periférica</span>';}
+function renderDrugs(){
+  const q=document.getElementById('drugSearch').value.toLowerCase();
+  const ft=document.getElementById('fType').value;const fr=document.getElementById('fRoute').value;
+  const body=document.getElementById('drugBody');body.innerHTML='';
+  let rows=drugs.filter(d=>d[0].toLowerCase().includes(q)&&(!ft||d[1]===ft)&&(!fr||d[4]===fr));
+  if(!rows.length){body.innerHTML='<tr><td colspan="6"><div class="empty">Sin coincidencias. Ajusta la búsqueda o los filtros.</div></td></tr>';return;}
+  rows.sort((a,b)=>a[0].localeCompare(b[0]));
+  rows.forEach(d=>{const tr=document.createElement('tr');
+    tr.innerHTML='<td><b>'+d[0]+'</b></td><td>'+pillType(d[1])+'</td><td style="font-family:var(--mono)">'+d[2]+'</td><td style="font-family:var(--mono)">'+d[3]+'</td><td>'+pillRoute(d[4])+'</td><td style="color:var(--txt-dim)">'+d[5]+'</td>';
+    body.appendChild(tr);});
+}
+renderDrugs();
+
+/* ---- Catálogo ---- */
+const devices=[
+  {fam:"CVC",line:"Catéter Venoso Central",name:"Bioflux®",sub:"Poliuretano radiopaco termo-sensible",c:"var(--royal)",desc:"CVC para terapia intensiva, NPT y medicamentos. Inserción en subclavia o yugular por Seldinger; punta en vena cava superior.",specs:{"Material":"Poliuretano","Lúmenes":"1–3","Calibres":"4–8 Fr","Longitud":"8–30 cm"},uses:["UCI","Urgencias","NPT"]},
+  {fam:"CVC",line:"Catéter Venoso Central",name:"Bioflux® Plus",sub:"Conectores libres de aguja",c:"var(--royal)",desc:"Versión avanzada con conectores libres de aguja en cada terminal para reducir infecciones. Tratamientos de 4–6 semanas.",specs:{"Material":"Poliuretano","Lúmenes":"1–3","Calibres":"4–8 Fr","Diferencial":"Sin aguja"},uses:["UCI","NPT","Control infección"]},
+  {fam:"PICC",line:"PICC",name:"EB-PICC",sub:"Silicón radiopaco, 1 lumen",c:"var(--teal)",desc:"Elastómero de silicón para acceso central de inserción periférica. NPT y medicación prolongada vía basílica, cefálica o braquial.",specs:{"Material":"Silicón","Lúmenes":"1","Tallas":"Neo/Ped/Adulto","Longitud":"280/600 mm"},uses:["Neonatología","Pediatría","Med. interna"]},
+  {fam:"PICC",line:"PICC",name:"EB-PICC DUO",sub:"Poliuretano/silicón, 1–2 lúmenes",c:"var(--teal)",desc:"Aguja introductora con camisa desprendible. Tamaños neonatal, pediátrico y adulto con 1 y 2 lúmenes.",specs:{"Material":"Poliuretano/silicón","Lúmenes":"1–2","Calibres":"1.9–3.0 Fr","Longitud":"30/50 cm"},uses:["Neonatología","Oncología","Larga duración"]},
+  {fam:"Hemodiálisis",line:"Catéter Hemodiálisis",name:"Smart®",sub:"Poliuretano termo-sensible, aguda",c:"var(--magenta)",desc:"Doble lumen para hemodiálisis aguda hasta 4–6 semanas. Extensiones codificadas: rojo arterial, azul venoso.",specs:{"Material":"Poliuretano","Lúmenes":"Doble","Calibres":"11.5–12 Fr","Uso":"HD aguda"},uses:["Nefrología","UCI","Aféresis"]},
+  {fam:"Hemodiálisis",line:"Catéter Hemodiálisis",name:"Evolution®",sub:"Silicón 100%, crónica",c:"var(--magenta)",desc:"Doble lumen 100% silicón radiopaco para hemodiálisis crónica (~1 año). Pinza y adaptador codificados por color.",specs:{"Material":"Silicón 100%","Lúmenes":"Doble","Ø interno":"1.2–2.0 mm","Duración":"~1 año"},uses:["HD crónica","Nefrología"]},
+  {fam:"Diálisis peritoneal",line:"Diálisis Peritoneal",name:"Ebflex®",sub:"Diseño patentado EBIME, aguda",c:"var(--green)",desc:"Diseño exclusivo patentado para diálisis peritoneal aguda. Se autoposiciona en cavidad para optimizar el flujo.",specs:{"Material":"Patentado EBIME","Uso":"DP aguda","Inserción":"Quirúrgica/percutánea"},uses:["DP aguda","UCI"]},
+  {fam:"Diálisis peritoneal",line:"Diálisis Peritoneal",name:"Biosil®",sub:"Silicón 100% (Tenckhoff)",c:"var(--green)",desc:"Silicón con línea radiopaca para DP aguda y crónica. Variantes Tenckhoff (1 o 2 cojinetes), Luer lock y tapón seguro.",specs:{"Material":"Silicón 100%","Tipo":"Tenckhoff","Tallas":"Neo/Inf/Adulto","Uso":"DP aguda/crónica"},uses:["DP","Nefrología"]},
+  {fam:"Puerto",line:"Puerto Vascular Quimioterapia",name:"Bioacces®",sub:"Puerto implantable de titanio",c:"var(--amber)",desc:"Puerto subcutáneo implantable para quimioterapia. Contenedor de titanio, membrana de silicón; punta en VCS por Seldinger modificada.",specs:{"Cuerpo":"Titanio+silicón","Catéter":"Silicón","Calibre":"5 Fr","Permanencia":"Larga"},uses:["Oncología","Quimioterapia"]},
+  {fam:"Accesorio",line:"Accesorio PVQ",name:"Aguja Huber EBIME",sub:"Angulada 90°, acero inoxidable",c:"var(--royal)",desc:"Aguja Huber con extensión y punta angulada que reduce el daño a la membrana del puerto. Alas antiderrapantes.",specs:{"Material":"Acero inox.","Ángulo":"90°","Calibres":"19/20 G","Longitud":"19.1 mm"},uses:["Oncología","Puerto vascular"]},
+  {fam:"Accesorio",line:"Accesorio",name:"Tapín EBIME",sub:"Conector libre de aguja",c:"var(--teal)",desc:"Permite infusión a través de su membrana sin abrir el sistema, manteniéndolo cerrado para reducir el riesgo de infección.",specs:{"Tipo":"Sin aguja","Función":"Sistema cerrado","Compat.":"Línea EBIME"},uses:["Control infección","UCI","Universal"]}
+];
+const fams=["Todos",...new Set(devices.map(d=>d.fam))];
+const cf=document.getElementById('catFilter');
+fams.forEach((f,i)=>{const b=document.createElement('button');b.textContent=f;b.style.cssText='--accent:var(--teal)';if(i===0)b.classList.add('on');b.onclick=()=>{document.querySelectorAll('#catFilter button').forEach(x=>x.classList.remove('on'));b.classList.add('on');renderDevices(f);};cf.appendChild(b);});
+function renderDevices(fam){
+  const g=document.getElementById('devGrid');g.innerHTML='';
+  devices.filter(d=>fam==='Todos'||d.fam===fam).forEach(d=>{
+    const el=document.createElement('div');el.className='dev';el.style.setProperty('--c',d.c);
+    let dl='';for(const k in d.specs)dl+='<dt>'+k+'</dt><dd>'+d.specs[k]+'</dd>';
+    el.innerHTML='<div class="line">'+d.line+'</div><h4>'+d.name+'</h4><div class="sub">'+d.sub+'</div><p>'+d.desc+'</p><dl>'+dl+'</dl><div class="uses">'+d.uses.map(u=>'<span class="badge">'+u+'</span>').join('')+'</div>';
+    g.appendChild(el);
+  });
+}
+renderDevices('Todos');
+
+/* ===== App shell navigation ===== */
+function svgIcon(p,stroke){return '<svg viewBox="0 0 24 24" fill="none" stroke="'+stroke+'" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'+p+'</svg>';}
+const chevron='<path d="M9 6l6 6-6 6"/>';
+const calcMeta=[
+  {id:'diva',name:'DIVA pediátrica',sub:'Acceso difícil en niños',color:'#902d8e',icon:'<path d="M9 11l3 3L22 4M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>'},
+  {id:'adiva',name:'A-DIVA',sub:'Acceso difícil en adultos',color:'#902d8e',icon:'<circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 12 0v1"/>'},
+  {id:'eadiva',name:'EA-DIVA',sub:'Acceso difícil · 8 ítems',color:'#902d8e',icon:'<rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 7h6M9 11h6M9 15h4"/>'},
+  {id:'cvr',name:'Ratio catéter/vena',sub:'Riesgo de trombosis (CVR)',color:'#16a3c4',icon:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.5"/>'},
+  {id:'magic',name:'MAGIC',sub:'Selección de dispositivo',color:'#24459a',icon:'<path d="M12 2v4M12 18v4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M2 12h4M18 12h4"/><circle cx="12" cy="12" r="3"/>'},
+  {id:'maddox',name:'Escala de Maddox',sub:'Flebitis periférica 0–5',color:'#f19f2c',icon:'<path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/>'},
+  {id:'caprini',name:'Caprini · Acceso vascular',sub:'Riesgo de TEV / trombosis CRT',color:'#54b24c',icon:'<path d="M12 2a7 7 0 0 0-7 7c0 4 7 13 7 13s7-9 7-13a7 7 0 0 0-7-7z"/><path d="M9 9h6M12 6v6"/>'}
+];
+const TITLES={home:'EBIME',calc:'Calculadoras',pharma:'Motor farmacológico',catalog:'Catálogo EBIME'};
+let curCalc=null;
+function tint(hex){return 'color-mix(in srgb,'+hex+' 14%,#fff)';}
+function renderCards(){
+  const hg=document.getElementById('homeCalcs');hg.innerHTML='';
+  calcMeta.forEach(m=>{const d=document.createElement('div');d.className='qcard ripple';d.onclick=()=>goCalc(m.id);
+    d.innerHTML='<div class="qi" style="background:'+tint(m.color)+'">'+svgIcon(m.icon,m.color)+'</div><h3>'+t(m.id+'_n')+'</h3><p>'+t(m.id+'_s')+'</p>';hg.appendChild(d);});
+  const cl=document.getElementById('calcListBody');cl.innerHTML='';
+  calcMeta.forEach(m=>{const r=document.createElement('div');r.className='listrow ripple';r.onclick=()=>openCalc(m.id);
+    r.innerHTML='<div class="li" style="background:'+tint(m.color)+'">'+svgIcon(m.icon,m.color)+'</div><div class="lt"><b>'+t(m.id+'_n')+'</b><span>'+t(m.id+'_s')+'</span></div><div class="chev">'+svgIcon(chevron,'currentColor')+'</div>';cl.appendChild(r);});
+}
+renderCards();
+function setTitle(t){document.getElementById('appTitle').textContent=t;}
+function showBack(on){document.getElementById('backBtn').hidden=!on;}
+function showScreen(s){
+  document.querySelectorAll('.screen').forEach(e=>e.classList.toggle('active',e.id==='s-'+s));
+  document.querySelectorAll('.navitem').forEach(n=>n.classList.toggle('active',n.dataset.s===s));
+  if(s==='calc'){closeCalc();}else if(s==='home'){document.getElementById('appTitle').innerHTML='<img class="barlogo" src="ebime-logo.png" alt="EBIME">';showBack(false);}else{setTitle(t('t_'+s));showBack(false);}
+  window.scrollTo(0,0);
+}
+function openCalc(id){
+  document.getElementById('calcList').style.display='none';
+  document.getElementById('calcDetail').style.display='block';
+  document.querySelectorAll('#calcDetail .ctab').forEach(e=>e.style.display='none');
+  document.getElementById('t-'+id).style.display='block';
+  curCalc=id;setTitle(t(id+'_n'));showBack(true);window.scrollTo(0,0);
+  history.pushState({calc:id},'');
+}
+function closeCalc(){
+  document.getElementById('calcDetail').style.display='none';
+  document.getElementById('calcList').style.display='block';
+  curCalc=null;setTitle(t('t_calc'));showBack(false);
+}
+function goCalc(id){showScreen('calc');openCalc(id);}
+window.addEventListener('popstate',()=>{if(!document.getElementById('backBtn').hidden){closeCalc();window.scrollTo(0,0);}});
+/* ripple (delegated, supports dynamic nodes) */
+document.addEventListener('pointerdown',e=>{
+  const el=e.target.closest('.ripple');if(!el)return;
+  const rect=el.getBoundingClientRect();const d=Math.max(rect.width,rect.height);
+  const s=document.createElement('span');s.className='rip';
+  s.style.width=s.style.height=d+'px';s.style.left=(e.clientX-rect.left-d/2)+'px';s.style.top=(e.clientY-rect.top-d/2)+'px';
+  el.appendChild(s);setTimeout(()=>s.remove(),500);
+});
+/* install prompt */
+let deferredPrompt=null;
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;document.getElementById('installBtn').style.display='inline-flex';});
+document.getElementById('installBtn').onclick=async()=>{if(!deferredPrompt)return;deferredPrompt.prompt();await deferredPrompt.userChoice;deferredPrompt=null;document.getElementById('installBtn').style.display='none';};
+function applyLang(){
+  document.documentElement.lang=LANG;
+  try{localStorage.setItem('ebime_lang',LANG);}catch(e){}
+  document.querySelectorAll('[data-i18n]').forEach(el=>{el.textContent=t(el.dataset.i18n);});
+  renderCards();
+  ['divaList','adivaList','eadivaList'].forEach(rebuildCrit);
+  const _f={diva:dvCalc,adiva:adCalc,eadiva:eaCalc,cvr:cvrCalc,maddox:mxCalc};
+  if(curCalc&&_f[curCalc])_f[curCalc]();
+  const cur=document.querySelector('.navitem.active');const s=cur?cur.dataset.s:'home';
+  if(s==='home'){document.getElementById('appTitle').innerHTML='<img class="barlogo" src="ebime-logo.png" alt="EBIME">';}
+  else if(curCalc){document.getElementById('appTitle').textContent=t(curCalc+'_n');}
+  else{document.getElementById('appTitle').textContent=t('t_'+s);}
+  renderLangList();
+}
+function renderLangList(){
+  const c=document.getElementById('langList');c.innerHTML='';
+  Object.keys(LANG_NAMES).forEach(code=>{const r=document.createElement('div');r.className='langrow ripple'+(code===LANG?' on':'');r.onclick=()=>selectLang(code);
+    r.innerHTML='<span class="nm">'+LANG_NAMES[code]+'</span><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>';c.appendChild(r);});
+}
+function openLang(){document.getElementById('langScrim').classList.add('on');document.getElementById('langSheet').classList.add('on');}
+function closeLang(){document.getElementById('langScrim').classList.remove('on');document.getElementById('langSheet').classList.remove('on');}
+function selectLang(code){LANG=code;applyLang();closeLang();}
+applyLang();
+
+/* service worker */
+if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));}
+</script>
+</body>
+</html>
