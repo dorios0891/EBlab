@@ -1,0 +1,38 @@
+{
+  "name": "EBIME · Plataforma Clínica de Acceso Vascular",
+  "short_name": "EBIME",
+  "description": "Calculadoras de acceso vascular, motor farmacológico y catálogo de dispositivos EBIME.",
+  "start_url": ".",
+  "scope": ".",
+  "display": "standalone",
+  "orientation": "portrait",
+  "lang": "es",
+  "background_color": "#ffffff",
+  "theme_color": "#24459a",
+  "categories": [
+    "medical",
+    "health",
+    "education"
+  ],
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "version": "4.6"
+}
