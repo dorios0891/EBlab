@@ -307,7 +307,7 @@ body{background:#e7ebf3;font-family:"Roboto","Inter",system-ui,sans-serif}
     <div class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></div>
   </div>
   <div class="appfoot" data-i18n="home_foot">© 2026 Diego Orlando Ríos Guarín · Uso educativo y clínico-operativo.</div>
-  <div class="appver">EBIME · v5.0</div>
+  <div class="appver">EBIME · v5.1</div>
 </div>
 
 <!-- CALC -->
@@ -805,7 +805,7 @@ function renderDrugs(){
   cont.appendChild(frag);
 }
 function setPharma(list,fuente){PHARMA=list;fillGroups();
-  document.getElementById('pharmaStatus').textContent=list.length+' fármacos · fuente: '+fuente;renderDrugs();}
+  document.getElementById('pharmaStatus').textContent=list.length+' fármacos';renderDrugs();}
 
 /* normalización del Excel (idéntica al conversor actualizar_farmacos.py) */
 const _SHEET_LABEL={'Cardio':'Cardiovascular / Vasoactivo','Antibioticos':'Antibióticos / Antifúngicos','Electrolitos':'Electrolitos / Fluidos','Sedoanalgesia':'Sedoanalgesia','Hoja 5':'Varios','Antineoplásicos':'Antineoplásicos','Antiepilépticos':'Antiepilépticos','Otros':'Otros','Glucocorticoides':'Glucocorticoides','Inmunosupresores':'Inmunosupresores','Anticoagulantes':'Anticoagulantes'};
