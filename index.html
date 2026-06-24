@@ -317,7 +317,7 @@ body{background:#e7ebf3;font-family:"Roboto","Inter",system-ui,sans-serif}
     <div class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></div>
   </div>
   <div class="appfoot" data-i18n="home_foot">© 2026 Diego Orlando Ríos Guarín · Uso educativo y clínico-operativo.</div>
-  <div class="appver">EBIME LAB · v5.8</div>
+  <div class="appver">EBIME LAB · v5.9</div>
 </div>
 
 <!-- CALC -->
@@ -390,6 +390,8 @@ body{background:#e7ebf3;font-family:"Roboto","Inter",system-ui,sans-serif}
     </div><div class="ctab" id="t-magic" style="--accent:var(--royal);display:none">
       <div class="grid2">
         <div class="card"><h4>Selección de dispositivo</h4><p class="hint">Michigan Appropriateness Guide for Intravenous Catheters. Responde según el escenario clínico.</p>
+          <div class="seg" id="mgMode" style="margin-bottom:12px"><button data-v="adult" class="on">Adultos (MAGIC)</button><button data-v="pedi">Pediátrico (miniMAGIC)</button></div>
+          <div id="mgAdultFields">
           <div class="field"><label>Duración prevista de la terapia</label><div class="seg" id="mgDur"><button data-v="0" class="on">≤5 días</button><button data-v="1">6–14 d</button><button data-v="2">15–30 d</button><button data-v="3">≥31 d</button></div></div>
           <div class="field"><label>Tipo de infusado</label><div class="seg" id="mgInf"><button data-v="periph" class="on">Periféricamente compatible</button><button data-v="central">Irritante / vesicante</button></div></div>
           <div class="field"><label>Acceso venoso difícil (DIVA/A-DIVA alto)</label><div class="seg" id="mgDiff"><button data-v="no" class="on">No</button><button data-v="si">Sí</button></div></div>
@@ -397,6 +399,13 @@ body{background:#e7ebf3;font-family:"Roboto","Inter",system-ui,sans-serif}
           <div class="field"><label>ERC avanzada (≥3b) — preservar capital venoso</label><div class="seg" id="mgCkd"><button data-v="no" class="on">No</button><button data-v="si">Sí</button></div></div>
           <div class="field"><label>Patrón de administración</label><div class="seg" id="mgPat"><button data-v="cont" class="on">Continua</button><button data-v="interm">Intermitente</button></div></div>
           <div class="field" style="margin-bottom:0"><label>Necesidad de múltiples lúmenes</label><div class="seg" id="mgLum"><button data-v="no" class="on">Un lumen basta</button><button data-v="si">Varios lúmenes</button></div></div>
+          </div>
+          <div id="mgPediFields" style="display:none">
+            <div class="field"><label>Población (miniMAGIC)</label><div class="seg" id="mgPob" style="flex-wrap:wrap"><button data-v="rn" class="on">RN término</button><button data-v="lact">Lactante ≤1 a</button><button data-v="nino">Niño/adolesc.</button><button data-v="critico">Crítico</button><button data-v="larga">Larga permanencia</button></div></div>
+            <div class="field" id="mgPobSubWrap" style="display:none"><label>Estado clínico</label><div class="seg" id="mgPobSub"></div></div>
+            <div class="field"><label id="mgPIndLbl">Indicación</label><div class="seg" id="mgPInd" style="flex-wrap:wrap"></div></div>
+            <div class="field" style="margin-bottom:0"><label id="mgPDurLbl">Duración prevista</label><div class="seg" id="mgPDur" style="flex-wrap:wrap"></div></div>
+          </div>
         </div>
         <button class="calc-btn" onclick="showResult('magic')" data-i18n="calc_btn">Calcular</button>
         <div class="readout">
@@ -405,7 +414,7 @@ body{background:#e7ebf3;font-family:"Roboto","Inter",system-ui,sans-serif}
           <div class="verdict" id="mgRationale" style="margin-top:16px"></div>
           <div class="eyebrow" style="--accent:var(--royal);margin:18px 0 8px">Idoneidad por dispositivo</div>
           <div class="gradelist" id="mgList"></div>
-          <div class="ref">Reevaluar la indicación a diario; retirar el dispositivo cuando ya no sea necesario. Chopra V et al. (MAGIC), Ann Intern Med. 2015.</div>
+          <div class="ref" id="mgRef">Reevaluar la indicación a diario; retirar el dispositivo cuando ya no sea necesario. Chopra V et al. (MAGIC), Ann Intern Med. 2015.</div>
         </div>
       </div>
     </div><div class="ctab" id="t-maddox" style="--accent:var(--amber);display:none">
@@ -690,6 +699,86 @@ function magicCalc(){
 }
 magicCalc();
 
+/* ---- miniMAGIC (pediátrico) ---- */
+var mgMode='adult';
+var mgP={pob:'rn',sub:'',ind:'perif',dur:'0'};
+var ADULT_REF='Reevaluar la indicación a diario; retirar el dispositivo cuando ya no sea necesario. Chopra V et al. (MAGIC), Ann Intern Med. 2015.';
+var PEDI_REF='Pediatría: miniMAGIC (Ullman AJ et al., Pediatrics 2020) · miniMAGIC-Brasil (Felipe MAA et al., Rev Paul Pediatr. 2024;42:e2023159). Apoyo a la decisión; prevalece el juicio clínico.';
+var HOSPIND=[['perif','Compatible periférica'],['noperif','No compatible periférica'],['sangre','Extracción frecuente de sangre']];
+var HOSPDUR=[['0','≤7 d'],['1','8–14 d'],['2','15–30 d'],['3','≥31 d']];
+var PEDI={
+ rn:{ind:HOSPIND,dur:HOSPDUR,durLbl:'Duración prevista'},
+ lact:{ind:HOSPIND,dur:HOSPDUR,durLbl:'Duración prevista'},
+ nino:{ind:HOSPIND,dur:HOSPDUR,durLbl:'Duración prevista'},
+ critico:{sub:[['estable','Estable'],['inestable','Inestable']],ind:[['perif','Compatible periférica'],['noperif','No compatible periférica'],['hemo','Monitorización hemodinámica']],dur:[['0','≤7 d'],['1','8–14 d'],['2','≥15 d']],durLbl:'Duración prevista'},
+ larga:{ind:[['cont','Uso continuo'],['interm','Uso intermitente']],dur:[['rnlact','RN / Lactante'],['ninoado','Niño / Adolescente']],durLbl:'Edad'}
+};
+function mmHosp(pob,ind,dur){var D=+dur;var d={};
+ if(pob==='rn'){d.umbilical=D===0?['rec','Adecuado en los primeros días de vida (≤7 d).']:D===1?['unc','Incierto 8–14 días; planificar recambio.']:['no','Inadecuado más allá de ~14 días.'];}
+ if(ind==='perif')d.cip=D===0?['rec','Infusión periférica de corta duración.']:D===1?['rec','Adecuado 8–14 días si la vena lo permite.']:D===2?['unc','Incierto 15–30 días; valorar línea media o central.']:['no','Inadecuado ≥31 días.'];
+ else if(ind==='sangre')d.cip=['no','La extracción frecuente requiere acceso central.'];
+ else d.cip=['no','La infusión no compatible no va por vía periférica.'];
+ if(ind==='perif')d.cilm=D===0?['unc','Posible, aunque suele bastar un CIP.']:D===1?['rec','Adecuado 8–14 días, infusión periférica.']:D===2?['rec','Adecuado 15–30 días en casos seleccionados.']:['no','Inadecuado ≥31 días.'];
+ else d.cilm=['no','Punta no central: no apto para infusión no compatible ni extracción frecuente.'];
+ if(ind==='noperif')d.picc=['rec','Acceso central para infusión no compatible; adecuado por duración.'];
+ else if(ind==='sangre')d.picc=['rec','Central; permite extracción frecuente fiable.'];
+ else d.picc=D===0?['no','Innecesario en corta duración periférica.']:D===1?['unc','Incierto; valorar según evolución.']:['rec','Adecuado para acceso prolongado.'];
+ if(ind==='noperif')d.cicnt=D===0?['rec','Acceso central de corta duración.']:D===1?['unc','Incierto 8–14 días; valorar PICC.']:['no','Inadecuado ≥15 días (riesgo de infección).'];
+ else if(ind==='sangre')d.cicnt=D===0?['unc','Posible a corto plazo para extracción frecuente.']:['no','Para uso prolongado preferir PICC.'];
+ else d.cicnt=['no','Sobredimensionado para infusión periférica.'];
+ d.cictc=(ind!=='perif'&&D===3)?['rec','Acceso central prolongado (≥31 d).']:(D===3)?['unc','Posible si se requiere acceso prolongado fiable.']:(D===2&&ind==='noperif')?['unc','Valorar si se prolongará >30 días.']:['no','Reservado a accesos prolongados.'];
+ d.cicti=(D===3&&ind!=='perif')?['rec','Terapia prolongada, sobre todo intermitente.']:(D===3)?['unc','Posible en terapia prolongada intermitente.']:['no','Reservado a terapia prolongada intermitente.'];
+ return d;}
+function mmCrit(sub,ind,dur){var D=+dur;var d={};var ne=sub==='inestable';
+ d.io=ne?(D===0?['rec','Vía emergente en inestabilidad cuando no hay acceso.']:['unc','Incierto pasadas las primeras horas.']):(D===0?['unc','Solo si no hay otro acceso.']:['no','Inadecuado de forma sostenida.']);
+ if(ind==='perif')d.cip=D===0?['rec','Corta duración, infusión periférica.']:D===1?['unc','Incierto 8–14 días.']:['no','Inadecuado ≥15 días.'];
+ else d.cip=['no','No apto para infusión no compatible ni monitorización.'];
+ if(ind==='perif')d.cilm=D>=1?['unc','Posible 8–14 días; valorar central según gravedad.']:['unc','Posible; suele bastar un CIP.'];
+ else d.cilm=['no','Punta no central: no apto.'];
+ if(ind==='noperif'||ind==='hemo')d.picc=D>=1?['rec','Acceso central adecuado al estabilizar.']:['unc','En agudo inestable el CICNT suele ser más rápido.'];
+ else d.picc=D===2?['rec','Acceso prolongado adecuado.']:['unc','Valorar según evolución.'];
+ if(ind==='noperif'||ind==='hemo')d.cicnt=D<=1?['rec','Acceso central rápido y de alto flujo en el crítico.']:['unc','Incierto ≥15 días; valorar PICC.'];
+ else d.cicnt=['no','Sobredimensionado para infusión periférica.'];
+ d.cictc=(D===2&&ind!=='perif')?['unc','Valorar si se prolongará el acceso.']:['no','Reservado a accesos prolongados.'];
+ d.cicti=['no','No apto en el contexto agudo.'];
+ return d;}
+function mmLarga(ind,age){var d={};
+ d.cip=['no','Inadecuado para larga permanencia.'];
+ d.cilm=['no','Inadecuado para larga permanencia.'];
+ d.picc=ind==='cont'?['rec','Acceso prolongado de uso continuo.']:['unc','Posible; en uso intermitente valorar reservorio.'];
+ d.cicnt=['no','Inadecuado para larga permanencia (riesgo de infección).'];
+ d.cictc=ind==='cont'?['rec','Uso continuo prolongado (tunelizado con cuff).']:['unc','Posible; el reservorio suele preferirse en uso intermitente.'];
+ d.cicti=ind==='interm'?['rec','Uso intermitente prolongado (reservorio).']:['unc','Posible; en uso continuo suele preferirse tunelizado/PICC.'];
+ return d;}
+function miniMagicCalc(){
+ var pob=mgP.pob,ind=mgP.ind,dur=mgP.dur,sub=mgP.sub,d,META,order;
+ var DEV={umbilical:'Catéter umbilical',io:'Intraóseo (IO)',cip:'Catéter periférico (CIP)',cilm:'Línea media (CILM)',picc:'PICC',cicnt:'CVC no tunelizado (CICNT)',cictc:'CVC tunelizado con cuff (CICTc)',cicti:'Reservorio implantable (CICTI)'};
+ if(pob==='larga'){d=mmLarga(ind,dur);META=['cip','cilm','picc','cicnt','cictc','cicti'];order=ind==='interm'?['cicti','picc','cictc']:['picc','cictc','cicti'];}
+ else if(pob==='critico'){d=mmCrit(sub,ind,dur);META=['io','cip','cilm','picc','cicnt','cictc','cicti'];order=ind==='hemo'?['cicnt','picc']:ind==='noperif'?((sub==='inestable'&&dur==='0')?['io','cicnt','picc']:['cicnt','picc']):['cip','picc'];}
+ else{d=mmHosp(pob,ind,dur);META=pob==='rn'?['umbilical','cip','cilm','picc','cicnt','cictc','cicti']:['cip','cilm','picc','cicnt','cictc','cicti'];order=ind==='noperif'?(dur==='3'?['cictc','picc','cicti']:dur==='0'?['cicnt','picc']:['picc','cicnt']):ind==='sangre'?['picc','cicnt']:(dur==='0'?['cip','cilm']:dur==='1'?['cilm','cip']:dur==='2'?['picc','cilm']:['picc','cictc','cicti']);if(pob==='rn'&&dur==='0')order=['umbilical'].concat(order);}
+ var SCOL={rec:'green',unc:'amber',no:'danger'},SICO={rec:'\u2713',unc:'~',no:'\u2715'},SLAB={rec:'Adecuado',unc:'Incierto',no:'Inadecuado'};
+ var c=document.getElementById('mgList');c.innerHTML='';
+ META.forEach(function(k){if(!d[k])return;var st=d[k][0],note=d[k][1],col=SCOL[st];var r=document.createElement('div');r.className='grow ro';if(st==='no')r.style.opacity='.6';
+  r.innerHTML='<span class="gb" style="background:'+FILL[col]+'">'+SICO[st]+'</span><span class="gt"><span class="gs"><b>'+DEV[k]+'</b></span><span class="gc" style="color:'+INK[col]+'">'+SLAB[st]+' · '+note+'</span></span>';c.appendChild(r);});
+ var keys=META.filter(function(k){return d[k];});
+ var pick=order.filter(function(k){return d[k]&&d[k][0]==='rec';})[0]||keys.filter(function(k){return d[k][0]==='rec';})[0]||order.filter(function(k){return d[k]&&d[k][0]==='unc';})[0]||keys.filter(function(k){return d[k][0]==='unc';})[0]||keys[0];
+ var pcol=SCOL[d[pick][0]];
+ document.getElementById('mgDevice').textContent=DEV[pick];document.getElementById('mgDevice').style.color=INK[pcol];
+ paint(document.getElementById('mgRationale'),pcol,'Fundamento (miniMAGIC)',d[pick][1]);
+}
+function buildSeg(id,opts,key){var c=document.getElementById(id);c.innerHTML='';opts.forEach(function(o,i){var b=document.createElement('button');b.textContent=o[1];b.dataset.v=o[0];if(i===0)b.classList.add('on');b.onclick=function(){c.querySelectorAll('button').forEach(function(x){x.classList.remove('on');});b.classList.add('on');mgP[key]=o[0];miniMagicCalc();};c.appendChild(b);});mgP[key]=opts[0][0];}
+function buildPedi(){var cfg=PEDI[mgP.pob];var sw=document.getElementById('mgPobSubWrap');
+ if(cfg.sub){sw.style.display='';buildSeg('mgPobSub',cfg.sub,'sub');}else{sw.style.display='none';mgP.sub='';}
+ buildSeg('mgPInd',cfg.ind,'ind');document.getElementById('mgPDurLbl').textContent=cfg.durLbl;buildSeg('mgPDur',cfg.dur,'dur');miniMagicCalc();}
+function mgRun(){if(mgMode==='pedi')miniMagicCalc();else magicCalc();}
+document.querySelectorAll('#mgPob button').forEach(function(b){b.onclick=function(){document.querySelectorAll('#mgPob button').forEach(function(x){x.classList.remove('on');});b.classList.add('on');mgP.pob=b.dataset.v;buildPedi();};});
+document.querySelectorAll('#mgMode button').forEach(function(b){b.onclick=function(){document.querySelectorAll('#mgMode button').forEach(function(x){x.classList.remove('on');});b.classList.add('on');mgMode=b.dataset.v;
+ document.getElementById('mgAdultFields').style.display=mgMode==='adult'?'':'none';
+ document.getElementById('mgPediFields').style.display=mgMode==='pedi'?'':'none';
+ var rf=document.getElementById('mgRef');if(rf)rf.textContent=mgMode==='pedi'?PEDI_REF:ADULT_REF;
+ mgRun();};});
+buildPedi();magicCalc();
+
 /* ---- MADDOX ---- */
 const MXCOL=['mx0','mx1','mx2','mx3','mx4','mx5'];let mxSel=0;
 function renderMx(){const c=document.getElementById('mxList');if(!c)return;c.innerHTML='';
@@ -937,7 +1026,7 @@ renderCards();
 function setTitle(t){document.getElementById('appTitle').textContent=t;}
 function showBack(on){document.getElementById('backBtn').hidden=!on;}
 function showResult(id){
-  var fns={diva:dvCalc,adiva:adCalc,eadiva:eaCalc,cvr:cvrCalc,magic:magicCalc,maddox:mxCalc,ins:insCalc,caprini:cpCalc};
+  var fns={diva:dvCalc,adiva:adCalc,eadiva:eaCalc,cvr:cvrCalc,magic:mgRun,maddox:mxCalc,ins:insCalc,caprini:cpCalc};
   try{if(fns[id])fns[id]();}catch(e){}
   var ro=document.querySelector('#t-'+id+' .readout');
   document.getElementById('calcModalBody').innerHTML=ro?ro.innerHTML:'';

@@ -1,6 +1,6 @@
-// EBIME service worker · v5.8
-const VERSION = '5.8';
-const CACHE = 'ebime-v5.8';
+// EBIME service worker · v5.9
+const VERSION = '5.9';
+const CACHE = 'ebime-v5.9';
 const SHELL = ['./manifest.webmanifest', './ebime-logo.png', './icon-192.png', './icon-512.png'];
 // Recursos que deben reflejar siempre la última versión publicada (red primero)
 const FRESH = ['index.html', 'farmacos_actualizado.xlsx', 'farmacos.json'];
