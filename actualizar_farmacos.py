@@ -114,6 +114,7 @@ for ws in wb.worksheets:
       'grupo':find(headers,'grupo'),
       'clasif':find(headers,'clasificación'),
       'riesgo':find(headers,'nivel de riesgo'),
+      'conc': find(headers,'concentración de dilución por ml','concentración de dilución por ml'),
     }
     for r in rows[1:]:
         name=get(r,ci['name'])
@@ -139,6 +140,7 @@ for ws in wb.worksheets:
           'incompatibilidades':_S(get(r,ci['incomp'])),
           'recomendaciones':clean_pump(_S(get(r,ci['recom']))),
           'cuidados':clean_pump(_S(cuid)),
+          'concentracion':_S(get(r,ci['conc'])),
         }
         drugs.append(rec)
 
