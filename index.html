@@ -256,6 +256,7 @@ body{background:#e7ebf3;font-family:"Roboto","Inter",system-ui,sans-serif}
 .gradelist{display:flex;flex-direction:column;gap:8px;margin-top:4px}
 .grow{display:flex;gap:11px;align-items:flex-start;border:1.5px solid #e6eaf2;border-radius:14px;padding:11px 12px;cursor:pointer;background:#fff;transition:border-color .12s,background .12s}
 .grow.on{border-color:var(--accent);background:#f7f9fd;box-shadow:inset 0 0 0 1px var(--accent)}
+.grow.ro{cursor:default}
 .grow .gb{flex:none;width:30px;height:30px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-weight:700;font-size:14px;color:#fff}
 .grow .gt{flex:1}
 .grow .gs{font-size:12.5px;color:#3a4a66;line-height:1.42}
@@ -306,7 +307,7 @@ body{background:#e7ebf3;font-family:"Roboto","Inter",system-ui,sans-serif}
     <div class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></div>
   </div>
   <div class="appfoot" data-i18n="home_foot">© 2026 Diego Orlando Ríos Guarín · Uso educativo y clínico-operativo.</div>
-  <div class="appver">EBIME · v4.9</div>
+  <div class="appver">EBIME · v5.0</div>
 </div>
 
 <!-- CALC -->
@@ -380,12 +381,15 @@ body{background:#e7ebf3;font-family:"Roboto","Inter",system-ui,sans-serif}
           <div class="field"><label>Acceso venoso difícil (DIVA/A-DIVA alto)</label><div class="seg" id="mgDiff"><button data-v="no" class="on">No</button><button data-v="si">Sí</button></div></div>
           <div class="field"><label>Paciente crítico hemodinámicamente inestable</label><div class="seg" id="mgCrit"><button data-v="no" class="on">No</button><button data-v="si">Sí</button></div></div>
           <div class="field"><label>ERC avanzada (≥3b) — preservar capital venoso</label><div class="seg" id="mgCkd"><button data-v="no" class="on">No</button><button data-v="si">Sí</button></div></div>
+          <div class="field"><label>Patrón de administración</label><div class="seg" id="mgPat"><button data-v="cont" class="on">Continua</button><button data-v="interm">Intermitente</button></div></div>
           <div class="field" style="margin-bottom:0"><label>Necesidad de múltiples lúmenes</label><div class="seg" id="mgLum"><button data-v="no" class="on">Un lumen basta</button><button data-v="si">Varios lúmenes</button></div></div>
         </div>
         <div class="readout">
           <div class="eyebrow" style="--accent:var(--royal);margin-bottom:10px">Recomendación</div>
           <div class="score-big" id="mgDevice" style="font-size:30px;font-family:var(--disp);letter-spacing:-.5px">Catéter periférico</div>
           <div class="verdict" id="mgRationale" style="margin-top:16px"></div>
+          <div class="eyebrow" style="--accent:var(--royal);margin:18px 0 8px">Idoneidad por dispositivo</div>
+          <div class="gradelist" id="mgList"></div>
           <div class="ref">Reevaluar la indicación a diario; retirar el dispositivo cuando ya no sea necesario. Chopra V et al. (MAGIC), Ann Intern Med. 2015.</div>
         </div>
       </div>
@@ -594,24 +598,70 @@ function cvrCalc(){
 document.getElementById('veinD').addEventListener('input',cvrCalc);frSel.addEventListener('change',cvrCalc);cvrCalc();
 
 /* ---- MAGIC ---- */
-const mg={dur:0,inf:'periph',diff:'no',crit:'no',ckd:'no',lum:'no'};
+const mg={dur:0,inf:'periph',diff:'no',crit:'no',ckd:'no',lum:'no',pat:'cont'};
 function segWire(id,key){document.querySelectorAll('#'+id+' button').forEach(b=>b.onclick=()=>{document.querySelectorAll('#'+id+' button').forEach(x=>x.classList.remove('on'));b.classList.add('on');mg[key]=b.dataset.v;magicCalc();});}
-segWire('mgDur','dur');segWire('mgInf','inf');segWire('mgDiff','diff');segWire('mgCrit','crit');segWire('mgCkd','ckd');segWire('mgLum','lum');
+segWire('mgDur','dur');segWire('mgInf','inf');segWire('mgDiff','diff');segWire('mgCrit','crit');segWire('mgCkd','ckd');segWire('mgLum','lum');segWire('mgPat','pat');
 function magicCalc(){
-  let dev,why,key='royal';const dur=+mg.dur;
-  if(mg.inf==='central'){
-    if(mg.crit==='si'){dev='CVC no tunelizado';why='Infusado irritante/vesicante en paciente crítico inestable: acceso central de inserción rápida para corta estancia.';}
-    else if(dur>=3){dev=mg.lum==='si'?'Port o CVC tunelizado':'Port implantable';why='Terapia central prolongada (≥31 días): dispositivo de larga permanencia tunelizado o totalmente implantable.';}
-    else{dev=mg.lum==='si'?'PICC multilumen':'PICC';why='El infusado irritante/vesicante exige acceso central; el PICC es razonable según duración y número de lúmenes.';}
-  } else {
-    if(mg.ckd==='si'){dev='Evitar venas del brazo — valorar con nefrología';why='ERC avanzada: preservar capital venoso del brazo. Evitar PICC/midline; coordinar estrategia de acceso con nefrología.';key='amber';}
-    else if(dur===0){dev=mg.diff==='si'?'Periférico guiado por US':'Catéter periférico';why='Terapia corta (≤5 días) y periféricamente compatible: dispositivo periférico. Con acceso difícil, guía por ultrasonido.';key='green';}
-    else if(dur===1){dev='Midline o periférico guiado por US';why='6–14 días, infusado compatible: preferir midline o periférico guiado por US; el PICC no es primera opción.';key='teal';}
-    else if(dur===2){dev=mg.lum==='si'?'PICC multilumen':'PICC';why='15–30 días: el PICC empieza a ser razonable según el contexto clínico.';}
-    else{dev=mg.lum==='si'?'PICC multilumen':'PICC';why='≥31 días: PICC apropiado; valorar tunelizado/port si la permanencia es muy prolongada.';}
+  const dur=+mg.dur, central=mg.inf==='central', diff=mg.diff==='si', crit=mg.crit==='si', ckd=mg.ckd==='si', lum=mg.lum==='si', interm=mg.pat==='interm';
+  const L=lum?' Si necesita varios lúmenes, use la mínima cantidad imprescindible.':'';
+  const d={};
+  // Catéter periférico corto
+  if(central) d.pivc=['no','El infusado irritante/vesicante no admite vía periférica.'];
+  else if(dur===0) d.pivc=diff?['alt','Posible; con acceso difícil prefiera el ecoguiado.']:['rec','Apropiado para terapia ≤5 días periféricamente compatible.'];
+  else d.pivc=['no','Solo para terapias cortas (≤5 días).'];
+  // Periférico ecoguiado
+  if(central) d.uspivc=['no','No aporta punta central; no apto para irritante/vesicante.'];
+  else if(dur===0) d.uspivc=diff?['rec','De elección si el acceso es difícil en terapia corta.']:['alt','Útil si falla la canalización estándar.'];
+  else if(dur===1) d.uspivc=['alt','Opción 6–14 días; valore midline si la vena es adecuada.'];
+  else d.uspivc=['no','>14 días: use un dispositivo central.'];
+  // Midline
+  if(central) d.midline=['no','Punta no central: no apto para irritante/vesicante ni NP hiperosmolar.'];
+  else if(ckd) d.midline=['alt','Usa venas del brazo; en ERC avanzada preserve el capital venoso (coordine con nefrología).'];
+  else if(dur===0) d.midline=['alt','Posible, aunque suele bastar un periférico.'];
+  else if(dur===1) d.midline=['rec','De elección 6–14 días con infusado compatible.'];
+  else if(dur===2) d.midline=['alt','Hasta ~28 días en casos seleccionados; reevalúe.'];
+  else d.midline=['no','Demasiado prolongado para midline.'];
+  // PICC
+  if(ckd) d.picc=['no','Evítelo: consume venas del brazo necesarias para fístula (ERC avanzada).'];
+  else { const needC=central||dur>=2;
+    if(!needC) d.picc=['no','Innecesario para terapia corta periféricamente compatible.'];
+    else if(crit&&central&&dur<=1) d.picc=['alt','Posible, pero en paciente inestable el CICC es más rápido.'+L];
+    else if(dur===3) d.picc=['rec','Apropiado; si es muy prolongada o intermitente valore tunelizado o reservorio.'+L];
+    else d.picc=['rec','Apropiado para acceso central de duración intermedia (15–30 días) o infusado central.'+L];
   }
-  document.getElementById('mgDevice').textContent=dev;document.getElementById('mgDevice').style.color=INK[key];
-  paint(document.getElementById('mgRationale'),key,'Fundamento',why);
+  // CICC (CVC no tunelizado)
+  if(!central&&dur<=1&&!crit) d.cicc=['no','Sobredimensionado para infusado periférico de corta duración.'];
+  else if(crit) d.cicc=['rec','De elección en paciente crítico inestable: central rápido y de alto flujo.'+L];
+  else if(ckd&&(central||dur>=2)) d.cicc=['rec','Si requiere central en ERC, prefiera CICC (yugular) y preserve el brazo.'+L];
+  else if(central&&dur<=1) d.cicc=['rec','Apropiado para terapia central de corta duración hospitalaria.'+L];
+  else if(dur===2) d.cicc=['alt','Posible 15–30 días; fuera de UCI suele preferirse el PICC.'+L];
+  else if(dur===3) d.cicc=['no','>30 días: prefiera tunelizado o reservorio (menor infección).'];
+  else d.cicc=['alt','Valórelo según disponibilidad y contexto.'+L];
+  // CVC tunelizado
+  if(dur===3&&central) d.tcvc=interm?['alt','Apropiado; si la terapia es intermitente, el reservorio puede ser preferible.']:['rec','Apropiado para terapia central prolongada continua o domiciliaria (>30 días).'];
+  else if(dur===3) d.tcvc=['alt','Opción para acceso prolongado y fiable.'];
+  else if(dur===2) d.tcvc=['alt','Considérelo si se prevé prolongar más de 30 días.'];
+  else d.tcvc=['no','Reservado a terapias prolongadas (>30 días).'];
+  // Reservorio / Port
+  if(dur===3) d.port=crit?['no','No apto si se necesita acceso inmediato/continuo en agudo.']:(interm?['rec','De elección en terapia prolongada e intermitente (p. ej., quimioterapia cíclica).']:['alt','Posible; en infusión continua suele preferirse tunelizado o PICC.']);
+  else if(dur===2) d.port=['alt','Valórelo si la terapia será intermitente y prolongada.'];
+  else d.port=['no','Reservado a terapia prolongada intermitente.'];
+
+  const META=[['pivc','Catéter periférico corto (PIVC)'],['uspivc','Periférico ecoguiado'],['midline','Midline (línea media)'],['picc','PICC'],['cicc','CICC · CVC no tunelizado'],['tcvc','CVC tunelizado'],['port','Reservorio / Port implantable']];
+  const SCOL={rec:'green',alt:'amber',no:'danger'},SICO={rec:'\u2713',alt:'~',no:'\u2715'},SLAB={rec:'Apropiado',alt:'Alternativa',no:'No apropiado'};
+  const c=document.getElementById('mgList');c.innerHTML='';
+  META.forEach(m=>{const st=d[m[0]][0],note=d[m[0]][1],col=SCOL[st];
+    const r=document.createElement('div');r.className='grow ro';if(st==='no')r.style.opacity='.6';
+    r.innerHTML='<span class="gb" style="background:'+FILL[col]+'">'+SICO[st]+'</span><span class="gt"><span class="gs"><b>'+m[1]+'</b></span><span class="gc" style="color:'+INK[col]+'">'+SLAB[st]+' · '+note+'</span></span>';
+    c.appendChild(r);});
+  let order;
+  if(central) order=crit?['cicc','picc']:ckd?['cicc','picc']:dur<=1?['cicc','picc']:dur===2?['picc','cicc']:(interm?['port','tcvc','picc']:['tcvc','picc','port']);
+  else order=ckd?(dur<=1?['midline','uspivc','pivc']:['cicc','picc']):dur===0?(diff?['uspivc','pivc']:['pivc','uspivc']):dur===1?['midline','uspivc']:dur===2?['picc','cicc']:(interm?['port','picc','tcvc']:['picc','tcvc']);
+  const allk=META.map(m=>m[0]);
+  let pick=order.find(k=>d[k][0]==='rec')||allk.find(k=>d[k][0]==='rec')||order.find(k=>d[k][0]==='alt')||allk.find(k=>d[k][0]==='alt')||'pivc';
+  const pm=META.find(m=>m[0]===pick),pcol=SCOL[d[pick][0]];
+  document.getElementById('mgDevice').textContent=pm[1];document.getElementById('mgDevice').style.color=INK[pcol];
+  paint(document.getElementById('mgRationale'),pcol,'Fundamento',d[pick][1]);
 }
 magicCalc();
 
