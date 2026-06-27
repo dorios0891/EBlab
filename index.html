@@ -17,7 +17,7 @@
 <style>
 
 :root{
-  --royal:#24459a; --teal:#16a3c4; --magenta:#902d8e; --green:#54b24c; --amber:#f19f2c; --white:#ffffff;
+  --royal:#24459a; --teal:#16a3c4; --magenta:#902d8e; --green:#54b24c; --amber:#f19f2c; --white:#ffffff; --appw:480px;
   /* tinta y superficies claras */
   --bg:#ffffff; --bg-2:#f4f7fc; --surface:#ffffff; --surface-2:#f7f9fe;
   --line:#e3e9f4; --line-soft:#edf1f8;
@@ -154,9 +154,9 @@ footer b{color:var(--txt-dim)}
 
 /* ============ Android / Material 3 shell ============ */
 body{background:#e7ebf3;font-family:"Roboto","Inter",system-ui,sans-serif}
-.app{max-width:480px;margin:0 auto;min-height:100vh;background:#fff;position:relative;box-shadow:0 0 50px rgba(20,33,63,.10);overflow-x:hidden}
-.spectrum{position:fixed;top:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;z-index:60}
-.appbar{position:fixed;top:4px;left:50%;transform:translateX(-50%);width:100%;max-width:480px;height:56px;display:flex;align-items:center;gap:2px;padding:0 6px;background:rgba(255,255,255,.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);z-index:55}
+.app{max-width:var(--appw);margin:0 auto;min-height:100vh;background:#fff;position:relative;box-shadow:0 0 50px rgba(20,33,63,.10);overflow-x:hidden}
+.spectrum{position:fixed;top:0;left:50%;transform:translateX(-50%);width:100%;max-width:var(--appw);z-index:60}
+.appbar{position:fixed;top:4px;left:50%;transform:translateX(-50%);width:100%;max-width:var(--appw);height:56px;display:flex;align-items:center;gap:2px;padding:0 6px;background:rgba(255,255,255,.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);z-index:55}
 .appbar .iconbtn{width:44px;height:44px;border:0;background:none;border-radius:50%;display:grid;place-items:center;color:var(--txt);cursor:pointer}
 .appbar .iconbtn svg{width:24px;height:24px}
 .appbar-title{font-size:20px;font-weight:600;letter-spacing:.1px;flex:1;padding-left:8px;color:var(--royal-ink);font-family:"Roboto","Space Grotesk",sans-serif}
@@ -174,7 +174,7 @@ body{background:#e7ebf3;font-family:"Roboto","Inter",system-ui,sans-serif}
 .seg button{background:#fff}
 .seg button.on{background:#dde6fb;color:var(--royal-ink);border-color:#bcd0f5}
 /* bottom navigation */
-.bottomnav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;height:74px;display:flex;background:rgba(255,255,255,.98);backdrop-filter:blur(12px);border-top:1px solid var(--line);z-index:55;padding:8px 6px 10px}
+.bottomnav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:var(--appw);height:74px;display:flex;background:rgba(255,255,255,.98);backdrop-filter:blur(12px);border-top:1px solid var(--line);z-index:55;padding:8px 6px 10px}
 .navitem{flex:1;border:0;background:none;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;color:var(--txt-faint);font-family:inherit;font-size:11.5px;font-weight:500;padding:0}
 .navitem .pill{width:62px;height:32px;border-radius:16px;display:grid;place-items:center;transition:background .18s}
 .navitem.active .pill{background:#dde6fb}
@@ -223,7 +223,7 @@ body{background:#e7ebf3;font-family:"Roboto","Inter",system-ui,sans-serif}
 
 .sheet-scrim{position:fixed;inset:0;background:rgba(10,16,36,.4);opacity:0;visibility:hidden;transition:.2s;z-index:70}
 .sheet-scrim.on{opacity:1;visibility:visible}
-.sheet{position:fixed;left:50%;transform:translateX(-50%) translateY(100%);bottom:0;width:100%;max-width:480px;background:#fff;border-radius:22px 22px 0 0;z-index:71;padding:8px 8px 26px;transition:transform .25s ease;box-shadow:0 -10px 40px rgba(20,33,63,.2)}
+.sheet{position:fixed;left:50%;transform:translateX(-50%) translateY(100%);bottom:0;width:100%;max-width:var(--appw);background:#fff;border-radius:22px 22px 0 0;z-index:71;padding:8px 8px 26px;transition:transform .25s ease;box-shadow:0 -10px 40px rgba(20,33,63,.2)}
 .sheet.on{transform:translateX(-50%) translateY(0)}
 .sheet-h{font-family:var(--mono);font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--txt-faint);padding:12px;font-weight:600}
 .langrow{display:flex;align-items:center;gap:12px;padding:14px;border-radius:14px;cursor:pointer;position:relative;overflow:hidden}
@@ -286,6 +286,22 @@ body{background:#e7ebf3;font-family:"Roboto","Inter",system-ui,sans-serif}
 .dlg-card p{margin:0 0 22px;font-size:14px;line-height:1.62;color:#46566f}
 .dlg-btn{width:100%;border:none;border-radius:13px;padding:14px;background:#24459a;color:#fff;font-size:15px;font-weight:600;font-family:inherit;cursor:pointer;letter-spacing:.2px;box-shadow:0 8px 20px -8px rgba(36,69,154,.7)}
 .dlg-btn:active{transform:scale(.99)}
+@media(min-width:760px) and (min-height:600px){
+  :root{--appw:880px}
+  .screen{padding:22px 22px 10px}
+  .qgrid{grid-template-columns:repeat(3,1fr)}
+  .devgrid{grid-template-columns:1fr 1fr}
+  #calcListBody{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  #drugList{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+  #drugList .dcard{margin-bottom:0}
+  .sheet{max-width:560px}
+}
+@media(min-width:1180px) and (min-height:600px){
+  :root{--appw:1040px}
+  .qgrid{grid-template-columns:repeat(4,1fr)}
+  .devgrid{grid-template-columns:repeat(3,1fr)}
+  #drugList{grid-template-columns:repeat(3,1fr)}
+}
 </style>
 </head>
 <body>
@@ -320,7 +336,7 @@ body{background:#e7ebf3;font-family:"Roboto","Inter",system-ui,sans-serif}
     <div class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></div>
   </div>
   <div class="appfoot" data-i18n="home_foot">© 2026 Diego Orlando Ríos Guarín · Uso educativo y clínico-operativo.</div>
-  <div class="appver">EBIME LAB · v6.2</div>
+  <div class="appver">EBIME LAB · v6.3</div>
 </div>
 
 <!-- CALC -->
