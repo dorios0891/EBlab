@@ -100,7 +100,7 @@ h2.sec{font-family:var(--disp);font-weight:700;font-size:clamp(24px,3.4vw,34px);
 input[type=range]{width:100%;accent-color:var(--accent);height:4px}
 select,input[type=number],input[type=text]{width:100%;background:var(--bg);border:1px solid var(--line);color:var(--txt);border-radius:var(--r-sm);padding:11px 13px;font-family:var(--body);font-size:14px}
 select:focus,input:focus{outline:none;border-color:var(--accent)}
-.rangeval{font-family:var(--mono);font-size:13px;color:var(--accent);float:right}
+.rangeval{font-family:var(--mono);font-size:13px;color:var(--teal-ink);float:right;font-weight:600}
 .seg{display:flex;gap:6px;flex-wrap:wrap}
 .seg button{flex:1;min-width:fit-content;background:var(--bg);border:1px solid var(--line);color:var(--txt-dim);padding:9px 12px;border-radius:var(--r-sm);font-family:var(--body);font-size:13px;font-weight:500;cursor:pointer;transition:.15s}
 .seg button.on{background:var(--accent);border-color:var(--accent);color:#fff}
@@ -332,7 +332,9 @@ html[data-theme="dark"] .pill.a{background:color-mix(in srgb,var(--amber) 22%,va
 html[data-theme="dark"] .pill.r{background:color-mix(in srgb,var(--danger) 22%,var(--surface))}
 html[data-theme="dark"] .pill.b{background:color-mix(in srgb,var(--teal) 22%,var(--surface))}
 html[data-theme="dark"] .pill.m{background:color-mix(in srgb,var(--magenta) 22%,var(--surface))}
-html[data-theme="dark"] .barlogo{filter:brightness(0) invert(1);opacity:.92}
+.barlogo-dark{display:none}
+html[data-theme="dark"] .barlogo-light{display:none}
+html[data-theme="dark"] .barlogo-dark{display:block}
 html[data-theme="dark"] .devimg{background:#eef2f8}
 html[data-theme="dark"] .dcard .nm{color:var(--txt)}
 html[data-theme="dark"] .dcard .fv{color:var(--txt)}
@@ -353,6 +355,9 @@ html[data-theme="dark"] .dpill.viac{background:color-mix(in srgb,var(--magenta) 
 html[data-theme="dark"] .dpill.viap{background:color-mix(in srgb,var(--royal) 22%,var(--surface));color:#a6b9ff}
 html[data-theme="dark"] .dpill.viab{background:color-mix(in srgb,var(--amber) 22%,var(--surface));color:#f7c878}
 html[data-theme="dark"] .dpill.alto{background:color-mix(in srgb,var(--danger) 20%,var(--surface));color:#ff9aa8;border-color:rgba(255,98,119,.5)}
+html[data-theme="dark"] .disclaim{background:color-mix(in srgb,var(--amber) 12%,var(--surface));border-color:color-mix(in srgb,var(--amber) 30%,var(--surface));color:var(--txt-dim)}
+html[data-theme="dark"] .dcard .fact{background:var(--surface-2);border-color:var(--line)}
+html[data-theme="dark"] .dcard .drow{border-top-color:var(--line)}
 </style>
 </head>
 <body>
@@ -360,7 +365,7 @@ html[data-theme="dark"] .dpill.alto{background:color-mix(in srgb,var(--danger) 2
 <div class="spectrum"></div>
 <header class="appbar">
   <button class="iconbtn ripple" id="backBtn" hidden onclick="history.back()" aria-label="Atrás"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button>
-  <div class="appbar-title" id="appTitle"><img class="barlogo" src="ebime-logo.png" alt="EBIME"></div>
+  <div class="appbar-title" id="appTitle"><img class="barlogo barlogo-light" src="ebime-logo.png" alt="EBIME"><img class="barlogo barlogo-dark" src="ebime-logo-blanco.png" alt="EBIME"></div>
   <button class="iconbtn ripple" id="cfgBtn" aria-label="Configuración" onclick="openCfg()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></button>
 </header>
 <div class="content">
@@ -387,7 +392,7 @@ html[data-theme="dark"] .dpill.alto{background:color-mix(in srgb,var(--danger) 2
     <div class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></div>
   </div>
   <div class="appfoot" data-i18n="home_foot">© 2026 Diego Orlando Ríos Guarín · Uso educativo y clínico-operativo.</div>
-  <div class="appver">EBIME LAB · v6.5</div>
+  <div class="appver">EBIME LAB · v6.6</div>
 </div>
 
 <!-- CALC -->
@@ -630,7 +635,7 @@ html[data-theme="dark"] .dpill.alto{background:color-mix(in srgb,var(--danger) 2
     <div style="font-size:11px;color:var(--txt-dim);font-weight:600;margin:20px 2px 7px;letter-spacing:.3px">Idioma</div>
     <div id="langList"></div>
   </div>
-  <div style="font-family:var(--mono);font-size:10px;color:var(--txt-faint);text-align:center;padding:16px 0 2px;letter-spacing:.5px">EBIME LAB · v6.5</div>
+  <div style="font-family:var(--mono);font-size:10px;color:var(--txt-faint);text-align:center;padding:16px 0 2px;letter-spacing:.5px">EBIME LAB · v6.6</div>
 </div>
 <div class="dlg-scrim" id="disclaimer">
   <div class="dlg-card" role="dialog" aria-modal="true">
@@ -660,7 +665,7 @@ const INK={green:'#2f7d28',amber:'#b9740b',danger:'#c52d44',teal:'#0c7c98',royal
 const FILL={green:'var(--green)',amber:'var(--amber)',danger:'var(--danger)',teal:'var(--teal)',royal:'var(--royal)',magenta:'var(--magenta)',mx0:'#8cb91e',mx1:'#f2c200',mx2:'#f0801a',mx3:'#d62424',mx4:'#9e1717',mx5:'#5f0d0d'};
 const INK_D={green:'#74da6f',amber:'#f6bd5e',danger:'#ff8d9a',teal:'#46d3f2',royal:'#9db2ff',magenta:'#e58fe2',mx0:'#b7e34a',mx1:'#ffd84d',mx2:'#ffae5c',mx3:'#ff6f7d',mx4:'#ff8a8a',mx5:'#ff9d7a'};
 function isDark(){return document.documentElement.dataset.theme==='dark';}
-function paint(el,key,title,body){el.style.borderColor=FILL[key];el.style.background='color-mix(in srgb,'+FILL[key]+' 12%,var(--mix))';el.innerHTML='<b style="color:'+(isDark()?INK_D:INK)[key]+'">'+title+'</b>'+body;}
+function paint(el,key,title,body){el.style.borderColor=FILL[key];el.style.background='color-mix(in srgb,'+FILL[key]+' 16%,var(--mix))';el.innerHTML='<b style="color:'+(isDark()?INK_D:INK)[key]+'">'+title+'</b>'+body;}
 const check='<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg>';
 function go(v,sub){
   document.querySelectorAll('.view').forEach(e=>e.classList.remove('active'));
@@ -1259,7 +1264,7 @@ function showScreen(s){
   if(s==='pharma')ensurePharma();
   document.querySelectorAll('.screen').forEach(e=>e.classList.toggle('active',e.id==='s-'+s));
   document.querySelectorAll('.navitem').forEach(n=>n.classList.toggle('active',n.dataset.s===s));
-  if(s==='calc'){closeCalc();}else if(s==='home'){document.getElementById('appTitle').innerHTML='<img class="barlogo" src="ebime-logo.png" alt="EBIME">';showBack(false);}else{setTitle(t('t_'+s));showBack(false);}
+  if(s==='calc'){closeCalc();}else if(s==='home'){document.getElementById('appTitle').innerHTML='<img class="barlogo barlogo-light" src="ebime-logo.png" alt="EBIME"><img class="barlogo barlogo-dark" src="ebime-logo-blanco.png" alt="EBIME">';showBack(false);}else{setTitle(t('t_'+s));showBack(false);}
   window.scrollTo(0,0);
 }
 function openCalc(id){
@@ -1300,7 +1305,7 @@ function applyLang(){
   const _f={diva:dvCalc,adiva:adCalc,eadiva:eaCalc,cvr:cvrCalc,maddox:mxCalc,ins:insCalc};
   if(curCalc&&_f[curCalc])_f[curCalc]();
   const cur=document.querySelector('.navitem.active');const s=cur?cur.dataset.s:'home';
-  if(s==='home'){document.getElementById('appTitle').innerHTML='<img class="barlogo" src="ebime-logo.png" alt="EBIME">';}
+  if(s==='home'){document.getElementById('appTitle').innerHTML='<img class="barlogo barlogo-light" src="ebime-logo.png" alt="EBIME"><img class="barlogo barlogo-dark" src="ebime-logo-blanco.png" alt="EBIME">';}
   else if(curCalc){document.getElementById('appTitle').textContent=t(curCalc+'_n');}
   else{document.getElementById('appTitle').textContent=t('t_'+s);}
   renderLangList();
@@ -1316,7 +1321,7 @@ function closeCfg(){document.getElementById('cfgScrim').classList.remove('on');d
 let THEME=(function(){try{var s=localStorage.getItem('ebime_theme');if(s==='light'||s==='dark'||s==='auto')return s;}catch(e){}return 'auto';})();
 function resolvedTheme(){if(THEME==='auto'){try{return (window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light';}catch(e){return 'light';}}return THEME;}
 function updateThemeUI(){document.querySelectorAll('#themeSeg button').forEach(function(b){b.classList.toggle('on',b.dataset.v===THEME);});}
-function repaintResults(){['dvCalc','adCalc','eaCalc','cvrCalc','mgRun','mxCalc','insCalc','cpCalc','davRun'].forEach(function(f){try{if(typeof window[f]==='function')window[f]();}catch(e){}});}
+function repaintResults(){['dvCalc','adCalc','eaCalc','cvrCalc','mgRun','mxCalc','insCalc','cpCalc','davRun','phCalc'].forEach(function(f){try{if(typeof window[f]==='function')window[f]();}catch(e){}});}
 function applyTheme(){var r=resolvedTheme();document.documentElement.dataset.theme=r;var m=document.querySelector('meta[name=theme-color]');if(m)m.setAttribute('content',r==='dark'?'#0b1120':'#24459a');try{localStorage.setItem('ebime_theme',THEME);}catch(e){}updateThemeUI();repaintResults();}
 function setTheme(v){THEME=v;applyTheme();}
 try{matchMedia('(prefers-color-scheme: dark)').addEventListener('change',function(){if(THEME==='auto')applyTheme();});}catch(e){}
