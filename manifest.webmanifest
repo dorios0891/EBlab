@@ -3,6 +3,7 @@
   "short_name": "EBIME",
   "description": "Calculadoras de acceso vascular, motor farmacológico y catálogo de dispositivos EBIME.",
   "start_url": ".",
+  "id": "/",
   "scope": ".",
   "display": "standalone",
   "orientation": "any",
