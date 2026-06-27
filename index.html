@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#24459a">
+<script>try{var _t=localStorage.getItem('ebime_theme');var _d=(_t==='dark')||((_t==='auto'||!_t)&&window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches);document.documentElement.dataset.theme=(_t==='light')?'light':(_d?'dark':'light');}catch(e){}</script>
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -17,7 +18,7 @@
 <style>
 
 :root{
-  --royal:#24459a; --teal:#16a3c4; --magenta:#902d8e; --green:#54b24c; --amber:#f19f2c; --white:#ffffff; --appw:480px;
+  --royal:#24459a; --teal:#16a3c4; --magenta:#902d8e; --green:#54b24c; --amber:#f19f2c; --white:#ffffff; --appw:480px; --mix:#fff;
   /* tinta y superficies claras */
   --bg:#ffffff; --bg-2:#f4f7fc; --surface:#ffffff; --surface-2:#f7f9fe;
   --line:#e3e9f4; --line-soft:#edf1f8;
@@ -133,10 +134,10 @@ td b{color:var(--txt)}
 .devgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
 .dev{background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--c);border-radius:var(--r);padding:18px;display:flex;gap:16px;align-items:flex-start;transition:.2s;box-shadow:var(--shadow)}
 .dev .txt{flex:1;min-width:0}
-.dev .imgcol{flex:0 0 132px;display:flex;flex-direction:column;gap:8px}
+.dev .imgcol{flex:0 0 138px;display:flex;flex-direction:column;gap:8px}
 .dev .imgcol .cap{font-family:var(--mono);font-size:9.5px;color:var(--txt-faint);text-align:center;letter-spacing:.3px;margin-top:-3px}
 .dev:hover{border-color:var(--c);transform:translateY(-3px)}
-.dev .devimg{width:132px;height:132px;object-fit:contain;background:#fff;border:1px solid var(--line);border-radius:12px;padding:7px;display:block}
+.dev .devimg{width:138px;height:96px;object-fit:cover;background:#fff;border:1px solid var(--line);border-radius:12px;padding:0;display:block}
 .dev .line{font-family:var(--mono);font-size:11px;letter-spacing:1px;color:var(--c);text-transform:uppercase;margin-bottom:10px}
 .dev h4{font-family:var(--disp);font-size:20px;font-weight:600;margin-bottom:3px}
 .dev .sub{font-size:12.5px;color:var(--txt-faint);margin-bottom:14px}
@@ -289,19 +290,69 @@ body{background:#e7ebf3;font-family:"Roboto","Inter",system-ui,sans-serif}
 @media(min-width:760px) and (min-height:600px){
   :root{--appw:880px}
   .screen{padding:22px 22px 10px}
-  .qgrid{grid-template-columns:repeat(3,1fr)}
-  .devgrid{grid-template-columns:1fr 1fr}
-  #calcListBody{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-  #drugList{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+  .qgrid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}
+  .devgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+  #calcListBody{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}
+  #drugList{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:13px}
   #drugList .dcard{margin-bottom:0}
+  .dev .imgcol{flex-basis:158px}
+  .dev .devimg{width:158px;height:108px}
+  #s-pharma .grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:start}
   .sheet{max-width:560px}
 }
 @media(min-width:1180px) and (min-height:600px){
   :root{--appw:1040px}
-  .qgrid{grid-template-columns:repeat(4,1fr)}
-  .devgrid{grid-template-columns:repeat(3,1fr)}
-  #drugList{grid-template-columns:repeat(3,1fr)}
 }
+html[data-theme="dark"]{
+  --royal:#5b7cf0; --teal:#2bc4e6; --magenta:#d96fd6; --green:#5fcf5a; --amber:#f5b54e;
+  --bg:#0b1120; --bg-2:#080d18; --surface:#141d30; --surface-2:#1a2438;
+  --line:#2a3650; --line-soft:#222d45;
+  --txt:#eef2fb; --txt-dim:#c4cee2; --txt-faint:#9ba7c6;
+  --royal-ink:#9db2ff; --teal-ink:#46d3f2; --magenta-ink:#e58fe2; --green-ink:#74da6f; --amber-ink:#f6bd5e; --danger:#ff6277; --danger-ink:#ff8d9a;
+  --mix:#141d30;
+  --shadow:0 1px 2px rgba(0,0,0,.45),0 18px 40px -22px rgba(0,0,0,.75);
+}
+html[data-theme="dark"] body{background:var(--bg-2)}
+html[data-theme="dark"] .app{background:var(--bg)}
+html[data-theme="dark"] .appbar{background:rgba(13,20,36,.92)}
+html[data-theme="dark"] .bottomnav{background:rgba(13,20,36,.96)}
+html[data-theme="dark"] .sheet,
+html[data-theme="dark"] .dcard,
+html[data-theme="dark"] .res-card,
+html[data-theme="dark"] .dlg-card{background:var(--surface)}
+html[data-theme="dark"] .dcard{border-color:var(--line)}
+html[data-theme="dark"] .dcard details{border-top-color:var(--line)}
+html[data-theme="dark"] .dcard summary{color:var(--royal-ink)}
+html[data-theme="dark"] .grow{background:var(--surface);border-color:var(--line)}
+html[data-theme="dark"] .seg button{background:var(--surface-2)}
+html[data-theme="dark"] .langrow:active,html[data-theme="dark"] .langrow.on{background:var(--surface-2)}
+html[data-theme="dark"] .navitem.active .pill{background:rgba(91,124,240,.22)}
+html[data-theme="dark"] .pill.g{background:color-mix(in srgb,var(--green) 22%,var(--surface))}
+html[data-theme="dark"] .pill.a{background:color-mix(in srgb,var(--amber) 22%,var(--surface))}
+html[data-theme="dark"] .pill.r{background:color-mix(in srgb,var(--danger) 22%,var(--surface))}
+html[data-theme="dark"] .pill.b{background:color-mix(in srgb,var(--teal) 22%,var(--surface))}
+html[data-theme="dark"] .pill.m{background:color-mix(in srgb,var(--magenta) 22%,var(--surface))}
+html[data-theme="dark"] .barlogo{filter:brightness(0) invert(1);opacity:.92}
+html[data-theme="dark"] .devimg{background:#eef2f8}
+html[data-theme="dark"] .dcard .nm{color:var(--txt)}
+html[data-theme="dark"] .dcard .fv{color:var(--txt)}
+html[data-theme="dark"] .dcard .dv{color:var(--txt-dim)}
+html[data-theme="dark"] .dcard .fk{color:var(--txt-faint)}
+html[data-theme="dark"] .dcard .dk{color:var(--teal-ink)}
+html[data-theme="dark"] .dcard .grp{color:var(--royal-ink);background:color-mix(in srgb,var(--royal) 20%,var(--surface));border-color:color-mix(in srgb,var(--royal) 36%,var(--surface))}
+html[data-theme="dark"] .grow .gs{color:var(--txt-dim)}
+html[data-theme="dark"] .seg button.on{background:var(--accent);border-color:var(--accent);color:#fff}
+html[data-theme="dark"] .res-close{background:var(--surface-2);color:var(--txt)}
+html[data-theme="dark"] .dlg-eyebrow{color:var(--royal-ink)}
+html[data-theme="dark"] .dlg-card h2{color:var(--txt)}
+html[data-theme="dark"] .dlg-card p{color:var(--txt-dim)}
+html[data-theme="dark"] .dpill.vesi{background:color-mix(in srgb,var(--danger) 22%,var(--surface));color:#ff9aa8}
+html[data-theme="dark"] .dpill.irri{background:color-mix(in srgb,var(--amber) 22%,var(--surface));color:#f7c878}
+html[data-theme="dark"] .dpill.neu{background:color-mix(in srgb,var(--green) 22%,var(--surface));color:#88e082}
+html[data-theme="dark"] .dpill.viac{background:color-mix(in srgb,var(--magenta) 22%,var(--surface));color:#e896e4}
+html[data-theme="dark"] .dpill.viap{background:color-mix(in srgb,var(--royal) 22%,var(--surface));color:#a6b9ff}
+html[data-theme="dark"] .dpill.viab{background:color-mix(in srgb,var(--amber) 22%,var(--surface));color:#f7c878}
+html[data-theme="dark"] .dpill.alto{background:color-mix(in srgb,var(--danger) 20%,var(--surface));color:#ff9aa8;border-color:rgba(255,98,119,.5)}
 </style>
 </head>
 <body>
@@ -310,7 +361,7 @@ body{background:#e7ebf3;font-family:"Roboto","Inter",system-ui,sans-serif}
 <header class="appbar">
   <button class="iconbtn ripple" id="backBtn" hidden onclick="history.back()" aria-label="Atrás"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button>
   <div class="appbar-title" id="appTitle"><img class="barlogo" src="ebime-logo.png" alt="EBIME"></div>
-  <button class="iconbtn ripple" id="langBtn" aria-label="Idioma" onclick="openLang()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.5 2.5 4 5.7 4 9s-1.5 6.5-4 9c-2.5-2.5-4-5.7-4-9s1.5-6.5 4-9z"/></svg></button>
+  <button class="iconbtn ripple" id="cfgBtn" aria-label="Configuración" onclick="openCfg()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></button>
 </header>
 <div class="content">
 
@@ -326,17 +377,17 @@ body{background:#e7ebf3;font-family:"Roboto","Inter",system-ui,sans-serif}
   <div class="qgrid" id="homeCalcs"></div>
   <div class="sectlabel" data-i18n="sec_more">Más herramientas</div>
   <div class="widecard ripple" onclick="showScreen('pharma')">
-    <div class="qi" style="background:color-mix(in srgb,var(--green) 14%,#fff)"><svg viewBox="0 0 24 24" fill="none" stroke="#54b24c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2v7.5L4.5 18a3 3 0 0 0 2.6 4.5h9.8A3 3 0 0 0 19.5 18L14 9.5V2M8 2h8M7 14h10"/></svg></div>
+    <div class="qi" style="background:color-mix(in srgb,var(--green) 14%,var(--mix))"><svg viewBox="0 0 24 24" fill="none" stroke="#54b24c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2v7.5L4.5 18a3 3 0 0 0 2.6 4.5h9.8A3 3 0 0 0 19.5 18L14 9.5V2M8 2h8M7 14h10"/></svg></div>
     <div><h3 data-i18n="pharma_t">Motor farmacológico</h3><p data-i18n="pharma_p">pH · osmolaridad · vía recomendada</p></div>
     <div class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></div>
   </div>
   <div class="widecard ripple" onclick="showScreen('catalog')">
-    <div class="qi" style="background:color-mix(in srgb,var(--magenta) 14%,#fff)"><svg viewBox="0 0 24 24" fill="none" stroke="#902d8e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>
+    <div class="qi" style="background:color-mix(in srgb,var(--magenta) 14%,var(--mix))"><svg viewBox="0 0 24 24" fill="none" stroke="#902d8e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>
     <div><h3 data-i18n="catalog_t">Catálogo EBIME</h3><p data-i18n="catalog_p">11 dispositivos por familia clínica</p></div>
     <div class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></div>
   </div>
   <div class="appfoot" data-i18n="home_foot">© 2026 Diego Orlando Ríos Guarín · Uso educativo y clínico-operativo.</div>
-  <div class="appver">EBIME LAB · v6.3</div>
+  <div class="appver">EBIME LAB · v6.5</div>
 </div>
 
 <!-- CALC -->
@@ -566,8 +617,21 @@ body{background:#e7ebf3;font-family:"Roboto","Inter",system-ui,sans-serif}
   <button class="navitem ripple" data-s="pharma" onclick="showScreen('pharma')"><span class="pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2v7.5L4.5 18a3 3 0 0 0 2.6 4.5h9.8A3 3 0 0 0 19.5 18L14 9.5V2M8 2h8M7 14h10"/></svg></span><span data-i18n="nav_pharma">Fármacos</span></button>
   <button class="navitem ripple" data-s="catalog" onclick="showScreen('catalog')"><span class="pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></span><span data-i18n="nav_catalog">Catálogo</span></button>
 </nav>
-<div class="sheet-scrim" id="langScrim" onclick="closeLang()"></div>
-<div class="sheet" id="langSheet"><div class="sheet-h" data-i18n="lang_label">Idioma</div><div id="langList"></div></div>
+<div class="sheet-scrim" id="cfgScrim" onclick="closeCfg()"></div>
+<div class="sheet" id="cfgSheet"><div class="sheet-h">Configuración</div>
+  <div style="padding:2px 14px 6px">
+    <div style="font-size:11px;color:var(--txt-dim);font-weight:600;margin:6px 2px 9px;letter-spacing:.3px">Tema de la app</div>
+    <div class="seg" id="themeSeg" style="--accent:var(--royal)">
+      <button data-v="auto" onclick="setTheme('auto')">Automático</button>
+      <button data-v="light" onclick="setTheme('light')">☀ Claro</button>
+      <button data-v="dark" onclick="setTheme('dark')">☾ Oscuro</button>
+    </div>
+    <div style="font-size:11px;color:var(--txt-faint);margin:12px 2px 0;line-height:1.5">«Automático» sigue el modo de tu dispositivo. «Claro» y «Oscuro» fijan el tema manualmente; tu elección se recuerda.</div>
+    <div style="font-size:11px;color:var(--txt-dim);font-weight:600;margin:20px 2px 7px;letter-spacing:.3px">Idioma</div>
+    <div id="langList"></div>
+  </div>
+  <div style="font-family:var(--mono);font-size:10px;color:var(--txt-faint);text-align:center;padding:16px 0 2px;letter-spacing:.5px">EBIME LAB · v6.5</div>
+</div>
 <div class="dlg-scrim" id="disclaimer">
   <div class="dlg-card" role="dialog" aria-modal="true">
     <div class="dlg-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v4h1"/></svg></div>
@@ -594,7 +658,9 @@ const LANG_NAMES={es:"Español",en:"English",pt:"Português",fr:"Français",it:"
 
 const INK={green:'#2f7d28',amber:'#b9740b',danger:'#c52d44',teal:'#0c7c98',royal:'#24459a',magenta:'#8a2b88',mx0:'#5f7d12',mx1:'#9c7c00',mx2:'#b85e0c',mx3:'#c0202f',mx4:'#8a1414',mx5:'#5f0d0d'};
 const FILL={green:'var(--green)',amber:'var(--amber)',danger:'var(--danger)',teal:'var(--teal)',royal:'var(--royal)',magenta:'var(--magenta)',mx0:'#8cb91e',mx1:'#f2c200',mx2:'#f0801a',mx3:'#d62424',mx4:'#9e1717',mx5:'#5f0d0d'};
-function paint(el,key,title,body){el.style.borderColor=FILL[key];el.style.background='color-mix(in srgb,'+FILL[key]+' 12%,#fff)';el.innerHTML='<b style="color:'+INK[key]+'">'+title+'</b>'+body;}
+const INK_D={green:'#74da6f',amber:'#f6bd5e',danger:'#ff8d9a',teal:'#46d3f2',royal:'#9db2ff',magenta:'#e58fe2',mx0:'#b7e34a',mx1:'#ffd84d',mx2:'#ffae5c',mx3:'#ff6f7d',mx4:'#ff8a8a',mx5:'#ff9d7a'};
+function isDark(){return document.documentElement.dataset.theme==='dark';}
+function paint(el,key,title,body){el.style.borderColor=FILL[key];el.style.background='color-mix(in srgb,'+FILL[key]+' 12%,var(--mix))';el.innerHTML='<b style="color:'+(isDark()?INK_D:INK)[key]+'">'+title+'</b>'+body;}
 const check='<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg>';
 function go(v,sub){
   document.querySelectorAll('.view').forEach(e=>e.classList.remove('active'));
@@ -917,7 +983,7 @@ function cpCalc(){
   const mods=[...document.querySelectorAll('#cpMods input:checked')].map(i=>+i.dataset.mod);
   const al=document.getElementById('cpModAlert');
   if(mods.length){
-    let html='<div class="verdict" style="border-color:var(--danger);background:color-mix(in srgb,var(--danger) 10%,#fff);margin-top:8px"><b style="color:'+INK.danger+'">⚑ Modificadores de trombosis presentes ('+mods.length+')</b><ul style="margin:6px 0 0 16px;padding:0;font-size:13px">';
+    let html='<div class="verdict" style="border-color:var(--danger);background:color-mix(in srgb,var(--danger) 10%,var(--mix));margin-top:8px"><b style="color:'+(isDark()?INK_D:INK).danger+'">⚑ Modificadores de trombosis presentes ('+mods.length+')</b><ul style="margin:6px 0 0 16px;padding:0;font-size:13px">';
     mods.forEach(i=>html+='<li style="margin-bottom:6px"><b style="color:var(--txt)">'+cpModsData[i][0]+':</b> '+cpModsData[i][1]+'</li>');
     html+='</ul></div>';al.innerHTML=html;
   } else al.innerHTML='';
@@ -1169,7 +1235,7 @@ const calcMeta=[
 ];
 const TITLES={home:'EBIME',calc:'Calculadoras',pharma:'Motor farmacológico',catalog:'Catálogo EBIME'};
 let curCalc=null;
-function tint(hex){return 'color-mix(in srgb,'+hex+' 14%,#fff)';}
+function tint(hex){return 'color-mix(in srgb,'+hex+' 14%,var(--mix))';}
 function renderCards(){
   const hg=document.getElementById('homeCalcs');hg.innerHTML='';
   calcMeta.forEach(m=>{const d=document.createElement('div');d.className='qcard ripple';d.onclick=()=>goCalc(m.id);
@@ -1244,10 +1310,17 @@ function renderLangList(){
   Object.keys(LANG_NAMES).forEach(code=>{const r=document.createElement('div');r.className='langrow ripple'+(code===LANG?' on':'');r.onclick=()=>selectLang(code);
     r.innerHTML='<span class="nm">'+LANG_NAMES[code]+'</span><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>';c.appendChild(r);});
 }
-function openLang(){document.getElementById('langScrim').classList.add('on');document.getElementById('langSheet').classList.add('on');}
-function closeLang(){document.getElementById('langScrim').classList.remove('on');document.getElementById('langSheet').classList.remove('on');}
-function selectLang(code){LANG=code;applyLang();closeLang();}
-applyLang();
+function selectLang(code){LANG=code;applyLang();renderLangList();}
+function openCfg(){document.getElementById('cfgScrim').classList.add('on');document.getElementById('cfgSheet').classList.add('on');updateThemeUI();renderLangList();}
+function closeCfg(){document.getElementById('cfgScrim').classList.remove('on');document.getElementById('cfgSheet').classList.remove('on');}
+let THEME=(function(){try{var s=localStorage.getItem('ebime_theme');if(s==='light'||s==='dark'||s==='auto')return s;}catch(e){}return 'auto';})();
+function resolvedTheme(){if(THEME==='auto'){try{return (window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light';}catch(e){return 'light';}}return THEME;}
+function updateThemeUI(){document.querySelectorAll('#themeSeg button').forEach(function(b){b.classList.toggle('on',b.dataset.v===THEME);});}
+function repaintResults(){['dvCalc','adCalc','eaCalc','cvrCalc','mgRun','mxCalc','insCalc','cpCalc','davRun'].forEach(function(f){try{if(typeof window[f]==='function')window[f]();}catch(e){}});}
+function applyTheme(){var r=resolvedTheme();document.documentElement.dataset.theme=r;var m=document.querySelector('meta[name=theme-color]');if(m)m.setAttribute('content',r==='dark'?'#0b1120':'#24459a');try{localStorage.setItem('ebime_theme',THEME);}catch(e){}updateThemeUI();repaintResults();}
+function setTheme(v){THEME=v;applyTheme();}
+try{matchMedia('(prefers-color-scheme: dark)').addEventListener('change',function(){if(THEME==='auto')applyTheme();});}catch(e){}
+applyLang();applyTheme();
 
 /* service worker */
 if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));}
