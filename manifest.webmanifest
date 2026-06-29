@@ -35,5 +35,63 @@
       "purpose": "maskable"
     }
   ],
-  "version": "6.7"
+  "screenshots": [
+    {
+      "src": "screenshots/01.jpeg",
+      "sizes": "720x1544",
+      "type": "image/jpeg",
+      "form_factor": "narrow",
+      "label": "Inicio · plataforma clínica"
+    },
+    {
+      "src": "screenshots/02.jpeg",
+      "sizes": "720x1544",
+      "type": "image/jpeg",
+      "form_factor": "narrow",
+      "label": "Calculadoras clínicas"
+    },
+    {
+      "src": "screenshots/03.jpeg",
+      "sizes": "720x1544",
+      "type": "image/jpeg",
+      "form_factor": "narrow",
+      "label": "Calculadora ratio catéter/vena"
+    },
+    {
+      "src": "screenshots/04.jpeg",
+      "sizes": "720x1544",
+      "type": "image/jpeg",
+      "form_factor": "narrow",
+      "label": "Resultado de cálculo"
+    },
+    {
+      "src": "screenshots/05.jpeg",
+      "sizes": "720x1544",
+      "type": "image/jpeg",
+      "form_factor": "narrow",
+      "label": "Motor farmacológico"
+    },
+    {
+      "src": "screenshots/06.jpeg",
+      "sizes": "720x1544",
+      "type": "image/jpeg",
+      "form_factor": "narrow",
+      "label": "Catálogo de dispositivos"
+    },
+    {
+      "src": "screenshots/07.jpeg",
+      "sizes": "720x1544",
+      "type": "image/jpeg",
+      "form_factor": "narrow",
+      "label": "Catálogo · línea PICC"
+    },
+    {
+      "src": "screenshots/08.jpeg",
+      "sizes": "720x1544",
+      "type": "image/jpeg",
+      "form_factor": "narrow",
+      "label": "Aviso de uso"
+    }
+  ],
+  "version": "6.9"
 }

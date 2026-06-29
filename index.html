@@ -358,6 +358,40 @@ html[data-theme="dark"] .dpill.alto{background:color-mix(in srgb,var(--danger) 2
 html[data-theme="dark"] .disclaim{background:color-mix(in srgb,var(--amber) 12%,var(--surface));border-color:color-mix(in srgb,var(--amber) 30%,var(--surface));color:var(--txt-dim)}
 html[data-theme="dark"] .dcard .fact{background:var(--surface-2);border-color:var(--line)}
 html[data-theme="dark"] .dcard .drow{border-top-color:var(--line)}
+.search-hero{position:relative;display:flex;align-items:center;gap:12px;background:var(--surface);border:1.6px solid var(--line);border-radius:16px;padding:15px 16px 15px 24px;box-shadow:0 10px 26px -16px rgba(22,163,196,.5);transition:.2s}
+.search-hero::before{content:"";position:absolute;left:0;top:14px;bottom:14px;width:4px;border-radius:4px;background:linear-gradient(var(--teal),var(--green))}
+.search-hero:focus-within{border-color:var(--teal);box-shadow:0 12px 34px -12px rgba(22,163,196,.6)}
+.search-hero .mag{color:var(--teal);flex:0 0 auto}
+.search-hero input{border:0;background:none;font-size:16.5px;font-weight:500;color:var(--txt);width:100%;outline:none;font-family:var(--body);padding:0;box-shadow:none}
+.search-hero input::placeholder{color:var(--txt-faint);font-weight:500}
+.search-hero .cnt{font-family:var(--mono);font-size:11px;color:var(--teal-ink);background:color-mix(in srgb,var(--teal) 14%,var(--mix));padding:5px 10px;border-radius:999px;white-space:nowrap;font-weight:600}
+.search-sub{font-size:12.5px;color:var(--txt-faint);margin:9px 4px 0;display:flex;align-items:center;gap:7px}
+.search-sub b{color:var(--green-ink);font-weight:600}
+.filters{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.filters select{flex:1;min-width:150px;font-family:var(--body);font-size:13.5px;color:var(--txt);background:var(--surface);border:1px solid var(--line);border-radius:11px;padding:11px 13px;cursor:pointer;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' fill='none' stroke='%238a97b5' stroke-width='2'%3E%3Cpath d='M3 5l4 4 4-4'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center}
+.az-head{font-family:var(--mono);font-size:10.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--txt-faint);margin:20px 4px 9px;font-weight:600}
+.az-index{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:22px}
+.az{font-family:var(--mono);font-size:12.5px;font-weight:600;min-width:32px;height:32px;display:flex;align-items:center;justify-content:center;border-radius:9px;border:1px solid var(--line);background:var(--surface);color:var(--txt-dim);cursor:pointer;transition:.12s;padding:0 4px}
+.az:hover{border-color:var(--teal);color:var(--teal-ink)}
+.az.on{background:var(--green);border-color:var(--green);color:#fff}
+.az.todos{padding:0 14px}
+.az.dis{opacity:.3;pointer-events:none}
+.count-line{font-family:var(--mono);font-size:11px;color:var(--txt-faint);margin:0 0 12px;letter-spacing:.4px}
+.ios-h{font-size:12.5px;font-weight:600;color:var(--txt-faint);letter-spacing:.4px;margin:20px 4px 8px;text-transform:uppercase}
+.ios-hint{font-size:12px;color:var(--txt-faint);margin:10px 4px 0;line-height:1.5}
+.seg-ios{display:flex;gap:6px;background:var(--surface-2);border:1px solid var(--line);border-radius:18px;padding:6px}
+.seg-ios button{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;padding:13px 0;border:0;border-radius:13px;background:none;color:var(--txt-dim);font-family:var(--body);font-size:15px;font-weight:600;cursor:pointer;transition:.18s}
+.seg-ios button .ic{color:var(--amber);transition:.18s;line-height:0}
+.seg-ios button.on{background:var(--royal);color:#fff;box-shadow:0 8px 18px -7px rgba(36,69,154,.55)}
+.seg-ios button.on .ic{color:#fff}
+.ios-group{background:var(--surface);border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.ios-row{display:flex;align-items:center;gap:13px;padding:14px 16px;cursor:pointer;position:relative;transition:background .12s}
+.ios-row:active{background:var(--surface-2)}
+.ios-row + .ios-row::before{content:"";position:absolute;top:0;left:52px;right:0;height:1px;background:var(--line)}
+.ios-row .flag{font-size:21px;width:26px;text-align:center}
+.ios-row .lbl{flex:1;font-size:16px;font-weight:500;color:var(--txt)}
+.ios-row .chk{color:var(--royal-ink);font-weight:800;font-size:18px;opacity:0;transform:scale(.6);transition:.15s}
+.ios-row.on .chk{opacity:1;transform:scale(1)}
 </style>
 </head>
 <body>
@@ -392,7 +426,7 @@ html[data-theme="dark"] .dcard .drow{border-top-color:var(--line)}
     <div class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></div>
   </div>
   <div class="appfoot" data-i18n="home_foot">© 2026 Diego Orlando Ríos Guarín · Uso educativo y clínico-operativo.</div>
-  <div class="appver">EBIME LAB · v6.7</div>
+  <div class="appver">EBIME LAB · v6.9</div>
 </div>
 
 <!-- CALC -->
@@ -590,13 +624,20 @@ html[data-theme="dark"] .dcard .drow{border-top-color:var(--line)}
         <div class="verdict" id="phVerdict" style="margin-top:0"></div><div class="verdict" id="osVerdict"></div><div class="verdict" id="routeVerdict" style="font-weight:600"></div>
       </div>
     </div>
-    <div class="pharma-status" id="pharmaStatus">Cargando fármacos…</div>
-    <div class="toolbar">
-      <input type="text" id="drugSearch" placeholder="Buscar fármaco…" oninput="renderDrugs()">
+    <div class="search-hero">
+      <svg class="mag" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+      <input type="text" id="drugSearch" placeholder="Buscar fármaco por nombre…" oninput="onDrugSearch()">
+      <span class="cnt" id="drugCount">247</span>
+    </div>
+    <div class="search-sub"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg><span>Empieza a escribir o toca una letra <b>↓</b></span></div>
+    <div class="filters">
       <select id="fGroup" onchange="renderDrugs()"><option value="">Todos los grupos</option></select>
       <select id="fType" onchange="renderDrugs()"><option value="">Todos los tipos</option><option value="Vesicante">Vesicante</option><option value="Irritante">Irritante</option><option value="Neutro">Neutro</option></select>
       
     </div>
+    <div class="az-head">Índice alfabético</div>
+    <div class="az-index" id="azIndex"></div>
+    <div class="count-line" id="drugCountLine"></div>
     <div id="drugList"></div>
     <div class="ref">Fuente: documento institucional <b>farmacos_actualizado.xlsx</b> — el motor se actualiza al editar ese archivo. El pH y la osmolaridad varían según marca y concentración: consulta la ficha técnica, al farmacéutico clínico y los protocolos institucionales.</div>
   
@@ -625,17 +666,16 @@ html[data-theme="dark"] .dcard .drow{border-top-color:var(--line)}
 <div class="sheet-scrim" id="cfgScrim" onclick="closeCfg()"></div>
 <div class="sheet" id="cfgSheet"><div class="sheet-h">Configuración</div>
   <div style="padding:2px 14px 6px">
-    <div style="font-size:11px;color:var(--txt-dim);font-weight:600;margin:6px 2px 9px;letter-spacing:.3px">Tema de la app</div>
-    <div class="seg" id="themeSeg" style="--accent:var(--royal)">
-      <button data-v="auto" onclick="setTheme('auto')">Automático</button>
-      <button data-v="light" onclick="setTheme('light')">☀ Claro</button>
-      <button data-v="dark" onclick="setTheme('dark')">☾ Oscuro</button>
+    <div class="ios-h">Tema</div>
+    <div class="seg-ios" id="themeSeg">
+      <button data-v="light" onclick="setTheme('light')"><span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M19.1 4.9l-1.8 1.8M6.7 17.3l-1.8 1.8"/></svg></span>Claro</button>
+      <button data-v="dark" onclick="setTheme('dark')"><span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A8.5 8.5 0 1 1 11.2 3a6.5 6.5 0 0 0 9.8 9.8z"/></svg></span>Oscuro</button>
     </div>
-    <div style="font-size:11px;color:var(--txt-faint);margin:12px 2px 0;line-height:1.5">«Automático» sigue el modo de tu dispositivo. «Claro» y «Oscuro» fijan el tema manualmente; tu elección se recuerda.</div>
-    <div style="font-size:11px;color:var(--txt-dim);font-weight:600;margin:20px 2px 7px;letter-spacing:.3px">Idioma</div>
-    <div id="langList"></div>
+    <div class="ios-hint">Elige el aspecto de la app. Tu preferencia se recuerda.</div>
+    <div class="ios-h">Idioma</div>
+    <div class="ios-group" id="langList"></div>
   </div>
-  <div style="font-family:var(--mono);font-size:10px;color:var(--txt-faint);text-align:center;padding:16px 0 2px;letter-spacing:.5px">EBIME LAB · v6.7</div>
+  <div style="font-family:var(--mono);font-size:10px;color:var(--txt-faint);text-align:center;padding:16px 0 2px;letter-spacing:.5px">EBIME LAB · v6.9</div>
 </div>
 <div class="dlg-scrim" id="disclaimer">
   <div class="dlg-card" role="dialog" aria-modal="true">
@@ -1023,11 +1063,22 @@ function fillGroups(){const sel=document.getElementById('fGroup');const cur=sel.
   sel.innerHTML='<option value="">Todos los grupos</option>'+gs.map(g=>'<option value="'+_esc(g)+'">'+_esc(g)+'</option>').join('');
   sel.value=cur;}
 
+const _norm=s=>(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toUpperCase();
+let DRUG_LETTER='';
+function buildAZ(){var az=document.getElementById('azIndex');if(!az)return;
+  var have=new Set(PHARMA.map(function(d){return _norm(d.nombre)[0];}));
+  var html='<button class="az todos'+(DRUG_LETTER===''?' on':'')+'" onclick="pickDrugLetter(\'\')">Todos</button>';
+  for(var i=65;i<=90;i++){var L=String.fromCharCode(i);var dis=have.has(L)?'':' dis';
+    html+='<button class="az'+dis+(DRUG_LETTER===L?' on':'')+'" onclick="pickDrugLetter(\''+L+'\')">'+L+'</button>';}
+  az.innerHTML=html;}
+function pickDrugLetter(L){DRUG_LETTER=L;var s=document.getElementById('drugSearch');if(s)s.value='';buildAZ();renderDrugs();}
+function onDrugSearch(){DRUG_LETTER='';buildAZ();renderDrugs();}
 function renderDrugs(){
   const q=(document.getElementById('drugSearch').value||'').toLowerCase();
   const fg=document.getElementById('fGroup').value,ft=document.getElementById('fType').value;
   const cont=document.getElementById('drugList');cont.innerHTML='';
-  let rows=PHARMA.filter(d=>(d.nombre.toLowerCase().includes(q)||(d.grupo||'').toLowerCase().includes(q))&&(!fg||d.grupo===fg)&&(!ft||d.tipo===ft));
+  let rows=PHARMA.filter(d=>(d.nombre.toLowerCase().includes(q)||(d.grupo||'').toLowerCase().includes(q))&&(!fg||d.grupo===fg)&&(!ft||d.tipo===ft)&&(!DRUG_LETTER||_norm(d.nombre)[0]===DRUG_LETTER));
+  var _cl=document.getElementById('drugCountLine');if(_cl)_cl.textContent=rows.length+(rows.length===1?' resultado':' resultados')+(DRUG_LETTER?(' \u00b7 letra '+DRUG_LETTER):'');
   if(!rows.length){cont.innerHTML='<div class="empty">Sin coincidencias. Ajusta la búsqueda o los filtros.</div>';return;}
   rows.sort((a,b)=>a.nombre.localeCompare(b.nombre));
   const frag=document.createDocumentFragment();
@@ -1049,8 +1100,8 @@ function renderDrugs(){
   });
   cont.appendChild(frag);
 }
-function setPharma(list,fuente){PHARMA=list;fillGroups();
-  document.getElementById('pharmaStatus').textContent=list.length+' fármacos';renderDrugs();}
+function setPharma(list,fuente){PHARMA=list;fillGroups();buildAZ();
+  var _dc=document.getElementById('drugCount');if(_dc)_dc.textContent=list.length;renderDrugs();}
 
 /* normalización del Excel (idéntica al conversor actualizar_farmacos.py) */
 const _SHEET_LABEL={'Cardio':'Cardiovascular / Vasoactivo','Antibioticos':'Antibióticos / Antifúngicos','Electrolitos':'Electrolitos / Fluidos','Sedoanalgesia':'Sedoanalgesia','Hoja 5':'Varios','Antineoplásicos':'Antineoplásicos','Antiepilépticos':'Antiepilépticos','Otros':'Otros','Glucocorticoides':'Glucocorticoides','Inmunosupresores':'Inmunosupresores','Anticoagulantes':'Anticoagulantes'};
@@ -1311,20 +1362,20 @@ function applyLang(){
   renderLangList();
 }
 function renderLangList(){
+  const FLAG={es:'\uD83C\uDDEA\uD83C\uDDF8',en:'\uD83C\uDDEC\uD83C\uDDE7',pt:'\uD83C\uDDF5\uD83C\uDDF9',fr:'\uD83C\uDDEB\uD83C\uDDF7',it:'\uD83C\uDDEE\uD83C\uDDF9',ru:'\uD83C\uDDF7\uD83C\uDDFA',zh:'\uD83C\uDDE8\uD83C\uDDF3'};
   const c=document.getElementById('langList');c.innerHTML='';
-  Object.keys(LANG_NAMES).forEach(code=>{const r=document.createElement('div');r.className='langrow ripple'+(code===LANG?' on':'');r.onclick=()=>selectLang(code);
-    r.innerHTML='<span class="nm">'+LANG_NAMES[code]+'</span><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>';c.appendChild(r);});
+  Object.keys(LANG_NAMES).forEach(code=>{const r=document.createElement('div');r.className='ios-row'+(code===LANG?' on':'');r.onclick=()=>selectLang(code);
+    r.innerHTML='<span class="flag">'+(FLAG[code]||'')+'</span><span class="lbl">'+LANG_NAMES[code]+'</span><span class="chk">\u2713</span>';c.appendChild(r);});
 }
 function selectLang(code){LANG=code;applyLang();renderLangList();}
 function openCfg(){document.getElementById('cfgScrim').classList.add('on');document.getElementById('cfgSheet').classList.add('on');updateThemeUI();renderLangList();}
 function closeCfg(){document.getElementById('cfgScrim').classList.remove('on');document.getElementById('cfgSheet').classList.remove('on');}
-let THEME=(function(){try{var s=localStorage.getItem('ebime_theme');if(s==='light'||s==='dark'||s==='auto')return s;}catch(e){}return 'auto';})();
-function resolvedTheme(){if(THEME==='auto'){try{return (window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light';}catch(e){return 'light';}}return THEME;}
+let THEME=(function(){try{var s=localStorage.getItem('ebime_theme');if(s==='light'||s==='dark')return s;}catch(e){}try{if(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches)return 'dark';}catch(e){}return 'light';})();
+function resolvedTheme(){return THEME;}
 function updateThemeUI(){document.querySelectorAll('#themeSeg button').forEach(function(b){b.classList.toggle('on',b.dataset.v===THEME);});}
 function repaintResults(){['dvCalc','adCalc','eaCalc','cvrCalc','mgRun','mxCalc','insCalc','cpCalc','davRun','phCalc'].forEach(function(f){try{if(typeof window[f]==='function')window[f]();}catch(e){}});}
 function applyTheme(){var r=resolvedTheme();document.documentElement.dataset.theme=r;var m=document.querySelector('meta[name=theme-color]');if(m)m.setAttribute('content',r==='dark'?'#0b1120':'#24459a');try{localStorage.setItem('ebime_theme',THEME);}catch(e){}updateThemeUI();repaintResults();}
 function setTheme(v){THEME=v;applyTheme();}
-try{matchMedia('(prefers-color-scheme: dark)').addEventListener('change',function(){if(THEME==='auto')applyTheme();});}catch(e){}
 applyLang();applyTheme();
 
 /* service worker */
