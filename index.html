@@ -379,11 +379,12 @@ html[data-theme="dark"] .dcard .drow{border-top-color:var(--line)}
 .count-line{font-family:var(--mono);font-size:11px;color:var(--txt-faint);margin:0 0 12px;letter-spacing:.4px}
 .ios-h{font-size:12.5px;font-weight:600;color:var(--txt-faint);letter-spacing:.4px;margin:20px 4px 8px;text-transform:uppercase}
 .ios-hint{font-size:12px;color:var(--txt-faint);margin:10px 4px 0;line-height:1.5}
-.seg-ios{display:flex;gap:6px;background:var(--surface-2);border:1px solid var(--line);border-radius:18px;padding:6px}
-.seg-ios button{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;padding:13px 0;border:0;border-radius:13px;background:none;color:var(--txt-dim);font-family:var(--body);font-size:15px;font-weight:600;cursor:pointer;transition:.18s}
-.seg-ios button .ic{color:var(--amber);transition:.18s;line-height:0}
-.seg-ios button.on{background:var(--royal);color:#fff;box-shadow:0 8px 18px -7px rgba(36,69,154,.55)}
-.seg-ios button.on .ic{color:#fff}
+.seg-ios{display:flex;gap:0;background:var(--fill);border:0;border-radius:11px;padding:3px}
+.seg-ios button{flex:1;display:flex;flex-direction:row;align-items:center;justify-content:center;gap:7px;padding:9px;border:0;border-radius:8px;background:none;color:var(--txt);font-family:var(--body);font-size:15px;font-weight:600;cursor:pointer;transition:.18s}
+.seg-ios button .ic{color:currentColor;transition:.18s;line-height:0}
+.seg-ios button.on{background:var(--surface);color:var(--txt);box-shadow:0 1px 3px rgba(0,0,0,.14)}
+.seg-ios button.on .ic{color:currentColor}
+html[data-theme="dark"] .seg-ios button.on{background:#636366;color:#fff}
 .ios-group{background:var(--surface);border:1px solid var(--line);border-radius:16px;overflow:hidden}
 .ios-row{display:flex;align-items:center;gap:13px;padding:14px 16px;cursor:pointer;position:relative;transition:background .12s}
 .ios-row:active{background:var(--surface-2)}
@@ -520,6 +521,12 @@ html[data-theme="dark"] .devgrid{border:.5px solid var(--line)}
 .qcard .qi{border-radius:10px}
 .widecard .qi{border-radius:11px}
 .listrow .li{border-radius:8px}
+/* ---- Cabecera Configuración iOS (botón Listo) ---- */
+.grab{width:38px;height:5px;border-radius:3px;background:var(--txt-faint);opacity:.5;margin:8px auto 2px}
+.sheet-head{display:flex;align-items:center;justify-content:space-between;padding:6px 16px 8px}
+.sheet-title{font-size:22px;font-weight:800;letter-spacing:-.4px;color:var(--txt)}
+.cfg-done{border:0;background:none;color:var(--royal);font:inherit;font-size:17px;font-weight:600;cursor:pointer;padding:4px 2px}
+.cfg-done:active{opacity:.5}
 </style>
 </head>
 <body>
@@ -554,7 +561,7 @@ html[data-theme="dark"] .devgrid{border:.5px solid var(--line)}
     <div class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></div>
   </div>
   <div class="appfoot" data-i18n="home_foot">© 2026 Diego Orlando Ríos Guarín · Uso educativo y clínico-operativo.</div>
-  <div class="appver">EBIME LAB · v7.4</div>
+  <div class="appver">EBIME LAB · v7.6</div>
 </div>
 
 <!-- CALC -->
@@ -805,18 +812,18 @@ html[data-theme="dark"] .devgrid{border:.5px solid var(--line)}
   <button class="navitem ripple" data-s="catalog" onclick="showScreen('catalog')"><span class="pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></span><span data-i18n="nav_catalog">Catálogo</span></button>
 </nav>
 <div class="sheet-scrim" id="cfgScrim" onclick="closeCfg()"></div>
-<div class="sheet" id="cfgSheet"><div class="sheet-h">Configuración</div>
+<div class="sheet" id="cfgSheet"><div class="grab"></div><div class="sheet-head"><div class="sheet-title">Configuración</div><button class="cfg-done" onclick="closeCfg()">Listo</button></div>
   <div style="padding:2px 14px 6px">
     <div class="ios-h">Tema</div>
     <div class="seg-ios" id="themeSeg">
-      <button data-v="light" onclick="setTheme('light')"><span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M19.1 4.9l-1.8 1.8M6.7 17.3l-1.8 1.8"/></svg></span>Claro</button>
-      <button data-v="dark" onclick="setTheme('dark')"><span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A8.5 8.5 0 1 1 11.2 3a6.5 6.5 0 0 0 9.8 9.8z"/></svg></span>Oscuro</button>
+      <button data-v="light" onclick="setTheme('light')"><span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M19.1 4.9l-1.8 1.8M6.7 17.3l-1.8 1.8"/></svg></span>Claro</button>
+      <button data-v="dark" onclick="setTheme('dark')"><span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A8.5 8.5 0 1 1 11.2 3a6.5 6.5 0 0 0 9.8 9.8z"/></svg></span>Oscuro</button>
     </div>
     <div class="ios-hint">Elige el aspecto de la app. Tu preferencia se recuerda.</div>
     <div class="ios-h">Idioma</div>
     <div class="ios-group" id="langList"></div>
   </div>
-  <div style="font-family:var(--mono);font-size:10px;color:var(--txt-faint);text-align:center;padding:16px 0 2px;letter-spacing:.5px">EBIME LAB · v7.4</div>
+  <div style="font-family:var(--mono);font-size:10px;color:var(--txt-faint);text-align:center;padding:16px 0 2px;letter-spacing:.5px">EBIME LAB · v7.6</div>
 </div>
 <div class="dlg-scrim" id="disclaimer">
   <div class="dlg-card" role="dialog" aria-modal="true">
