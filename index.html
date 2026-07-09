@@ -547,6 +547,7 @@ html[data-theme="dark"] .fav-empty{background:transparent;border:1.5px dashed va
 .fp-tx b{font-size:15px;color:var(--txt)}
 .fp-tx span{font-size:12.5px;color:var(--txt-dim)}
 .fp-ck{color:var(--royal);font-weight:700;margin-left:auto}
+.calc-cite{font-size:11px;line-height:1.45;color:var(--txt-faint);border-top:1px solid var(--line);margin-top:14px;padding-top:10px;font-style:italic}
 </style>
 </head>
 <body>
@@ -581,7 +582,7 @@ html[data-theme="dark"] .fav-empty{background:transparent;border:1.5px dashed va
     <div class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></div>
   </div>
   <div class="appfoot" data-i18n="home_foot">© 2026 Diego Orlando Ríos Guarín · Uso educativo y clínico-operativo. Escalas reconocidas a sus autores. Contacto: dorios0891@gmail.com</div>
-  <div class="appver">EBIME LAB · v8.0</div>
+  <div class="appver">EBIME LAB · v8.3</div>
 </div>
 
 <!-- CALC -->
@@ -598,7 +599,8 @@ html[data-theme="dark"] .fav-empty{background:transparent;border:1.5px dashed va
           <div class="field"><label data-i18n="diva_age">Edad del paciente</label><div class="seg" id="dvAge"><button data-v="3" data-i18n="age_lt1">&lt; 1 año</button><button data-v="1" data-i18n="age_12">1–2 años</button><button data-v="0" class="on" data-i18n="age_gt2">&gt; 2 años</button></div></div>
           <div id="divaList"></div>
         </div>
-        <button class="calc-btn" onclick="showResult('diva')" data-i18n="calc_btn">Calcular</button>
+        <div class="calc-cite">Escala original — Escala DIVA · Yen K et al., Pediatr Emerg Care 2008. Reconocida a su(s) autor(es); uso educativo y clínico.</div>
+          <button class="calc-btn" onclick="showResult('diva')" data-i18n="calc_btn">Calcular</button>
         <div class="readout">
           <div class="eyebrow" style="--accent:var(--magenta);margin-bottom:10px"><span data-i18n="result">Resultado</span> DIVA</div>
           <div class="score-big"><span id="dvScore">0</span><small> / 10</small></div>
@@ -613,7 +615,8 @@ html[data-theme="dark"] .fav-empty{background:transparent;border:1.5px dashed va
         <div class="card"><h4 data-i18n="adiva_title">A-DIVA modificada (van Loon 2019)</h4><p class="hint" data-i18n="adiva_hint">Escala aditiva de 5 variables binarias (1 punto c/u) para riesgo de acceso venoso difícil en adultos.</p>
           <div id="adivaList"></div>
         </div>
-        <button class="calc-btn" onclick="showResult('adiva')" data-i18n="calc_btn">Calcular</button>
+        <div class="calc-cite">Escala original — A-DIVA modificada · van Loon FHJ et al., J Clin Med 2019. Reconocida a su(s) autor(es); uso educativo y clínico.</div>
+          <button class="calc-btn" onclick="showResult('adiva')" data-i18n="calc_btn">Calcular</button>
         <div class="readout">
           <div class="eyebrow" style="--accent:var(--magenta);margin-bottom:10px"><span data-i18n="result">Resultado</span> A-DIVA</div>
           <div class="score-big"><span id="adScore">0</span><small> / 5</small></div>
@@ -626,7 +629,8 @@ html[data-theme="dark"] .fav-empty{background:transparent;border:1.5px dashed va
     </div><div class="ctab" id="t-eadiva" style="--accent:var(--magenta);display:none">
       <div class="grid2">
         <div class="card"><h4 data-i18n="eadiva_title">EA-DIVA (Civetta 2019)</h4><p class="hint" data-i18n="eadiva_hint">Escala de 8 ítems ponderados para riesgo de acceso venoso periférico difícil en adultos. Corte > 8.</p><div id="eadivaList"></div></div>
-        <button class="calc-btn" onclick="showResult('eadiva')" data-i18n="calc_btn">Calcular</button>
+        <div class="calc-cite">Escala original — EA-DIVA · Civetta G et al., J Vasc Access 2019. Reconocida a su(s) autor(es); uso educativo y clínico.</div>
+          <button class="calc-btn" onclick="showResult('eadiva')" data-i18n="calc_btn">Calcular</button>
         <div class="readout">
           <div class="eyebrow" style="--accent:var(--magenta);margin-bottom:10px"><span data-i18n="result">Resultado</span> EA-DIVA</div>
           <div class="score-big"><span id="eaScore">0</span><small> / 12</small></div>
@@ -643,9 +647,22 @@ html[data-theme="dark"] .fav-empty{background:transparent;border:1.5px dashed va
           <div class="metrics"><div class="metric"><span data-i18n="cvr_m_od">OD catéter</span><b id="odVal">–</b></div><div class="metric"><span data-i18n="cvr_m_d">Diámetro vena</span><b id="dVal">–</b></div><div class="metric"><span data-i18n="cvr_m_cvr">CVR · ocupación</span><b id="cvrVal">–</b></div></div>
           <div class="note" data-i18n="cvr_note">El CVR se calcula por diámetro (OD ÷ vena). Los cortes 33% y 45% son por diámetro, no por área (45% diámetro ≈ 20% área); no mezclar escalas.</div>
         </div>
-        <button class="calc-btn" onclick="showResult('cvr')" data-i18n="calc_btn">Calcular</button>
+        <div class="calc-cite">Escala original — Ratio catéter/vena · Spencer & Mahoney 2017; Sharp R et al. 2021. Reconocida a su(s) autor(es); uso educativo y clínico.</div>
+          <button class="calc-btn" onclick="showResult('cvr')" data-i18n="calc_btn">Calcular</button>
         <div class="readout">
           <div class="eyebrow" style="--accent:var(--teal);margin-bottom:10px" data-i18n="cvr_zone">Zona de riesgo</div>
+          <div id="cvrViz" style="display:flex;flex-direction:column;align-items:center;margin:6px 0 16px">
+            <svg viewBox="0 0 200 200" width="168" height="168" style="max-width:62%">
+              <circle cx="100" cy="100" r="84" fill="var(--surface)" stroke="var(--txt-faint)" stroke-width="2"></circle>
+              <line x1="100" y1="8" x2="100" y2="192" stroke="var(--txt-faint)" stroke-width="1"></line>
+              <line x1="8" y1="100" x2="192" y2="100" stroke="var(--txt-faint)" stroke-width="1"></line>
+              <circle id="cvrCath" cx="100" cy="100" r="0" fill="var(--green)" fill-opacity="0.92"></circle>
+            </svg>
+            <div style="display:flex;gap:26px;margin-top:10px;font-size:12px">
+              <div style="text-align:center"><b id="cvrDiaRatio" style="font-size:17px;font-weight:800">–</b><br><span style="color:var(--txt-faint)">Ratio diámetro</span></div>
+              <div style="text-align:center"><b id="cvrAreaRatio" style="font-size:17px;font-weight:800">–</b><br><span style="color:var(--txt-faint)">Ratio área</span></div>
+            </div>
+          </div>
           <div class="score-big" id="cvrBig" style="font-size:48px">–</div>
           <div class="gauge"><i id="cvrGauge" style="width:0%"></i></div>
           <div class="verdict" id="cvrVerdict"></div>
@@ -673,7 +690,8 @@ html[data-theme="dark"] .fav-empty{background:transparent;border:1.5px dashed va
             <div class="field" style="margin-bottom:0"><label id="mgPDurLbl">Duración prevista</label><div class="seg" id="mgPDur" style="flex-wrap:wrap"></div></div>
           </div>
         </div>
-        <button class="calc-btn" onclick="showResult('magic')" data-i18n="calc_btn">Calcular</button>
+        <div class="calc-cite">Escala original — MAGIC · Chopra V et al., Ann Intern Med 2015. Reconocida a su(s) autor(es); uso educativo y clínico.</div>
+          <button class="calc-btn" onclick="showResult('magic')" data-i18n="calc_btn">Calcular</button>
         <div class="readout">
           <div class="eyebrow" style="--accent:var(--royal);margin-bottom:10px">Recomendación</div>
           <div class="score-big" id="mgDevice" style="font-size:30px;font-family:var(--disp);letter-spacing:-.5px">Catéter periférico</div>
@@ -688,7 +706,8 @@ html[data-theme="dark"] .fav-empty{background:transparent;border:1.5px dashed va
         <div class="card"><h4 data-i18n="maddox_title">Grado observado</h4><p class="hint" data-i18n="maddox_hint">Selecciona el grado de flebitis en el sitio de inserción del catéter periférico.</p>
           <div class="gradelist" id="mxList"></div>
         </div>
-        <button class="calc-btn" onclick="showResult('maddox')" data-i18n="calc_btn">Calcular</button>
+        <div class="calc-cite">Escala original — Escala visual de flebitis · Maddox HE et al., Am J Hosp Pharm 1977. Reconocida a su(s) autor(es); uso educativo y clínico.</div>
+          <button class="calc-btn" onclick="showResult('maddox')" data-i18n="calc_btn">Calcular</button>
         <div class="readout">
           <div class="eyebrow" style="--accent:var(--amber);margin-bottom:10px" data-i18n="maddox_score">Puntaje actual</div>
           <div class="score-big" id="mxScore">0</div>
@@ -702,7 +721,8 @@ html[data-theme="dark"] .fav-empty{background:transparent;border:1.5px dashed va
         <div class="card"><h4 data-i18n="ins_title">Escala de infiltración de soluciones intravenosas (INS)</h4><p class="hint" data-i18n="ins_hint">Compara los criterios clínicos con lo observado en el sitio y selecciona el grado.</p>
           <div class="gradelist" id="insList"></div>
         </div>
-        <button class="calc-btn" onclick="showResult('ins')" data-i18n="calc_btn">Calcular</button>
+        <div class="calc-cite">Escala original — Escala de infiltración · Infusion Nurses Society (INS), 2024. Reconocida a su(s) autor(es); uso educativo y clínico.</div>
+          <button class="calc-btn" onclick="showResult('ins')" data-i18n="calc_btn">Calcular</button>
         <div class="readout">
           <div class="eyebrow" style="--accent:var(--teal);margin-bottom:10px" data-i18n="ins_result">Grado de infiltración</div>
           <div class="score-big" id="insScore">0</div>
@@ -716,7 +736,8 @@ html[data-theme="dark"] .fav-empty{background:transparent;border:1.5px dashed va
         <div class="card"><h4>Exitsite</h4><p class="hint">Compara los signos del sitio de salida del catéter con cada grado y selecciona el observado. Diferencia la infección local del sitio de salida de la tunelitis y de la bacteriemia asociada a catéter (CRBSI).</p>
           <div class="gradelist" id="exitList"></div>
         </div>
-        <button class="calc-btn" onclick="showResult('exitsite')">Calcular</button>
+        <div class="calc-cite">Escala original — Sitio de salida · INS 2024; O'Grady NP et al. (CDC/HICPAC) 2011. Reconocida a su(s) autor(es); uso educativo y clínico.</div>
+          <button class="calc-btn" onclick="showResult('exitsite')">Calcular</button>
         <div class="readout">
           <div class="eyebrow" style="--accent:var(--teal);margin-bottom:10px">Grado del sitio de salida</div>
           <div class="score-big" id="exitScore">0</div>
@@ -733,7 +754,8 @@ html[data-theme="dark"] .fav-empty{background:transparent;border:1.5px dashed va
           <div class="grphead" style="--accent:var(--danger)">Modificadores de acceso vascular (no puntúan)</div>
           <div id="cpMods" style="--accent:var(--danger)"></div>
         </div>
-        <button class="calc-btn" onclick="showResult('caprini')" data-i18n="calc_btn">Calcular</button>
+        <div class="calc-cite">Escala original — Índice de Caprini · Caprini JA, Dis Mon 2005. Reconocida a su(s) autor(es); uso educativo y clínico.</div>
+          <button class="calc-btn" onclick="showResult('caprini')" data-i18n="calc_btn">Calcular</button>
         <div class="readout">
           <div class="eyebrow" style="--accent:var(--green);margin-bottom:10px">Resultado Caprini</div>
           <div class="score-big" id="cpScore">0</div>
@@ -764,7 +786,8 @@ html[data-theme="dark"] .fav-empty{background:transparent;border:1.5px dashed va
             <div class="field" id="dvpFreqWrap" style="display:none;margin-bottom:0"><label>Frecuencia de uso</label><div class="seg" id="dvpFreq"><button data-v="frec" class="on">Frecuente (≥1/sem)</button><button data-v="infrec">Infrecuente (&lt;1/sem)</button></div></div>
           </div>
         </div>
-        <button class="calc-btn" onclick="showResult('dav')" data-i18n="calc_btn">Calcular</button>
+        <div class="calc-cite">Escala original — DAV-Expert / GAVePed · GAVeCeLT (Pittiruti M et al.). Reconocida a su(s) autor(es); uso educativo y clínico.</div>
+          <button class="calc-btn" onclick="showResult('dav')" data-i18n="calc_btn">Calcular</button>
         <div class="readout">
           <div class="eyebrow" style="--accent:var(--royal);margin-bottom:10px">Resultado DAV-Expert</div>
           <div id="davDevice" style="font-size:19px;font-weight:800;line-height:1.25;margin-bottom:10px">—</div>
@@ -808,7 +831,7 @@ html[data-theme="dark"] .fav-empty{background:transparent;border:1.5px dashed va
     <div class="az-index" id="azIndex"></div>
     <div class="count-line" id="drugCountLine"></div>
     <div id="drugList"></div>
-    <div class="ref">Fuente: documento institucional <b>farmacos_actualizado.xlsx</b> — el motor se actualiza al editar ese archivo. El pH y la osmolaridad varían según marca y concentración: consulta la ficha técnica, al farmacéutico clínico y los protocolos institucionales.</div>
+    
   
 </div>
 
@@ -847,7 +870,7 @@ html[data-theme="dark"] .fav-empty{background:transparent;border:1.5px dashed va
     <div class="ios-h">Idioma</div>
     <div class="ios-group" id="langList"></div>
   </div>
-  <div style="font-family:var(--mono);font-size:10px;color:var(--txt-faint);text-align:center;padding:16px 0 2px;letter-spacing:.5px">EBIME LAB · v8.0</div>
+  <div style="font-family:var(--mono);font-size:10px;color:var(--txt-faint);text-align:center;padding:16px 0 2px;letter-spacing:.5px">EBIME LAB · v8.3</div>
 </div>
 <div class="dlg-scrim" id="disclaimer">
   <div class="dlg-card" role="dialog" aria-modal="true">
@@ -980,6 +1003,11 @@ function cvrCalc(){
   document.getElementById('cvrBig').style.color=INK[key];
   const map={green:[t('cvr_v_opt_t'),t('cvr_v_opt_b')],amber:[t('cvr_v_acc_t'),t('cvr_v_acc_b')],danger:[t('cvr_v_no_t'),t('cvr_v_no_b')]};
   paint(document.getElementById('cvrVerdict'),key,map[key][0],map[key][1]);
+  (function(){var dia=od/d;var R=84;var cath=document.getElementById('cvrCath');
+    if(cath){cath.setAttribute('r',(Math.min(dia,1)*R).toFixed(1));cath.setAttribute('fill',FILL[key]);}
+    var dr=document.getElementById('cvrDiaRatio');if(dr){dr.textContent=Math.round(dia*100)+'%';dr.style.color=INK[key];}
+    var ar=document.getElementById('cvrAreaRatio');if(ar){ar.textContent=Math.round(dia*dia*100)+'%';ar.style.color=INK[key];}
+  })();
 }
 document.getElementById('veinD').addEventListener('input',cvrCalc);frSel.addEventListener('change',cvrCalc);cvrCalc();
 
