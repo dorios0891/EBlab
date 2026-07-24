@@ -1,6 +1,6 @@
-// EBIME service worker · v9.0
-const VERSION = '9.0';
-const CACHE = 'ebime-v9.0';
+// EBIME service worker
+const VERSION = '9.7';
+const CACHE = 'ebime-v9.7';
 // Precache COMPLETO -> funcionamiento offline total una vez instalada.
 // Las fuentes van incrustadas (base64) dentro de index.html, así que se cachean con él.
 const SHELL = [
@@ -8,6 +8,9 @@ const SHELL = [
   './farmacos.json', './farmacos_actualizado.xlsx',
   './ebime-logo.png', './ebime-logo-blanco.png',
   './icon-192.png', './icon-512.png', './icon-maskable-512.png', './apple-touch-icon.png',
+  './prime-logo.png',
+  './prime-vasos.jpg',
+  './prime-zim.jpg',
   './xlsx.full.min.js',
   './splash/splash-1125x2436.png', './splash/splash-1170x2532.png', './splash/splash-1179x2556.png', './splash/splash-1242x2208.png', './splash/splash-1242x2688.png', './splash/splash-1284x2778.png', './splash/splash-1290x2796.png', './splash/splash-1536x2048.png', './splash/splash-1620x2160.png', './splash/splash-1668x2388.png', './splash/splash-2048x2732.png', './splash/splash-640x1136.png', './splash/splash-750x1334.png', './splash/splash-828x1792.png'
 ];
@@ -43,7 +46,7 @@ function cacheFirst(req) {
     const copy = res.clone();
     caches.open(CACHE).then(c => c.put(req, copy)).catch(() => {});
     return res;
-  }).catch(() => caches.match('./index.html')));
+  }).catch(() => undefined));
 }
 
 self.addEventListener('fetch', e => {

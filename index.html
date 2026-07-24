@@ -686,6 +686,185 @@ html[data-theme=dark]{--glass-nav:rgba(22,28,46,.5);--glass-brd:rgba(255,255,255
   html[data-theme=dark] .appbar,html[data-theme=dark] .bottomnav{background:#1c1c1e !important}
   .fav-cell .qi,.calc-tile .qi,.devrow .devthumb{background:rgba(255,255,255,.28) !important}
 }
+
+/* ============ PRIME · módulo PICC ============ */
+.prime-card{position:relative;overflow:hidden;display:flex;align-items:center;gap:13px;padding:14px;margin:12px 0 0;
+  border-radius:20px;cursor:pointer;
+  background-color:#16202e;
+  background-image:linear-gradient(135deg,rgba(22,163,196,.30),transparent 58%),linear-gradient(160deg,rgba(255,255,255,.10),rgba(0,0,0,.22));
+  box-shadow:0 12px 26px -12px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.18)}
+.prime-card::after{content:"";position:absolute;inset:0;border-radius:20px;pointer-events:none;
+  background:linear-gradient(160deg,rgba(255,255,255,.14),transparent 50%)}
+.prime-card>*{position:relative;z-index:1}
+.prime-card-logo{height:38px;width:auto;flex:0 0 auto}
+.prime-card-txt{flex:1;display:flex;flex-direction:column;gap:2px;min-width:0}
+.prime-card-txt b{color:#fff;font-size:14px;font-weight:700;letter-spacing:-.2px;line-height:1.25}
+.prime-card-txt span{color:rgba(255,255,255,.72);font-size:11.5px}
+.prime-card-go{color:rgba(255,255,255,.6);display:flex}
+.prime-card-go svg{width:19px;height:19px}
+
+.prime-hero{border-radius:22px;padding:22px 18px 18px;margin-bottom:16px;text-align:center;
+  background-color:#16202e;
+  background-image:linear-gradient(135deg,rgba(22,163,196,.28),transparent 60%),linear-gradient(160deg,rgba(255,255,255,.10),rgba(0,0,0,.20));
+  box-shadow:0 14px 30px -14px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.18)}
+.prime-hero-logo{width:76%;max-width:290px;height:auto;display:block;margin:0 auto 10px}
+.prime-hero-sub{color:rgba(255,255,255,.80);font-size:12.5px;line-height:1.5;font-style:italic}
+
+.prime-bar{display:flex;align-items:center;gap:11px;margin:0 2px 14px}
+.prime-meter{flex:1;height:7px;border-radius:99px;background:var(--fill);overflow:hidden}
+.prime-fill{height:100%;width:0%;border-radius:99px;transition:width .3s ease;
+  background:linear-gradient(90deg,var(--royal),var(--teal))}
+.prime-count{font-family:var(--mono);font-size:12.5px;font-weight:700;color:var(--txt-dim);min-width:32px;text-align:right}
+.prime-reset{border:.5px solid var(--line);background:var(--fill);color:var(--txt-dim);
+  font-family:inherit;font-size:11.5px;font-weight:600;padding:7px 12px;border-radius:99px;cursor:pointer}
+.prime-reset:active{transform:scale(.95)}
+
+.prime-list{display:flex;flex-direction:column;gap:9px}
+.prime-cell{border-radius:18px;overflow:hidden;background:var(--surface);border:.5px solid var(--line);
+  box-shadow:var(--ios-shadow)}
+.prime-row{display:flex;align-items:center;gap:12px;padding:13px 14px;cursor:pointer}
+.prime-num{flex:0 0 auto;width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  background:var(--royal);color:#fff;font-size:13.5px;font-weight:800;transition:background .2s}
+.prime-num svg{width:16px;height:16px;stroke:#fff;fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.prime-cell.done .prime-num{background:var(--green)}
+.prime-name{flex:1;font-size:15px;font-weight:700;color:var(--txt);letter-spacing:-.2px}
+.prime-cell.done .prime-name{color:var(--txt-dim)}
+.prime-chev{color:var(--txt-faint);display:flex;transition:transform .25s}
+.prime-chev svg{width:17px;height:17px}
+.prime-cell.open .prime-chev{transform:rotate(90deg)}
+.prime-body{display:none;padding:0 14px 14px 56px}
+.prime-cell.open .prime-body{display:block}
+.prime-body p{margin:0 0 11px;font-size:13.5px;line-height:1.58;color:var(--txt-dim)}
+.prime-act{display:inline-flex;align-items:center;gap:7px;border:0;cursor:pointer;font-family:inherit;
+  background:var(--royal);color:#fff;font-size:12.5px;font-weight:600;padding:9px 14px;border-radius:11px;
+  box-shadow:0 6px 14px -6px rgba(36,69,154,.6)}
+.prime-act:active{transform:scale(.96)}
+.prime-act svg{width:15px;height:15px;stroke:#fff;fill:none;stroke-width:2.2}
+
+.prime-final{margin:16px 2px 0;padding:15px;border-radius:16px;font-size:13.5px;line-height:1.55;display:none}
+.prime-final.on{display:block}
+.prime-final.ok{background:rgba(84,178,76,.13);border:.5px solid rgba(84,178,76,.45);color:var(--txt)}
+.prime-final.pend{background:var(--fill);border:.5px solid var(--line);color:var(--txt-dim)}
+.prime-final b{color:var(--txt)}
+/* ============================================= */
+
+/* PRIME · imágenes, selectores y cierre */
+.prime-img{width:100%;border-radius:13px;display:block;margin:0 0 10px;box-shadow:0 6px 16px -8px rgba(0,0,0,.5)}
+.prime-cap{font-size:12.5px !important;line-height:1.5;color:var(--txt-dim)}
+.prime-head{flex:1;display:flex;flex-direction:column;gap:3px;min-width:0}
+.prime-val{display:inline-flex;align-items:center;gap:6px;align-self:flex-start;max-width:100%;
+  font-size:11.5px;font-weight:600;color:var(--royal);background:rgba(36,69,154,.12);
+  border-radius:99px;padding:3px 9px}
+html[data-theme=dark] .prime-val{color:#8fb3ff;background:rgba(91,124,240,.18)}
+.prime-x{cursor:pointer;opacity:.6;font-size:11px}
+.prime-opts{display:flex;flex-wrap:wrap;gap:8px}
+.prime-opt{border:.5px solid var(--line);background:var(--fill);color:var(--txt);cursor:pointer;
+  font-family:inherit;font-size:13px;font-weight:600;padding:10px 14px;border-radius:12px}
+.prime-opt:active{transform:scale(.96)}
+.prime-opt.on{background:var(--royal);color:#fff;border-color:transparent;
+  box-shadow:0 6px 14px -6px rgba(36,69,154,.6)}
+.prime-fin{width:100%;margin-top:16px;border:0;border-radius:14px;padding:15px;cursor:pointer;
+  font-family:inherit;font-size:15px;font-weight:700;color:#fff;
+  background:linear-gradient(135deg,var(--royal),var(--teal));
+  box-shadow:0 10px 22px -10px rgba(36,69,154,.7)}
+.prime-fin:disabled{background:var(--fill);color:var(--txt-faint);box-shadow:none;cursor:default}
+.prime-fin:not(:disabled):active{transform:scale(.98)}
+.prime-final.warn{background:rgba(241,159,44,.13);border:.5px solid rgba(241,159,44,.5);color:var(--txt)}
+.prime-final.bad{background:rgba(210,96,59,.13);border:.5px solid rgba(210,96,59,.5);color:var(--txt)}
+.prime-final ul{margin:9px 0 0;padding-left:19px}
+.prime-final li{margin-bottom:6px;font-size:13px;line-height:1.5;color:var(--txt-dim)}
+.prime-fin-t b{font-size:14.5px}
+.prime-dis{margin:11px 0 0 !important;font-size:11.5px !important;line-height:1.5;color:var(--txt-faint) !important}
+
+/* PRIME · popup de resultado */
+.prime-dlg{max-height:86vh;overflow-y:auto;-webkit-overflow-scrolling:touch}
+.prime-diag{display:flex;flex-direction:column;align-items:center;margin:2px 0 14px}
+.prime-diag-n{display:flex;gap:24px;margin-top:8px;text-align:center}
+.prime-diag-n b{display:block;font-size:17px;font-weight:800;line-height:1.2}
+.prime-diag-n span{font-size:10.5px;color:var(--txt-faint)}
+.prime-diag-z{margin-top:7px;font-size:11.5px;color:var(--txt-faint);text-align:center}
+.prime-verd{border-radius:13px;padding:12px 14px;font-size:14.5px;font-weight:700;text-align:center;margin-bottom:11px}
+.prime-verd.ok{background:rgba(84,178,76,.14);border:.5px solid rgba(84,178,76,.5);color:#3d8a37}
+.prime-verd.warn{background:rgba(241,159,44,.14);border:.5px solid rgba(241,159,44,.55);color:#a86b12}
+.prime-verd.bad{background:rgba(210,96,59,.14);border:.5px solid rgba(210,96,59,.55);color:#b4472a}
+html[data-theme=dark] .prime-verd.ok{color:#7ed877}
+html[data-theme=dark] .prime-verd.warn{color:#f5c163}
+html[data-theme=dark] .prime-verd.bad{color:#f0937a}
+.prime-ul{margin:0 0 12px;padding-left:19px}
+.prime-ul li{margin-bottom:7px;font-size:12.8px;line-height:1.5;color:var(--txt-dim)}
+.prime-okp{margin:0 0 12px !important;font-size:13px !important;color:var(--txt-dim) !important}
+.prime-sum{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:12px}
+.prime-sum span{display:flex;flex-direction:column;gap:1px;background:var(--fill);border-radius:10px;
+  padding:6px 10px;font-size:12px;font-weight:600;color:var(--txt)}
+.prime-sum i{font-style:normal;font-size:9.5px;letter-spacing:.6px;text-transform:uppercase;color:var(--txt-faint);font-weight:600}
+
+/* PRIME · alineación final con el lenguaje iOS 26/27 del resto de la app */
+.prime-cell{border-radius:20px}
+.prime-opt{border-radius:13px;font-size:13.5px;letter-spacing:-.1px;transition:transform .12s,background .2s}
+.prime-act{border-radius:13px;letter-spacing:-.1px}
+.prime-fin{border-radius:16px;letter-spacing:-.2px}
+.prime-verd{border-radius:14px;letter-spacing:-.2px}
+.prime-diag svg{filter:drop-shadow(0 6px 14px rgba(0,0,0,.10))}
+.prime-dlg{border-radius:24px}
+#primeResult{-webkit-backdrop-filter:blur(18px) saturate(160%);backdrop-filter:blur(18px) saturate(160%)}
+.prime-num{box-shadow:inset 0 1px 0 rgba(255,255,255,.28)}
+.prime-sum span{border-radius:11px}
+
+/* ============ v9.5 · INTERIOR DE CALCULADORAS · iOS 26/27 ============ */
+/* Tarjetas y resultado: sin bordes duros, squircle, sombra iOS */
+.ctab .card,.ctab .readout{background:var(--surface);border:none !important;border-radius:18px;
+  padding:18px;box-shadow:var(--ios-shadow)}
+html[data-theme=dark] .ctab .card,html[data-theme=dark] .ctab .readout{background:var(--surface)}
+
+/* Encabezados de sección: fuera el mono ancho, entra el header iOS */
+.ctab .eyebrow{font-family:var(--body);font-size:12.5px;font-weight:700;letter-spacing:-.1px;
+  text-transform:none;color:var(--txt-dim);gap:8px;margin-bottom:10px}
+.ctab .card h4{font-size:16.5px;font-weight:700;letter-spacing:-.3px;margin:0 0 6px}
+.ctab .hint{font-size:13px;line-height:1.5;color:var(--txt-dim)}
+
+/* Campos: relleno iOS, sin borde, 16px para evitar el zoom de Safari */
+.ctab .field{margin-bottom:15px}
+.ctab .field label{font-size:12.5px;font-weight:600;color:var(--txt-dim);margin-bottom:7px;letter-spacing:-.1px}
+.ctab input[type=number],.ctab input[type=text],.ctab select{
+  background:var(--fill) !important;border:none !important;border-radius:12px;
+  padding:13px 14px;font-size:16px;font-family:var(--body);color:var(--txt);
+  -webkit-appearance:none;appearance:none;width:100%}
+.ctab select{background-position:right 13px center}
+.ctab input:focus,.ctab select:focus{outline:2px solid var(--accent,var(--royal));outline-offset:-2px}
+
+/* Sliders estilo iOS */
+.ctab input[type=range]{-webkit-appearance:none;appearance:none;height:28px;background:transparent}
+.ctab input[type=range]::-webkit-slider-runnable-track{height:5px;border-radius:99px;background:var(--fill)}
+.ctab input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:26px;height:26px;border-radius:50%;
+  background:#fff;margin-top:-10.5px;box-shadow:0 1px 4px rgba(0,0,0,.28),0 0 0 .5px rgba(0,0,0,.06)}
+.ctab input[type=range]::-moz-range-track{height:5px;border-radius:99px;background:var(--fill)}
+.ctab input[type=range]::-moz-range-thumb{width:26px;height:26px;border:none;border-radius:50%;
+  background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.28)}
+.ctab .rangeval{font-family:var(--body);font-weight:700;color:var(--accent,var(--royal))}
+
+/* Filas seleccionables: celda iOS, sin doble borde */
+.ctab .grow{border:none !important;border-radius:14px;padding:13px 14px;background:var(--fill);
+  box-shadow:none;transition:background .18s,box-shadow .18s}
+html[data-theme=dark] .ctab .grow{background:var(--surface-2)}
+.ctab .grow.on{background:color-mix(in srgb,var(--accent,#24459a) 13%,var(--surface));
+  box-shadow:inset 0 0 0 2px var(--accent,#24459a)}
+.ctab .gradelist{gap:9px}
+
+/* Veredicto y cifras */
+.ctab .verdict{border:none !important;border-radius:14px;background:var(--fill);
+  padding:14px 15px;font-size:13.8px;line-height:1.55}
+.ctab .score-big{font-family:var(--body) !important;font-weight:800;letter-spacing:-2px}
+.ctab .chip{font-family:var(--body);border-radius:99px;font-weight:600;font-size:12px;
+  background:rgba(255,255,255,.20);border:.5px solid rgba(255,255,255,.34)}
+
+/* Botón calcular */
+.ctab .calc-btn{border-radius:14px;letter-spacing:-.2px;font-weight:700;transition:transform .12s}
+.ctab .calc-btn:active{transform:scale(.98)}
+
+/* Cita de autor */
+.ctab .calc-cite{border-top:.5px solid var(--line);color:var(--txt-faint)}
+.ctab .ref{font-size:11.5px;line-height:1.5;color:var(--txt-faint)}
+/* =================================================================== */
 </style>
 </head>
 <body>
@@ -708,6 +887,14 @@ html[data-theme=dark]{--glass-nav:rgba(22,28,46,.5);--glass-brd:rgba(255,255,255
   </div>
   <div class="favhead"><div class="sectlabel">Favoritos</div><button class="fav-edit" id="favEditBtn" onclick="toggleFavEdit()">Editar</button></div>
   <div class="qgrid favgrid" id="favGrid"></div>
+  <div class="prime-card ripple" onclick="showScreen('prime')">
+    <img class="prime-card-logo" src="prime-logo.png" alt="RAVA PRIME">
+    <div class="prime-card-txt">
+      <b>Los 60 segundos anteriores a la aguja</b>
+      <span>Lista verificable para PICC · 6 pasos</span>
+    </div>
+    <div class="prime-card-go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></div>
+  </div>
   <div class="sectlabel" data-i18n="sec_more">Más herramientas</div>
   <div class="qgrid moregrid">
   <div class="qcard calc-tile ripple" style="background-color:var(--green)" onclick="showScreen('pharma')">
@@ -720,7 +907,7 @@ html[data-theme=dark]{--glass-nav:rgba(22,28,46,.5);--glass-brd:rgba(255,255,255
   </div>
   </div>
   <div class="appfoot" data-i18n="home_foot">© 2026 Diego Orlando Ríos Guarín · Uso educativo y clínico-operativo. Escalas reconocidas a sus autores. Contacto: dorios0891@gmail.com</div>
-  <div class="appver">EBIME LAB · v9.0 · 20 jul 2026</div>
+  <div class="appver">EBIME LAB · v9.7 · 20 jul 2026</div>
 </div>
 
 <!-- CALC -->
@@ -984,6 +1171,28 @@ html[data-theme=dark]{--glass-nav:rgba(22,28,46,.5);--glass-brd:rgba(255,255,255
   
 </div>
 
+<div class="screen" id="s-prime">
+
+  <div class="prime-hero">
+    <img class="prime-hero-logo" src="prime-logo.png" alt="RAVA PRIME">
+    <div class="prime-hero-sub">Los 60 segundos anteriores a la aguja</div>
+  </div>
+
+  <div class="prime-bar">
+    <div class="prime-meter"><div class="prime-fill" id="primeFill"></div></div>
+    <div class="prime-count" id="primeCount">0/6</div>
+    <button class="prime-reset" onclick="primeReset()">Nuevo paciente</button>
+  </div>
+
+  <div class="prime-list" id="primeList"></div>
+
+  <button class="prime-fin" id="primeFinBtn" onclick="primeFinish()" disabled>Finalizar (0/6)</button>
+  <div class="prime-final" id="primeFinal"></div>
+
+  <div class="ref">Síntesis operativa de: VHP cuadrante 1 · MAGIC (Chopra et al., 2015) · ZIM (Dawson, 2011) · INS 2024 (9.ª ed.) · AVA CPG 2026, caps. 3, 4.2, 4.3, 4.5, 4.6 y 4.7</div>
+
+</div>
+
 </div><!-- /content -->
 
 <nav class="bottomnav">
@@ -1008,7 +1217,7 @@ html[data-theme=dark]{--glass-nav:rgba(22,28,46,.5);--glass-brd:rgba(255,255,255
     <div class="ios-h">Idioma</div>
     <div class="ios-group" id="langList"></div>
   </div>
-  <div style="font-family:var(--mono);font-size:10px;color:var(--txt-faint);text-align:center;padding:16px 0 2px;letter-spacing:.5px">EBIME LAB · v9.0 · 20 jul 2026</div>
+  <div style="font-family:var(--mono);font-size:10px;color:var(--txt-faint);text-align:center;padding:16px 0 2px;letter-spacing:.5px">EBIME LAB · v9.7 · 20 jul 2026</div>
 </div>
 <div class="dlg-scrim" id="disclaimer">
   <div class="dlg-card" role="dialog" aria-modal="true">
@@ -1017,6 +1226,13 @@ html[data-theme=dark]{--glass-nav:rgba(22,28,46,.5);--glass-brd:rgba(255,255,255
     <h2>Un apoyo para tu práctica</h2>
     <p>EBIME LAB acompaña tu trabajo con cálculos y referencias de acceso vascular. <b>No reemplaza tu juicio clínico</b>, las guías de tu institución ni la valoración del paciente: la decisión final siempre es tuya, como profesional.<br><br>Al continuar, confirmas que la usarás con criterio profesional y <b>liberas a EBIME de toda responsabilidad</b> por su uso sin ese criterio.</p>
     <button class="dlg-btn" onclick="document.getElementById('disclaimer').classList.add('hidden')">Acepto</button>
+  </div>
+</div>
+<div class="dlg-scrim hidden" id="primeResult">
+  <div class="dlg-card prime-dlg" role="dialog" aria-modal="true">
+    <div class="dlg-eyebrow">PRIME · Resultado</div>
+    <div id="primeResBody"></div>
+    <button class="dlg-btn" onclick="closePrimeResult()">Entendido</button>
   </div>
 </div>
 <div class="dlg-scrim hidden" id="pharmaAck">
@@ -1705,6 +1921,153 @@ function showResult(id){
   document.getElementById('calcModal').classList.remove('hidden');
 }
 function closeResult(){document.getElementById('calcModal').classList.add('hidden');}
+
+/* ===== PRIME · lista verificable PICC (estado en memoria, no persiste) ===== */
+var PRIME_STEPS=[
+ {n:1,name:'Pertinencia',calc:'magic',lbl:'Abrir MAGIC'},
+ {n:2,name:'Vaso',img:'prime-vasos.jpg',
+   cap:'Vaso, Profundidad, Di\u00e1metro, Compresibilidad, Ausencia de trombo, Trayecto y v\u00e1lvulas.',
+   opts:['Bas\u00edlica','Braquial','Cef\u00e1lica']},
+ {n:3,name:'Ratio',calc:'cvr',lbl:'Calcular ratio C/V'},
+ {n:4,name:'Zona y lado',img:'prime-zim.jpg',
+   cap:'Zona Verde (tercio medio): zona de punci\u00f3n de elecci\u00f3n. Zona Amarilla: aceptable con reservas. Zona Roja: evitar.',
+   opts:['Zona Verde','Zona Amarilla','Zona Roja']},
+ {n:5,name:'L\u00famenes',
+   q:'\u00bfHay infusiones simult\u00e1neas incompatibles que justifiquen el segundo lumen?',
+   opts:['S\u00ed','No']},
+ {n:6,name:'Punta y operador',
+   q:'M\u00e9todo de verificaci\u00f3n de la punta:',
+   opts:['ECG intracavitario','RX de t\u00f3rax']}
+];
+var PRIME_VAL=[null,null,null,null,null,null];
+var PRIME_OPEN=-1;
+var PRIME_PENDING=null;
+
+function primeSet(i,v){PRIME_VAL[i]=v;PRIME_OPEN=(i+1<6)?i+1:-1;renderPrime();
+  try{document.getElementById('s-prime').scrollIntoView({block:'start'});}catch(e){}}
+function primeClear(i,ev){if(ev)ev.stopPropagation();PRIME_VAL[i]=null;renderPrime();}
+function primeToggleOpen(i){PRIME_OPEN=(PRIME_OPEN===i)?-1:i;renderPrime();}
+function primeReset(){PRIME_VAL=[null,null,null,null,null,null];PRIME_OPEN=-1;PRIME_PENDING=null;renderPrime();}
+function primeCalc(i,id,ev){if(ev)ev.stopPropagation();PRIME_PENDING={i:i,calc:id};goCalc(id);}
+
+/* al terminar el c\u00e1lculo: guarda resultado y vuelve a PRIME */
+function primeAfterCalc(id){
+  if(!PRIME_PENDING||PRIME_PENDING.calc!==id)return;
+  var i=PRIME_PENDING.i;PRIME_PENDING=null;var val='Calculado';
+  try{
+    if(id==='magic'){var d=document.getElementById('mgDevice');if(d&&d.textContent.trim())val=d.textContent.trim();}
+    else if(id==='cvr'){var r=document.getElementById('cvrDiaRatio');var v=document.getElementById('cvrVerdict');
+      var a=(r&&r.textContent.trim())?('CVR '+r.textContent.trim()):'';
+      var b=(v&&v.textContent.trim())?v.textContent.trim().split('\n')[0].slice(0,42):'';
+      val=(a+(a&&b?' \u00b7 ':'')+b)||'Calculado';}
+  }catch(e){}
+  PRIME_VAL[i]=val;
+  try{closeResult();}catch(e){}
+  showScreen('prime');
+  PRIME_OPEN=(i+1<6)?i+1:-1;
+  renderPrime();
+}
+var _primeOrigShowResult=showResult;
+showResult=function(id){_primeOrigShowResult(id);primeAfterCalc(id);};
+
+function renderPrime(){
+  var c=document.getElementById('primeList');if(!c)return;c.innerHTML='';
+  var ck='<svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>';
+  var cv='<svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>';
+  PRIME_STEPS.forEach(function(s,i){
+    var done=PRIME_VAL[i]!==null;
+    var d=document.createElement('div');
+    d.className='prime-cell'+(done?' done':'')+(PRIME_OPEN===i?' open':'');
+    var inner='';
+    if(s.img)inner+='<img class="prime-img" src="'+s.img+'" alt="'+s.name+'">';
+    if(s.cap)inner+='<p class="prime-cap">'+s.cap+'</p>';
+    if(s.q)inner+='<p>'+s.q+'</p>';
+    if(s.calc)inner+='<button class="prime-act" onclick="primeCalc('+i+',\''+s.calc+'\',event)">'
+      +'<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>'+s.lbl+'</button>';
+    if(s.opts){inner+='<div class="prime-opts">';
+      s.opts.forEach(function(o){
+        inner+='<button class="prime-opt'+(PRIME_VAL[i]===o?' on':'')+'" onclick="event.stopPropagation();primeSet('+i+',\''+o+'\')">'+o+'</button>';});
+      inner+='</div>';}
+    var tag=done?'<div class="prime-val">'+PRIME_VAL[i]+'<span class="prime-x" onclick="primeClear('+i+',event)">\u2715</span></div>':'';
+    d.innerHTML='<div class="prime-row" onclick="primeToggleOpen('+i+')">'
+      +'<div class="prime-num">'+(done?ck:s.n)+'</div>'
+      +'<div class="prime-head"><div class="prime-name">'+s.name+'</div>'+tag+'</div>'
+      +'<div class="prime-chev">'+cv+'</div></div>'
+      +'<div class="prime-body">'+inner+'</div>';
+    c.appendChild(d);
+  });
+  var n=PRIME_VAL.filter(function(v){return v!==null;}).length;
+  var f=document.getElementById('primeFill');if(f)f.style.width=(n/6*100)+'%';
+  var q=document.getElementById('primeCount');if(q)q.textContent=n+'/6';
+  var b=document.getElementById('primeFinBtn');
+  if(b){b.disabled=(n<6);b.textContent=(n<6)?('Finalizar ('+n+'/6)'):'Finalizar';}
+  var fin=document.getElementById('primeFinal');if(fin&&n<6){fin.className='prime-final';fin.innerHTML='';}
+}
+
+function closePrimeResult(){document.getElementById('primeResult').classList.add('hidden');}
+function primeRatioSVG(cvr){
+  var R=84,col='var(--green)',zone='\u00d3ptimo (< 33 %)';
+  if(cvr===null){col='var(--txt-faint)';zone='Sin dato';}
+  else if(cvr>45){col='#d2603b';zone='Sobre el techo (> 45 %)';}
+  else if(cvr>33){col='var(--amber)';zone='Aceptable (33\u201345 %)';}
+  var r=(cvr===null)?0:Math.min(cvr/100,1)*R;
+  var area=(cvr===null)?null:Math.round(cvr*cvr/100);
+  return '<div class="prime-diag">'
+    +'<svg viewBox="0 0 200 200" width="150" height="150">'
+    +'<circle cx="100" cy="100" r="'+R+'" fill="var(--surface)" stroke="var(--txt-faint)" stroke-width="2"></circle>'
+    +'<line x1="100" y1="8" x2="100" y2="192" stroke="var(--txt-faint)" stroke-width="1"></line>'
+    +'<line x1="8" y1="100" x2="192" y2="100" stroke="var(--txt-faint)" stroke-width="1"></line>'
+    +'<circle cx="100" cy="100" r="'+r.toFixed(1)+'" fill="'+col+'" fill-opacity="0.92"></circle>'
+    +'</svg>'
+    +'<div class="prime-diag-n">'
+      +'<div><b style="color:'+col+'">'+(cvr===null?'\u2013':cvr+' %')+'</b><span>Ratio di\u00e1metro</span></div>'
+      +'<div><b>'+(area===null?'\u2013':area+' %')+'</b><span>Ratio \u00e1rea</span></div>'
+    +'</div>'
+    +'<div class="prime-diag-z">Ocupaci\u00f3n del vaso \u00b7 '+zone+'</div></div>';
+}
+function primeFinish(){
+  var body=document.getElementById('primeResBody');if(!body)return;
+  var stop=[],warn=[];
+  var mg=(PRIME_VAL[0]||'').toLowerCase();
+  if(mg&&mg.indexOf('picc')<0)stop.push('MAGIC no sugiere PICC ('+PRIME_VAL[0]+').');
+  var vaso=PRIME_VAL[1];
+  if(vaso==='Cef\u00e1lica')warn.push('Vena cef\u00e1lica: mayor riesgo de trombosis y dificultad de progresi\u00f3n; prefiera bas\u00edlica.');
+  if(vaso==='Braquial')warn.push('Vena braquial: vigile proximidad de arteria y nervio mediano.');
+  var m=(PRIME_VAL[2]||'').match(/(\d+(?:[.,]\d+)?)\s*%/);
+  var cvr=m?parseFloat(m[1].replace(',','.')):null;
+  if(cvr!==null){
+    if(cvr>45)stop.push('Ratio cat\u00e9ter/vena '+cvr+' % (techo 45 %): baje calibre, cambie de vaso o reduzca l\u00famenes.');
+    else if(cvr>33)warn.push('Ratio '+cvr+' % por encima del objetivo < 33 %, dentro del techo de 45 %.');
+  }
+  var z=PRIME_VAL[3];
+  if(z==='Zona Roja')stop.push('Zona Roja del ZIM: no es zona de punci\u00f3n; reubique o tunelice.');
+  if(z==='Zona Amarilla')warn.push('Zona Amarilla del ZIM: aceptable con reservas.');
+  if(PRIME_VAL[4]==='No')warn.push('Sin infusiones incompatibles declaradas: no hay indicaci\u00f3n para segundo lumen, use monolumen.');
+  if(PRIME_VAL[5]==='RX de t\u00f3rax')warn.push('Verificaci\u00f3n por RX de t\u00f3rax: v\u00e1lida, pero el ECG intracavitario es el m\u00e9todo de elecci\u00f3n.');
+
+  var cls,ttl;
+  if(stop.length){cls='bad';ttl='No favorable \u00b7 revise antes de puncionar';}
+  else if(warn.length){cls='warn';ttl='Viable con reservas';}
+  else{cls='ok';ttl='Candidato favorable para la inserci\u00f3n';}
+
+  var html=primeRatioSVG(cvr);
+  html+='<div class="prime-verd '+cls+'">'+ttl+'</div>';
+  var items=stop.concat(warn);
+  if(items.length){html+='<ul class="prime-ul">';items.forEach(function(x){html+='<li>'+x+'</li>';});html+='</ul>';}
+  else{html+='<p class="prime-okp">Los seis puntos cumplen los criterios de referencia.</p>';}
+  html+='<div class="prime-sum">'
+    +'<span><i>Pertinencia</i>'+(PRIME_VAL[0]||'\u2013')+'</span>'
+    +'<span><i>Vaso</i>'+(PRIME_VAL[1]||'\u2013')+'</span>'
+    +'<span><i>Zona</i>'+(PRIME_VAL[3]||'\u2013')+'</span>'
+    +'<span><i>L\u00famenes</i>'+(PRIME_VAL[4]||'\u2013')+'</span>'
+    +'<span><i>Punta</i>'+(PRIME_VAL[5]||'\u2013')+'</span></div>';
+  html+='<p class="prime-dis">Este resultado es una <b>recomendaci\u00f3n de apoyo</b> basada en gu\u00edas internacionales y evidencia cl\u00ednica probada que, bajo ninguna circunstancia, reemplaza el criterio cl\u00ednico del profesional ni representa una autorizaci\u00f3n para la punci\u00f3n. Ni PRIME ni EBIME est\u00e1n facultados para indicar o contraindicar el procedimiento: <b>la decisi\u00f3n es \u00fanicamente del profesional facultativo</b>, seg\u00fan su valoraci\u00f3n del paciente y el protocolo institucional.</p>';
+  body.innerHTML=html;
+  document.getElementById('primeResult').classList.remove('hidden');
+}
+
+renderPrime();
+
 function showScreen(s){
   if(s==='pharma'){ensurePharma();openPharmaAck();}
   document.querySelectorAll('.screen').forEach(e=>e.classList.toggle('active',e.id==='s-'+s));
@@ -1764,7 +2127,7 @@ function applyLang(){
   renderLangList();
 }
 function renderLangList(){
-  const FLAG={es:'\uD83C\uDDEA\uD83C\uDDF8',en:'\uD83C\uDDEC\uD83C\uDDE7',pt:'\uD83C\uDDF5\uD83C\uDDF9',fr:'\uD83C\uDDEB\uD83C\uDDF7',it:'\uD83C\uDDEE\uD83C\uDDF9',ru:'\uD83C\uDDF7\uD83C\uDDFA',zh:'\uD83C\uDDE8\uD83C\uDDF3'};
+  const FLAG={es:'\uD83C\uDDF2\uD83C\uDDFD',en:'\uD83C\uDDEC\uD83C\uDDE7',pt:'\uD83C\uDDF5\uD83C\uDDF9',fr:'\uD83C\uDDEB\uD83C\uDDF7',it:'\uD83C\uDDEE\uD83C\uDDF9',ru:'\uD83C\uDDF7\uD83C\uDDFA',zh:'\uD83C\uDDE8\uD83C\uDDF3'};
   const c=document.getElementById('langList');c.innerHTML='';
   Object.keys(LANG_NAMES).forEach(code=>{const r=document.createElement('div');r.className='ios-row'+(code===LANG?' on':'');r.onclick=()=>selectLang(code);
     r.innerHTML='<span class="flag">'+(FLAG[code]||'')+'</span><span class="lbl">'+LANG_NAMES[code]+'</span><span class="chk">\u2713</span>';c.appendChild(r);});
@@ -1781,7 +2144,22 @@ function setTheme(v){THEME=v;applyTheme();}
 applyLang();applyTheme();
 
 /* service worker */
-if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));}
+if('serviceWorker' in navigator){
+  var _swHadCtrl=!!navigator.serviceWorker.controller, _swReloading=false;
+  navigator.serviceWorker.addEventListener('controllerchange',function(){
+    if(!_swHadCtrl||_swReloading)return;   /* 1.ª instalacion: no recargar */
+    _swReloading=true;location.reload();   /* version nueva -> refresca la vista */
+  });
+  window.addEventListener('load',function(){
+    navigator.serviceWorker.register('sw.js',{updateViaCache:'none'}).then(function(reg){
+      try{reg.update();}catch(e){}
+      setInterval(function(){try{reg.update();}catch(e){}},30*60*1000);
+      document.addEventListener('visibilitychange',function(){
+        if(document.visibilityState==='visible'){try{reg.update();}catch(e){}}
+      });
+    }).catch(function(){});
+  });
+}
 </script>
 
 <div class="dlg-scrim hidden" id="iosInstall">
